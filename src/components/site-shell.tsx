@@ -36,9 +36,15 @@ const footerColumns = [
 
 type SiteShellProps = {
   children: React.ReactNode;
+  /**
+   * The header is transparent with white links until you scroll, which only reads
+   * over a dark hero. Pages that open on a light background must set this so the
+   * header starts solid — otherwise the nav is white on near-white.
+   */
+  solidHeader?: boolean;
 };
 
-export default function SiteShell({ children }: SiteShellProps) {
+export default function SiteShell({ children, solidHeader = false }: SiteShellProps) {
   const [isHidden, setIsHidden] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -93,7 +99,7 @@ export default function SiteShell({ children }: SiteShellProps) {
           isHidden && !isMobileMenuOpen ? "-translate-y-full" : "translate-y-0"
         }`}
       >
-        <div className={`top-nav-shell w-full ${isScrolled ? "is-scrolled" : ""}`}>
+        <div className={`top-nav-shell w-full ${isScrolled || solidHeader ? "is-scrolled" : ""}`}>
           <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-6 px-6 py-3 md:px-8">
             <Link href="/" className="flex items-center gap-3">
               <Image

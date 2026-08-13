@@ -35,8 +35,8 @@ src/app/
   page.tsx                Home — hero, scientific shift, energy challenge, what we built,
                           why now, closing full-bleed CTA band
   about-us/               company story, leadership cards, Gem Power panel
-  our-system/             page hero + the shared Energy Challenge section. Emptied on
-                          purpose — the real system content is still to be written
+  our-system/             nothing but the Energy Challenge section, in its tabbed form.
+                          Emptied on purpose — the real system content is still to be written
   latest/                 newsroom — 2 hardcoded posts
   investors-portal/       password gate (UI only, no backend)
 src/components/
@@ -45,13 +45,22 @@ src/components/
   parallax-hero.tsx       3-video autoplay carousel, 9s rotation, scroll parallax
   scientific-shift-section.tsx   scroll-progress-driven reveal (inline transforms)
   energy-challenge-section.tsx   "The Energy Challenge" — rendered on BOTH the homepage
-                          and Our System, so edits to it show up in two places
+                          and Our System, so edits to it show up in two places. Two props:
+                          `tabbed` splits it into three chapters behind a tab bar (Our
+                          System only — the homepage shows just the first, no tabs), and
+                          `asPageOpener` adds the top padding that clears the fixed header
   scroll-reveal.tsx       IntersectionObserver wrapper for section reveals
 ```
 
-**The header is `fixed`, so it does not reserve space.** Only the homepage hero is meant to run
-underneath it; every other page's first section needs `pt-32` to clear it. A new page that opens
-with `py-20` will render its kicker behind the logo.
+**The header is `fixed` and transparent at rest, so it neither reserves space nor has a
+background of its own.** Two consequences for any new page:
+
+- It does not reserve space. Only the homepage hero is meant to run underneath it; every other
+  page's first section needs `pt-32` to clear it, or the kicker renders behind the logo.
+- Its links are white until you scroll past 120px, which only reads over a dark hero. A page
+  that opens on a light background must pass `<SiteShell solidHeader>` — otherwise the nav is
+  white on near-white. Home and About Us open dark and do not need it; Our System, Latest and
+  Investors Portal do.
 
 **Every page wraps its content in `<SiteShell>`.** Nav links live in the `navItems` array in
 `site-shell.tsx` — adding a route means adding it there, and usually to `footerColumns` too.

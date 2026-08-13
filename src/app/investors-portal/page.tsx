@@ -2,7 +2,7 @@ import SiteShell from "@/components/site-shell";
 
 export default function InvestorsPortalPage() {
   return (
-    <SiteShell>
+    <SiteShell solidHeader>
       <section className="mx-auto w-full max-w-4xl px-6 pb-20 pt-32">
         <p className="type-kicker font-semibold tracking-[0.16em] text-[var(--accent)]">INVESTORS PORTAL</p>
         <h1 className="type-title mt-4 font-semibold text-[var(--brand-dark)]">Investors Portal</h1>
