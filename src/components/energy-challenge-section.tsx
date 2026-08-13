@@ -401,18 +401,18 @@ export default function EnergyChallengeSection({
           items in condensed caps, split by hairline rules, on a deep teal band. */}
       <div className="bg-[#04383f]">
         <div
-          className={`mx-auto w-full max-w-7xl px-6 pb-2 md:px-8 ${
-            asPageOpener ? "pt-32 md:pt-36" : "pt-16 md:pt-20"
+          className={`mx-auto w-full max-w-7xl px-6 pb-4 md:px-8 ${
+            asPageOpener ? "pt-24 md:pt-28" : "pt-16 md:pt-20"
           }`}
         >
-          <p className="type-kicker text-center font-semibold uppercase tracking-[0.22em] text-[#d8ff35]">
+          <p className="type-body-sm text-center font-semibold uppercase tracking-[0.24em] text-[#d8ff35]">
             Challenge
           </p>
 
           <div
             role="tablist"
             aria-label="The energy challenge"
-            className="mt-8 flex justify-start overflow-x-auto lg:justify-center"
+            className="mt-5 flex justify-start overflow-x-auto lg:justify-center"
           >
             {tabs.map((tab, index) => {
               const isActive = index === activeTab;
