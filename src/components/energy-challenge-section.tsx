@@ -341,12 +341,15 @@ type EnergyChallengeSectionProps = {
    * The homepage shows only the first, with no tab bar.
    */
   tabbed?: boolean;
+  /** Extra room below the panel, so a pinned section has scroll room before it pins. */
+  trailingSpace?: boolean;
 };
 
 /** "The Energy Challenge" — rendered on both the homepage and Our System. */
 export default function EnergyChallengeSection({
   asPageOpener = false,
   tabbed = false,
+  trailingSpace = false,
 }: EnergyChallengeSectionProps) {
   if (tabbed) {
     return (
@@ -356,6 +359,7 @@ export default function EnergyChallengeSection({
         ariaLabel="The energy challenge"
         chapters={chapters}
         asPageOpener={asPageOpener}
+        trailingSpace={trailingSpace}
       />
     );
   }

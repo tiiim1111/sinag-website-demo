@@ -23,6 +23,13 @@ type ChapterTabsProps = {
    * scrolling from one chapter set to the next reads as one layer over another.
    */
   overlapPrevious?: boolean;
+  /**
+   * Extra room below the panel. A pinned section pins as soon as its bottom
+   * meets the bottom of the viewport, so without this the trigger fires after
+   * only the section's overflow — a few dozen pixels — and the chapter is
+   * covered before it can be read.
+   */
+  trailingSpace?: boolean;
 };
 
 /**
@@ -40,6 +47,7 @@ export default function ChapterTabs({
   chapters,
   asPageOpener = false,
   overlapPrevious = false,
+  trailingSpace = false,
 }: ChapterTabsProps) {
   const [activeTab, setActiveTab] = useState(0);
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
@@ -155,7 +163,11 @@ export default function ChapterTabs({
             }}
           />
         </ParallaxLayer>
-        <div className="relative mx-auto w-full max-w-7xl px-6 py-16 text-[var(--brand-dark)] md:px-8 md:py-20">
+        <div
+          className={`relative mx-auto w-full max-w-7xl px-6 pt-16 text-[var(--brand-dark)] md:px-8 md:pt-20 ${
+            trailingSpace ? "pb-[38vh]" : "pb-16 md:pb-20"
+          }`}
+        >
           {chapters.map((chapter, index) => (
             <div
               key={chapter.id}

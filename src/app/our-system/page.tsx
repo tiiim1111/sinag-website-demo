@@ -6,7 +6,7 @@ import SolutionSection from "@/components/solution-section";
 export default function OurSystemPage() {
   return (
     <SiteShell>
-      <ScrollStack pinned={<EnergyChallengeSection asPageOpener tabbed />}>
+      <ScrollStack pinned={<EnergyChallengeSection asPageOpener tabbed trailingSpace />}>
         <SolutionSection />
       </ScrollStack>
     </SiteShell>

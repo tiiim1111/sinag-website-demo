@@ -128,6 +128,11 @@ constraint, so the browser leaves it in flow and nothing happens; `sticky top: 0
 edge and buries everything below the fold. ScrollStack translates the pinned section down by the
 distance scrolled instead, which freezes it visually without touching layout.
 
+A pinned section pins the moment its bottom meets the bottom of the viewport, so free scroll
+before the trigger is only `sectionHeight - viewportHeight`. Pass `trailingSpace` to its
+`ChapterTabs` to buy room — without it the challenge fired after ~98px and was covered before it
+could be read.
+
 **Tailwind gotcha:** `shadow-[…]` silently drops an arbitrary value whose first offset is
 negative — the rule compiles but computes to transparent. Use the arbitrary *property* form,
 `[box-shadow:0_-26px_60px_…]`, for upward shadows.
