@@ -18,11 +18,15 @@ type SiteShellProps = {
 
 export default function SiteShell({ children }: SiteShellProps) {
   const [isHidden, setIsHidden] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     let lastY = window.scrollY;
     const threshold = 120;
+    const initialFrame = window.requestAnimationFrame(() => {
+      setIsScrolled(window.scrollY > threshold);
+    });
 
     const onScroll = () => {
       if (isMobileMenuOpen) {
@@ -32,6 +36,8 @@ export default function SiteShell({ children }: SiteShellProps) {
 
       const currentY = window.scrollY;
       const delta = currentY - lastY;
+
+      setIsScrolled(currentY > threshold);
 
       if (currentY <= threshold) {
         setIsHidden(false);
@@ -45,7 +51,10 @@ export default function SiteShell({ children }: SiteShellProps) {
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      window.cancelAnimationFrame(initialFrame);
+      window.removeEventListener("scroll", onScroll);
+    };
   }, [isMobileMenuOpen]);
 
   useEffect(() => {
@@ -62,7 +71,7 @@ export default function SiteShell({ children }: SiteShellProps) {
           isHidden && !isMobileMenuOpen ? "-translate-y-full" : "translate-y-0"
         }`}
       >
-        <div className="top-nav-shell w-full">
+        <div className={`top-nav-shell w-full ${isScrolled ? "is-scrolled" : ""}`}>
           <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-6 px-6 py-3 md:px-8">
             <Link href="/" className="flex items-center gap-3">
               <Image
@@ -136,7 +145,7 @@ export default function SiteShell({ children }: SiteShellProps) {
             isMobileMenuOpen ? "max-h-[24rem] opacity-100" : "max-h-0 opacity-0"
           }`}
         >
-          <nav className="mx-auto flex w-full max-w-7xl flex-col px-6 py-3 text-base font-semibold text-[var(--brand-dark)]">
+          <nav className="type-body-sm mx-auto flex w-full max-w-7xl flex-col px-6 py-3 font-semibold text-[var(--brand-dark)]">
             {navItems.map((item) => (
               <Link
                 key={item.href}
@@ -154,9 +163,9 @@ export default function SiteShell({ children }: SiteShellProps) {
       <main>{children}</main>
 
       <footer className="mt-20 border-t border-[var(--line)] bg-white">
-        <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-6 py-10 text-sm text-slate-600 md:flex-row md:justify-between">
+        <div className="type-body-sm mx-auto flex w-full max-w-6xl flex-col gap-8 px-6 py-10 text-slate-600 md:flex-row md:justify-between">
           <div className="space-y-3">
-            <p className="text-base font-semibold text-[var(--brand-dark)]">SINAG GLOBAL</p>
+            <p className="type-body font-semibold text-[var(--brand-dark)]">SINAG GLOBAL</p>
             <p className="max-w-md">
               A company committed to sustaining life by replacing coal, nuclear and oil-powered generation
               technologies.

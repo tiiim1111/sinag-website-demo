@@ -39,6 +39,11 @@ yarn-error.log*
 # local working assets
 resources/
 
+# source presentation deck (30MB of binaries; kept locally, not in git)
+gemcor-presentation.pptx
+gemcor-presentation.zip
+gemcor-presentation-extract/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

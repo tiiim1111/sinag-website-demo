@@ -1,9 +1,9 @@
 import SiteShell from "@/components/site-shell";
 
 const systemPoints = [
-  "Uses ambient energy sources through a patented magnetic induction process",
-  "No fossil fuel combustion and no need for hydro, wind, or solar input",
-  "Designed for stable, high-capacity-factor stationary generation",
+  "Uses electromagnetic induction feedback through a patented regenerative process",
+  "Minimizes moving parts while avoiding fossil fuel input and harmful emissions",
+  "Built for distributed generation, micro-grid, and scalable stationary applications",
 ];
 
 export default function OurSystemPage() {
@@ -11,36 +11,59 @@ export default function OurSystemPage() {
     <SiteShell>
       <section className="brand-gradient">
         <div className="mx-auto w-full max-w-6xl px-6 py-20 text-white">
-          <p className="text-xs font-semibold tracking-[0.16em] text-emerald-100">OUR SYSTEM</p>
-          <h1 className="mt-4 max-w-4xl text-4xl font-semibold leading-tight md:text-5xl">
-            Sinag Global System and Technology Direction
+          <p className="type-kicker font-semibold tracking-[0.16em] text-emerald-100">OUR SYSTEM</p>
+          <h1 className="type-title mt-4 max-w-4xl font-semibold leading-tight">
+            EER Power Generation System
           </h1>
-          <p className="mt-5 max-w-3xl text-base leading-relaxed text-emerald-100">
-            The EER-SPG system introduces a different path to renewable generation by extracting electricity from
-            ambient energy via electromagnetic flux conversion.
+          <p className="type-body mt-5 max-w-3xl text-emerald-100">
+            The EER-SPG system is positioned as a high-output stationary generation platform built around
+            electromagnetic induction and regenerative field interaction.
           </p>
         </div>
       </section>
 
       <section className="mx-auto w-full max-w-6xl px-6 py-14">
         <div className="mb-8 rounded-2xl bg-white p-8 thin-border">
-          <h2 className="text-2xl font-semibold text-[var(--brand-dark)]">How the system is positioned</h2>
-          <p className="mt-4 leading-relaxed text-slate-600">
-            Sinag Global positions EER-SPG as a clean and sustainable stationary power generation technology for
-            communities and industries that need round-the-clock power without traditional fuel dependency.
+          <h2 className="type-emphasis font-semibold text-[var(--brand-dark)]">How the system works</h2>
+          <p className="type-body mt-4 text-slate-600">
+            The main principle underpinning the Electromagnetic Energy-Flux Reactor&apos;s operation is Faraday&apos;s Law of
+            Induction. When coils are exposed to changing magnetic fields, voltage is induced into the coils. EER-SPG
+            applies this principle through a network of reactors and transformers in a patented regenerative
+            electromagnetic process.
           </p>
-          <p className="mt-4 leading-relaxed text-slate-600">
-            By combining exclusive development rights in selected markets with project partnership models, the company
-            supports structured deployments through PPA and JV arrangements.
+          <p className="type-body mt-4 text-slate-600">
+            Similar to conventional generators, the system aims to produce varying magnetic field effects without
+            depending on a rotating magnetic field in the same way traditional machines do. The positioning emphasizes
+            cleaner power generation, efficient operation, and suitability for distributed applications.
           </p>
         </div>
         <div className="grid gap-6 md:grid-cols-3">
           {systemPoints.map((item) => (
             <article key={item} className="thin-border rounded-2xl bg-white p-6">
-              <h2 className="text-xl font-semibold text-[var(--brand-dark)]">{item}</h2>
+              <h2 className="type-body font-semibold text-[var(--brand-dark)]">{item}</h2>
             </article>
           ))}
         </div>
+      </section>
+
+      <section className="mx-auto grid w-full max-w-6xl gap-6 px-6 py-4 md:grid-cols-2">
+        <article className="thin-border rounded-2xl bg-white p-8">
+          <p className="type-kicker font-semibold tracking-[0.16em] text-[var(--accent)]">APPLICATION FIT</p>
+          <h2 className="type-emphasis mt-3 font-semibold text-[var(--brand-dark)]">Designed for distributed and stationary power use cases</h2>
+          <p className="type-body mt-4 text-slate-600">
+            Public-facing messaging around the platform consistently highlights micro-grid and distributed generation
+            applications, especially where reliable, sustainable, and flexible power supply is strategically important.
+          </p>
+        </article>
+        <article className="thin-border rounded-2xl bg-white p-8">
+          <p className="type-kicker font-semibold tracking-[0.16em] text-[var(--accent)]">MARKET STORY</p>
+          <h2 className="type-emphasis mt-3 font-semibold text-[var(--brand-dark)]">Positioned as a cleaner alternative to conventional generation</h2>
+          <p className="type-body mt-4 text-slate-600">
+            Across Sinag and Gem Power references, the technology is presented as a route toward lower dependence on
+            traditional energy sources, with a focus on sustainability, efficiency, and more resilient electricity
+            access.
+          </p>
+        </article>
       </section>
     </SiteShell>
   );

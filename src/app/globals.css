@@ -8,6 +8,15 @@
   --brand-dark: #0c2f57;
   --accent: #11b39a;
   --line: #cfdee8;
+  --type-kicker: clamp(0.78rem, 0.76rem + 0.12vw, 0.9rem);
+  --type-body-sm: clamp(0.95rem, 0.92rem + 0.14vw, 1.02rem);
+  --type-body: clamp(1rem, 0.97rem + 0.18vw, 1.12rem);
+  --type-body-lg: clamp(1.2rem, 1.08rem + 0.5vw, 1.46rem);
+  --type-emphasis: clamp(1.42rem, 1.24rem + 0.8vw, 1.92rem);
+  --type-title: clamp(2.45rem, 1.95rem + 2.2vw, 4.15rem);
+  --type-display: clamp(3.25rem, 2.3rem + 4.1vw, 6.45rem);
+  --leading-body: 1.58;
+  --leading-tight: 0.96;
 }
 
 @theme inline {
@@ -60,20 +69,25 @@ a {
   border-bottom: none;
   box-shadow: none;
   backdrop-filter: none;
-  transition: background-color 220ms ease;
+  transition: background-color 220ms ease, box-shadow 220ms ease;
 }
 
-.top-nav-shell:hover {
+.top-nav-shell:hover,
+.top-nav-shell.is-scrolled {
   background: #ffffff;
+  box-shadow: 0 1px 0 rgba(12, 47, 87, 0.1);
 }
 
-.top-nav-shell:hover .desktop-nav-link {
+.top-nav-shell:hover .desktop-nav-link,
+.top-nav-shell.is-scrolled .desktop-nav-link {
   color: var(--brand-dark);
 }
 
-.top-nav-shell:hover button[aria-label="Search"] {
+.top-nav-shell:hover button[aria-label="Search"],
+.top-nav-shell.is-scrolled button[aria-label="Search"] {
   color: var(--brand-dark);
   border-color: var(--line);
+  background: #ffffff;
 }
 
 .top-nav-link {
@@ -102,16 +116,71 @@ a {
   letter-spacing: 0.01em;
 }
 
+.type-kicker {
+  font-size: var(--type-kicker);
+  line-height: 1.25;
+}
+
+.type-body-sm {
+  font-size: var(--type-body-sm);
+  line-height: 1.52;
+}
+
+.type-body {
+  font-size: var(--type-body);
+  line-height: var(--leading-body);
+}
+
+.type-body-lg {
+  font-size: var(--type-body-lg);
+  line-height: var(--leading-body);
+}
+
+.type-emphasis {
+  font-size: var(--type-emphasis);
+  line-height: 1.3;
+}
+
+.type-title {
+  font-size: var(--type-title);
+  line-height: var(--leading-tight);
+}
+
+.type-display {
+  font-size: var(--type-display);
+  line-height: 0.92;
+}
+
 .fade-up {
   animation: fadeUp 0.7s ease-out both;
 }
 
+.reveal-body {
+  animation: revealBody 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.scroll-reveal {
+  opacity: 0;
+  transform: translate3d(0, 28px, 0) scale(0.97);
+  transition:
+    opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.scroll-reveal.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
 .delay-1 {
   animation-delay: 0.08s;
+  transition-delay: 0.08s;
 }
 
 .delay-2 {
   animation-delay: 0.16s;
+  transition-delay: 0.16s;
 }
 
 @keyframes fadeUp {
@@ -122,5 +191,16 @@ a {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes revealBody {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 24px, 0) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
   }
 }

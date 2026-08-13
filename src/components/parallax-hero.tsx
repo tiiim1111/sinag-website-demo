@@ -6,22 +6,22 @@ import { useEffect, useRef, useState } from "react";
 const slides = [
   {
     video: "/1.mp4",
-    title: "Powering Communities with Clean Energy",
-    subtitle: "Building reliable renewable systems for sustainable progress.",
+    title: "Step Into Revolutionary Renewable Energy",
+    subtitle: "Clean, high-output power systems designed to support sustainable growth.",
     cta: "See more",
-    rail: ["Community Impact", "Clean Generation", "Energy Access"],
+    rail: ["Renewable Energy", "Energy Access", "Sustainable Growth"],
   },
   {
     video: "/2.mp4",
-    title: "Engineering Smarter Energy Systems",
-    subtitle: "Combining innovation and execution for long-term value.",
+    title: "Anywhere, Everywhere, Anytime",
+    subtitle: "Reliable stationary power generation from ambient sources, wherever energy is needed.",
     cta: "See more",
-    rail: ["Technology", "System Design", "Scalable Delivery"],
+    rail: ["Uninterrupted Power", "Distributed Generation", "Scalable Delivery"],
   },
   {
     video: "/3.mp4",
-    title: "Advancing the Future of Decarbonization",
-    subtitle: "Driving practical transitions toward low-carbon operations.",
+    title: "Rethinking Sustainable Power Supply",
+    subtitle: "A cleaner path for industries, communities, and long-term decarbonization goals.",
     cta: "See more",
     rail: ["Decarbonization", "Partnership Models", "Future Projects"],
   },
@@ -106,14 +106,14 @@ export default function ParallaxHero() {
       <div className="relative mx-auto flex min-h-screen w-full max-w-7xl flex-col justify-end px-6 pb-12 pt-28 md:px-8">
         <div className="mb-8 max-w-3xl">
           <div className="mb-6 border-l-[3px] border-[#d8ff35] pl-6">
-            <h1 className="display-condensed text-6xl font-semibold uppercase leading-[0.92] tracking-tight md:text-8xl">
+            <h1 className="display-condensed type-display font-semibold uppercase tracking-tight">
               {current.title}
             </h1>
-            <p className="mt-4 text-2xl text-white/95">{current.subtitle}</p>
+            <p className="type-body-lg mt-4 text-white/95">{current.subtitle}</p>
           </div>
           <Link
             href="/our-system"
-            className="mt-8 inline-flex items-center gap-3 rounded-full bg-[#d8ff35] px-7 py-3.5 text-lg font-semibold !text-[#0e2238] transition hover:bg-[#c6f20b] hover:!text-[#0e2238]"
+            className="type-body mt-8 inline-flex items-center gap-3 rounded-full bg-[#d8ff35] px-7 py-3.5 font-semibold !text-[#0e2238] transition hover:bg-[#c6f20b] hover:!text-[#0e2238]"
           >
             {current.cta}
             <span aria-hidden="true" className="!text-[#0e2238]">
@@ -123,7 +123,7 @@ export default function ParallaxHero() {
         </div>
 
         <div className="w-full">
-          <div className="grid grid-cols-3 gap-4 text-lg font-semibold">
+          <div className="type-body grid grid-cols-3 gap-4 font-semibold">
             <p>{current.rail[0]}</p>
             <p>{current.rail[1]}</p>
             <p className="text-right">{current.rail[2]}</p>
