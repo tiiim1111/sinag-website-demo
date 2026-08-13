@@ -35,7 +35,8 @@ src/app/
   page.tsx                Home — hero, scientific shift, energy challenge, what we built,
                           why now, closing full-bleed CTA band
   about-us/               company story, leadership cards, Gem Power panel
-  our-system/             how the EER works (Faraday's law framing), application fit
+  our-system/             page hero + the shared Energy Challenge section. Emptied on
+                          purpose — the real system content is still to be written
   latest/                 newsroom — 2 hardcoded posts
   investors-portal/       password gate (UI only, no backend)
 src/components/
@@ -43,8 +44,14 @@ src/components/
                           Holds navItems, footerColumns and socials as module-level arrays
   parallax-hero.tsx       3-video autoplay carousel, 9s rotation, scroll parallax
   scientific-shift-section.tsx   scroll-progress-driven reveal (inline transforms)
+  energy-challenge-section.tsx   "The Energy Challenge" — rendered on BOTH the homepage
+                          and Our System, so edits to it show up in two places
   scroll-reveal.tsx       IntersectionObserver wrapper for section reveals
 ```
+
+**The header is `fixed`, so it does not reserve space.** Only the homepage hero is meant to run
+underneath it; every other page's first section needs `pt-32` to clear it. A new page that opens
+with `py-20` will render its kicker behind the logo.
 
 **Every page wraps its content in `<SiteShell>`.** Nav links live in the `navItems` array in
 `site-shell.tsx` — adding a route means adding it there, and usually to `footerColumns` too.
@@ -158,4 +165,5 @@ Things that are deliberately unfinished — don't "fix" them silently, they need
 - `ScrollReveal` re-hides on scroll-out (it tracks `isIntersecting` both ways) rather than
   revealing once.
 - `next.config.ts` allows remote images from `gempowerph.com` — no longer referenced anywhere.
-- The challenge-card markup in `page.tsx` is duplicated across the top and bottom rows.
+- **Our System has been deliberately emptied.** It holds only its hero and the shared Energy
+  Challenge section while its real content is rewritten. Do not treat the sparseness as a bug.

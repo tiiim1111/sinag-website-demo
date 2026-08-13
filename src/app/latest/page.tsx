@@ -18,7 +18,7 @@ const posts = [
 export default function LatestPage() {
   return (
     <SiteShell>
-      <section className="mx-auto w-full max-w-5xl px-6 py-20">
+      <section className="mx-auto w-full max-w-5xl px-6 pb-20 pt-32">
         <p className="type-kicker font-semibold tracking-[0.16em] text-[var(--accent)]">LATEST</p>
         <h1 className="type-title mt-4 font-semibold text-[var(--brand-dark)]">Latest Updates</h1>
         <p className="type-body mt-4 max-w-3xl text-slate-600">

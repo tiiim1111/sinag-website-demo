@@ -33,7 +33,7 @@ export default function AboutUsPage() {
   return (
     <SiteShell>
       <section className="brand-gradient">
-        <div className="mx-auto w-full max-w-6xl px-6 py-20 text-white">
+        <div className="mx-auto w-full max-w-6xl px-6 pb-20 pt-32 text-white">
           <p className="type-kicker font-semibold tracking-[0.16em] text-emerald-100">ABOUT US</p>
           <h1 className="type-title mt-4 font-semibold leading-tight md:type-display">Anywhere, Everywhere, Anytime</h1>
           <p className="type-body mt-5 max-w-3xl text-emerald-100">
