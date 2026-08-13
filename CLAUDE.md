@@ -34,8 +34,9 @@ src/app/
   globals.css             design tokens, type scale, animation classes
   page.tsx                Home — hero, scientific shift, energy challenge, what we built,
                           why now, closing full-bleed CTA band
-  about-us/               "What We Stand For" statement then the leadership block. No
-                          hero, and the 2014/EER founding copy was cut on purpose
+  about-us/               "What We Stand For" statement, the leadership block, then the
+                          patent portfolio. No hero, and the 2014/EER founding copy was
+                          cut on purpose
   our-system/             three tabbed sections and nothing else: Energy Challenge (3
                           chapters), Solution (5), Technology (4), chained through nested
                           ScrollStacks. No hero — the challenge rail is it
@@ -218,6 +219,10 @@ gempowerph.com public pages.
 Things that are deliberately unfinished — don't "fix" them silently, they need product decisions:
 
 - **Search button** in the nav (`site-shell.tsx`) is decorative — no handler, no search backend.
+- **All nine patent certificate scans are missing.** `patent-portfolio-section.tsx` renders a
+  "certificate to follow" frame for every entry whose `image` is null. Drop the files in
+  `public/patents/` and set the paths in that array — no other change needed. **This must not
+  ship to a live site as-is.**
 - **Investors portal** password form is UI only — `type="button"`, no handler, no auth.
 - **SEO:** only `layout.tsx` sets metadata. No per-page titles, no OG images, no favicon.
 - **A11y:** no `prefers-reduced-motion` guard on the parallax, video autoplay, or reveals.

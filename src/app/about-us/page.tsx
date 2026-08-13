@@ -1,6 +1,7 @@
 import Image from "next/image";
 import SiteShell from "@/components/site-shell";
 import ChapterSplit from "@/components/chapter-split";
+import PatentPortfolioSection from "@/components/patent-portfolio-section";
 import ScrollReveal from "@/components/scroll-reveal";
 
 const leadership = [
@@ -94,6 +95,8 @@ export default function AboutUsPage() {
           </div>
         </div>
       </section>
+
+      <PatentPortfolioSection />
     </SiteShell>
   );
 }
