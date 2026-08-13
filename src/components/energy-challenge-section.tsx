@@ -1,6 +1,4 @@
-"use client";
-
-import { useRef, useState } from "react";
+import ChapterTabs from "@/components/chapter-tabs";
 import ScrollReveal from "@/components/scroll-reveal";
 
 const valueCards = [
@@ -109,12 +107,6 @@ const baseloadStats = [
   { value: "24/7", caption: "Load requirement for critical operations" },
   { value: "Baseload", caption: "Continuous output and capacity stability" },
   { value: "Clean", caption: "Decarbonisation without intermittency trade-off" },
-];
-
-const tabs = [
-  { id: "energy-challenge", label: "The Energy Challenge" },
-  { id: "renewable-limits", label: "Limits of Renewables" },
-  { id: "baseload-gap", label: "The Baseload Gap" },
 ];
 
 function GridBackdrop() {
@@ -335,7 +327,11 @@ function BaseloadGapPanel() {
   );
 }
 
-const panels = [EnergyChallengePanel, RenewableLimitsPanel, BaseloadGapPanel];
+const chapters = [
+  { id: 'energy-challenge', label: 'The Energy Challenge', panel: <EnergyChallengePanel /> },
+  { id: 'renewable-limits', label: 'Limits of Renewables', panel: <RenewableLimitsPanel /> },
+  { id: 'baseload-gap', label: 'The Baseload Gap', panel: <BaseloadGapPanel /> },
+];
 
 type EnergyChallengeSectionProps = {
   /** Set when the section is the first thing on a page, so it clears the fixed header. */
@@ -352,129 +348,29 @@ export default function EnergyChallengeSection({
   asPageOpener = false,
   tabbed = false,
 }: EnergyChallengeSectionProps) {
-  const [activeTab, setActiveTab] = useState(0);
-  const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
-
-  const focusTab = (index: number) => {
-    const next = (index + tabs.length) % tabs.length;
-    setActiveTab(next);
-    tabRefs.current[next]?.focus();
-  };
-
-  const onKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>, index: number) => {
-    if (event.key === "ArrowRight") {
-      event.preventDefault();
-      focusTab(index + 1);
-    } else if (event.key === "ArrowLeft") {
-      event.preventDefault();
-      focusTab(index - 1);
-    } else if (event.key === "Home") {
-      event.preventDefault();
-      focusTab(0);
-    } else if (event.key === "End") {
-      event.preventDefault();
-      focusTab(tabs.length - 1);
-    }
-  };
-
-  if (!tabbed) {
+  if (tabbed) {
     return (
-      <section id="challenge" className="relative scroll-mt-20 overflow-hidden bg-[#eef4f7]">
-        <GridBackdrop />
-        <div
-          className={`relative mx-auto w-full max-w-7xl px-6 pb-16 text-[var(--brand-dark)] md:px-8 md:pb-20 ${
-            asPageOpener ? "pt-32 md:pt-36" : "pt-16 md:pt-20"
-          }`}
-        >
-          <p className="type-kicker font-semibold uppercase tracking-[0.18em] text-[#00a8a8]">Challenge</p>
-          <div className="pt-4">
-            <EnergyChallengePanel />
-          </div>
-        </div>
-      </section>
+      <ChapterTabs
+        id="challenge"
+        kicker="Challenge"
+        ariaLabel="The energy challenge"
+        chapters={chapters}
+        asPageOpener={asPageOpener}
+      />
     );
   }
 
   return (
-    <section id="challenge" className="scroll-mt-20">
-      {/* Chapter selector, styled after the GE Vernova "5 Charges" rail: numbered
-          items in condensed caps, split by hairline rules, on a deep teal band. */}
-      <div className="bg-[#04383f]">
-        <div
-          className={`mx-auto w-full max-w-7xl px-6 pb-4 md:px-8 ${
-            asPageOpener ? "pt-24 md:pt-28" : "pt-16 md:pt-20"
-          }`}
-        >
-          <p className="type-body-sm text-center font-semibold uppercase tracking-[0.24em] text-[#d8ff35]">
-            Challenge
-          </p>
-
-          <div
-            role="tablist"
-            aria-label="The energy challenge"
-            className="mt-5 flex justify-start overflow-x-auto lg:justify-center"
-          >
-            {tabs.map((tab, index) => {
-              const isActive = index === activeTab;
-              return (
-                <button
-                  key={tab.id}
-                  ref={(node) => {
-                    tabRefs.current[index] = node;
-                  }}
-                  type="button"
-                  role="tab"
-                  id={`tab-${tab.id}`}
-                  aria-selected={isActive}
-                  aria-controls={`panel-${tab.id}`}
-                  tabIndex={isActive ? 0 : -1}
-                  onClick={() => setActiveTab(index)}
-                  onKeyDown={(event) => onKeyDown(event, index)}
-                  className={`group relative flex shrink-0 items-baseline gap-3 whitespace-nowrap px-5 pb-5 pt-1 md:px-7 ${
-                    index > 0 ? "border-l border-white/25" : ""
-                  }`}
-                >
-                  <span
-                    className={`display-condensed type-body-lg transition ${
-                      isActive ? "text-[#d8ff35]" : "text-white/40 group-hover:text-[#d8ff35]/70"
-                    }`}
-                  >
-                    {index + 1}
-                  </span>
-                  <span
-                    className={`display-condensed type-body-lg uppercase tracking-[0.02em] transition ${
-                      isActive ? "text-white" : "text-white/55 group-hover:text-white/85"
-                    }`}
-                  >
-                    {tab.label}
-                  </span>
-                  <span
-                    aria-hidden="true"
-                    className={`absolute inset-x-5 bottom-0 h-[3px] transition md:inset-x-7 ${
-                      isActive ? "bg-[#d8ff35]" : "bg-transparent"
-                    }`}
-                  />
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      </div>
-
-      <div className="relative overflow-hidden bg-[#eef4f7]">
-        <GridBackdrop />
-        <div className="relative mx-auto w-full max-w-7xl px-6 py-16 text-[var(--brand-dark)] md:px-8 md:py-20">
-          {panels.map((Panel, index) => (
-            <div
-              key={tabs[index].id}
-              role="tabpanel"
-              id={`panel-${tabs[index].id}`}
-              aria-labelledby={`tab-${tabs[index].id}`}
-              hidden={index !== activeTab}
-            >
-              <Panel />
-            </div>
-          ))}
+    <section id="challenge" className="relative scroll-mt-20 overflow-hidden bg-[#eef4f7]">
+      <GridBackdrop />
+      <div
+        className={`relative mx-auto w-full max-w-7xl px-6 pb-16 text-[var(--brand-dark)] md:px-8 md:pb-20 ${
+          asPageOpener ? "pt-32 md:pt-36" : "pt-16 md:pt-20"
+        }`}
+      >
+        <p className="type-kicker font-semibold uppercase tracking-[0.18em] text-[#00a8a8]">Challenge</p>
+        <div className="pt-4">
+          <EnergyChallengePanel />
         </div>
       </div>
     </section>

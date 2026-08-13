@@ -35,8 +35,8 @@ src/app/
   page.tsx                Home — hero, scientific shift, energy challenge, what we built,
                           why now, closing full-bleed CTA band
   about-us/               company story, leadership cards, Gem Power panel
-  our-system/             nothing but the Energy Challenge section, in its tabbed form.
-                          Emptied on purpose — the real system content is still to be written
+  our-system/             two tabbed sections and nothing else: Energy Challenge (3
+                          chapters) then Solution (5). No hero — the challenge rail is it
   latest/                 newsroom — 2 hardcoded posts
   investors-portal/       password gate (UI only, no backend)
 src/components/
@@ -44,11 +44,16 @@ src/components/
                           Holds navItems, footerColumns and socials as module-level arrays
   parallax-hero.tsx       3-video autoplay carousel, 9s rotation, scroll parallax
   scientific-shift-section.tsx   scroll-progress-driven reveal (inline transforms)
+  chapter-tabs.tsx        the numbered tab rail + panel shell both tabbed sections use.
+                          The ONLY client component of the three — panels arrive as
+                          already-rendered ReactNode, so the sections below stay server
+                          components and every chapter's copy ships in the HTML
   energy-challenge-section.tsx   "The Energy Challenge" — rendered on BOTH the homepage
                           and Our System, so edits to it show up in two places. Two props:
-                          `tabbed` splits it into three chapters behind a tab bar (Our
+                          `tabbed` splits it into three chapters behind the rail (Our
                           System only — the homepage shows just the first, no tabs), and
                           `asPageOpener` adds the top padding that clears the fixed header
+  solution-section.tsx    "GEMCOR's Solution: EER-SPG" — 5 chapters. Our System only
   scroll-reveal.tsx       IntersectionObserver wrapper for section reveals
 ```
 
@@ -174,5 +179,7 @@ Things that are deliberately unfinished — don't "fix" them silently, they need
 - `ScrollReveal` re-hides on scroll-out (it tracks `isIntersecting` both ways) rather than
   revealing once.
 - `next.config.ts` allows remote images from `gempowerph.com` — no longer referenced anywhere.
-- **Our System has been deliberately emptied.** It holds only its hero and the shared Energy
-  Challenge section while its real content is rewritten. Do not treat the sparseness as a bug.
+- **Our System is still being built out from the deck**, one tabbed section per topic. Challenge
+  and Solution are in; more may follow. There is no hero by design.
+- **The Solution intro chapter reuses `/overview/eer.png`** (the single container unit). The deck
+  also shows a stacked/scaled render on its first slide — that asset has not been supplied.
