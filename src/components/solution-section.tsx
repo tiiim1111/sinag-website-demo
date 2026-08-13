@@ -76,29 +76,27 @@ function EerSpgPanel() {
       <PanelHeading>GEMCOR&apos;s Solution: EER-SPG</PanelHeading>
 
       <ScrollReveal className="mt-8" delayClassName="delay-1">
-        <p className="type-body max-w-5xl text-slate-700">
+        <p className="type-body mx-auto max-w-4xl text-center text-slate-700">
           EER-SPG is GEMCOR&apos;s clean on-demand baseload power generation system, designed to generate
           continuous electricity through electromagnetic processes, without fossil fuels, feedstock, weather
           dependency, or conventional rotating generator mechanisms.
         </p>
       </ScrollReveal>
       <ScrollReveal className="mt-6" delayClassName="delay-1">
-        <p className="type-body max-w-5xl text-slate-700">
+        <p className="type-body mx-auto max-w-4xl text-center text-slate-700">
           The system is modular, scalable, and suitable for embedded, distributed, and centralised power
           applications.
         </p>
       </ScrollReveal>
 
-      <ScrollReveal className="mx-auto mt-10 max-w-3xl" delayClassName="delay-2">
-        <div className="relative mx-auto aspect-[16/9] w-full">
-          <Image
-            src="/overview/eer.png"
-            alt="EER-SPG container unit"
-            fill
-            sizes="(min-width: 1024px) 48rem, 100vw"
-            className="object-contain"
-          />
-        </div>
+      <ScrollReveal className="mx-auto mt-10 max-w-4xl" delayClassName="delay-2">
+        <Image
+          src="/overview/eer2.png"
+          alt="Stacked EER-SPG container units"
+          width={1117}
+          height={514}
+          className="h-auto w-full"
+        />
       </ScrollReveal>
 
       <ScrollReveal className="mt-10" delayClassName="delay-2">
@@ -210,7 +208,7 @@ function CapabilitiesPanel() {
       <PanelHeading>Unique Capabilities of EER-SPG</PanelHeading>
 
       <ScrollReveal className="mt-8" delayClassName="delay-1">
-        <p className="type-body-lg max-w-5xl text-slate-700">
+        <p className="type-body-lg mx-auto max-w-4xl text-center text-slate-700">
           EER-SPG brings together the capabilities energy users have historically had to choose between.
         </p>
       </ScrollReveal>
@@ -243,13 +241,13 @@ function AdvantagesPanel() {
       <PanelHeading>Economic &amp; Environmental Advantages</PanelHeading>
 
       <ScrollReveal className="mt-8" delayClassName="delay-1">
-        <p className="type-body max-w-5xl text-slate-700">
+        <p className="type-body mx-auto max-w-4xl text-center text-slate-700">
           EER-SPG is built to improve the economics and environmental profile of power generation at the
           same time.
         </p>
       </ScrollReveal>
       <ScrollReveal className="mt-6" delayClassName="delay-1">
-        <p className="type-body max-w-5xl text-slate-700">
+        <p className="type-body mx-auto max-w-4xl text-center text-slate-700">
           By removing fuel and feedstock from the generation model, the system reduces exposure to
           commodity pricing, import dependency, supply logistics, and combustion-related emissions.
         </p>
@@ -257,7 +255,7 @@ function AdvantagesPanel() {
 
       <ScrollReveal className="mt-10" delayClassName="delay-2">
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[32rem] max-w-4xl border-collapse text-left">
+          <table className="mx-auto w-full min-w-[32rem] max-w-4xl border-collapse text-left">
             <caption className="sr-only">Design choices and the customer value each one delivers</caption>
             <thead>
               <tr className="bg-[#dfe9ef]">
@@ -295,7 +293,7 @@ function AdvantagesPanel() {
       </ScrollReveal>
 
       <ScrollReveal className="mt-10" delayClassName="delay-2">
-        <p className="type-body max-w-5xl text-slate-700">
+        <p className="type-body mx-auto max-w-4xl text-center text-slate-700">
           By generating electricity close to the point of demand, EER-SPG can reduce dependence on
           long-distance transmission and distribution infrastructure. By operating continuously, it
           supports energy users that need clean power{" "}
@@ -316,14 +314,14 @@ function EmbeddedPowerPanel() {
       <PanelHeading>Embedded Clean Power</PanelHeading>
 
       <ScrollReveal className="mt-8" delayClassName="delay-1">
-        <p className="type-body max-w-5xl text-slate-700">
+        <p className="type-body mx-auto max-w-4xl text-center text-slate-700">
           EER-SPG can be deployed directly where power is consumed. For embedded generation, this creates a
           more direct relationship between the power source and the energy user, reducing reliance on
           centralised generation and long-distance delivery.
         </p>
       </ScrollReveal>
       <ScrollReveal className="mt-6" delayClassName="delay-1">
-        <p className="type-body max-w-5xl text-slate-700">
+        <p className="type-body mx-auto max-w-4xl text-center text-slate-700">
           The embedded model is designed to reduce or eliminate key external charges associated with
           conventional electricity delivery, including transmission, distribution, demand, system loss, and
           related pass-through charges, depending on the applicable regulatory and commercial structure.
