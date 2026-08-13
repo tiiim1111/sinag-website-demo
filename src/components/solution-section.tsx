@@ -257,7 +257,7 @@ function AdvantagesPanel() {
 
       <ScrollReveal className="mt-10" delayClassName="delay-2">
         <div className="overflow-x-auto">
-          <table className="mx-auto w-full min-w-[32rem] max-w-4xl border-collapse text-left">
+          <table className="w-full min-w-[32rem] max-w-4xl border-collapse text-left">
             <caption className="sr-only">Design choices and the customer value each one delivers</caption>
             <thead>
               <tr className="bg-[#dfe9ef]">
@@ -295,7 +295,7 @@ function AdvantagesPanel() {
       </ScrollReveal>
 
       <ScrollReveal className="mt-10" delayClassName="delay-2">
-        <p className="type-body mx-auto max-w-5xl text-slate-700">
+        <p className="type-body max-w-5xl text-slate-700">
           By generating electricity close to the point of demand, EER-SPG can reduce dependence on
           long-distance transmission and distribution infrastructure. By operating continuously, it
           supports energy users that need clean power{" "}
@@ -331,14 +331,10 @@ function EmbeddedPowerPanel() {
       </ScrollReveal>
 
       <ScrollReveal className="mt-12" delayClassName="delay-2">
-        <div className="mx-auto max-w-3xl space-y-6 text-center">
-          {embeddedOutcomes.map((line) => (
-            <p key={line} className="type-body-lg font-semibold text-slate-600">
-              {line}
-            </p>
-          ))}
-          <p className="type-emphasis font-semibold text-[#0a745f]">Strengthen resilience.</p>
-        </div>
+        <p className="type-body-lg mx-auto max-w-6xl text-center font-semibold text-slate-600">
+          {embeddedOutcomes.join(" ")}{" "}
+          <span className="text-[#0a745f]">Strengthen resilience.</span>
+        </p>
       </ScrollReveal>
     </>
   );

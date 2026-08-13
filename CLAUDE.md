@@ -121,6 +121,18 @@ move the layout box, so the drift would otherwise expose an edge. Inert under re
 Consecutive `ChapterTabs` pass `overlapPrevious` so the next section rides up over the last one
 with a rounded lip and a cast shadow.
 
+**Sticky chapter rail:** the `ChapterTabs` rail is `sticky top-0` so the tabs stay reachable while
+you read a chapter. Two things keep that working, both easy to undo by accident:
+
+- The section must NOT have `overflow-hidden` — that makes it a scroll container and the rail
+  stops sticking. The overlap lip and shadow therefore live on the rail itself, not the section.
+- Inside a `ScrollStack` the rail carries `translateY(calc(var(--pin-offset) * -2))`. The parent
+  shifts down by `--pin-offset` during a pin, so the net `-1x` slides the rail up and away —
+  without it two chapter rails sit stacked on top of each other through the whole transition.
+
+The rail's top padding also has to clear the fixed site header (z-30, above the rail's z-20),
+so it cannot go below about `pt-20`.
+
 **Pinned stack:** `<ScrollStack pinned={…}>` holds a section still while the next scrolls up over
 it — Our System uses it for Challenge → Solution. **Do not try to rebuild this with
 `position: sticky`.** A sticky box taller than the viewport can never satisfy a `bottom: 0`

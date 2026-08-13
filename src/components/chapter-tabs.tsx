@@ -16,8 +16,6 @@ type ChapterTabsProps = {
   kicker: string;
   ariaLabel: string;
   chapters: Chapter[];
-  /** Set when the section opens a page, so the band clears the fixed header. */
-  asPageOpener?: boolean;
   /**
    * Ride up over the section above with a rounded lip and a cast shadow, so
    * scrolling from one chapter set to the next reads as one layer over another.
@@ -45,7 +43,6 @@ export default function ChapterTabs({
   kicker,
   ariaLabel,
   chapters,
-  asPageOpener = false,
   overlapPrevious = false,
   trailingSpace = false,
 }: ChapterTabsProps) {
@@ -77,20 +74,25 @@ export default function ChapterTabs({
   return (
     <section
       id={id}
-      className={`scroll-mt-20 ${
-        overlapPrevious
-          ? // Arbitrary *property* rather than shadow-[…]: Tailwind's shadow utility
-            // drops an arbitrary value whose first offset is negative.
-            "relative z-10 -mt-10 overflow-hidden rounded-t-[2.5rem] [box-shadow:0_-26px_60px_rgba(4,56,63,0.28)]"
-          : ""
-      }`}
+      // The lip and shadow live on the rail below, not here: `overflow-hidden`
+      // on this element would turn it into a scroll container and kill the
+      // rail's stickiness.
+      className={`scroll-mt-20 ${overlapPrevious ? "relative z-10 -mt-10" : ""}`}
     >
-      <div className="bg-[#04383f]">
-        <div
-          className={`mx-auto w-full max-w-7xl px-6 pb-4 md:px-8 ${
-            asPageOpener ? "pt-24 md:pt-28" : "pt-14 md:pt-16"
-          }`}
-        >
+      <div
+        className={`sticky top-0 z-20 bg-[#04383f] ${
+          overlapPrevious
+            ? // Arbitrary *property* rather than shadow-[…]: Tailwind's shadow
+              // utility drops an arbitrary value whose first offset is negative.
+              "rounded-t-[2.5rem] [box-shadow:0_-26px_60px_rgba(4,56,63,0.28)]"
+            : ""
+        }`}
+        // The parent shifts down by --pin-offset during a pin; -2x that leaves a
+        // net -1x, so the rail slides up and out instead of hanging around
+        // stacked under the next section's rail. Sticks normally when unpinned.
+        style={{ transform: "translateY(calc(var(--pin-offset, 0px) * -2))" }}
+      >
+        <div className="mx-auto w-full max-w-7xl px-6 pb-3 pt-20 md:px-8">
           <p className="type-body-sm text-center font-semibold uppercase tracking-[0.24em] text-[#d8ff35]">
             {kicker}
           </p>
@@ -98,7 +100,7 @@ export default function ChapterTabs({
           <div
             role="tablist"
             aria-label={ariaLabel}
-            className="mt-5 flex justify-start overflow-x-auto lg:justify-center"
+            className="mt-4 flex justify-start overflow-x-auto lg:justify-center"
           >
             {chapters.map((chapter, index) => {
               const isActive = index === activeTab;
@@ -116,7 +118,7 @@ export default function ChapterTabs({
                   tabIndex={isActive ? 0 : -1}
                   onClick={() => setActiveTab(index)}
                   onKeyDown={(event) => onKeyDown(event, index)}
-                  className={`group relative flex shrink-0 items-baseline gap-3 whitespace-nowrap px-5 pb-5 pt-1 md:px-7 ${
+                  className={`group relative flex shrink-0 items-baseline gap-3 whitespace-nowrap px-5 pb-4 pt-1 md:px-7 ${
                     index > 0 ? "border-l border-white/25" : ""
                   }`}
                 >

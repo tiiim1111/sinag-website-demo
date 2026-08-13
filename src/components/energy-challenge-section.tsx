@@ -358,7 +358,6 @@ export default function EnergyChallengeSection({
         kicker="Challenge"
         ariaLabel="The energy challenge"
         chapters={chapters}
-        asPageOpener={asPageOpener}
         trailingSpace={trailingSpace}
       />
     );

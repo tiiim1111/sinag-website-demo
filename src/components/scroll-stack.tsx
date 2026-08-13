@@ -68,7 +68,14 @@ export default function ScrollStack({ pinned, children }: ScrollStackProps) {
       <div
         ref={pinnedRef}
         className="relative z-0"
-        style={{ transform: `translate3d(0, ${offset}px, 0)` }}
+        // --pin-offset lets a sticky child (the chapter rail) cancel the shift
+        // out and keep holding at the top while the rest of the section freezes.
+        style={
+          {
+            transform: `translate3d(0, ${offset}px, 0)`,
+            "--pin-offset": `${offset}px`,
+          } as React.CSSProperties
+        }
       >
         {pinned}
       </div>
