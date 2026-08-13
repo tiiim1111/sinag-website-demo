@@ -355,6 +355,12 @@ const chapters = [
 /** "GEMCOR's Solution: EER-SPG" — the five solution chapters, tabbed. Our System only. */
 export default function SolutionSection() {
   return (
-    <ChapterTabs id="solution" kicker="Solution" ariaLabel="The EER-SPG solution" chapters={chapters} />
+    <ChapterTabs
+      id="solution"
+      kicker="Solution"
+      ariaLabel="The EER-SPG solution"
+      chapters={chapters}
+      overlapPrevious
+    />
   );
 }

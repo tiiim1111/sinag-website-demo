@@ -55,6 +55,7 @@ src/components/
                           `asPageOpener` adds the top padding that clears the fixed header
   solution-section.tsx    "GEMCOR's Solution: EER-SPG" — 5 chapters. Our System only
   scroll-reveal.tsx       IntersectionObserver wrapper for section reveals
+  parallax-layer.tsx      drifts a decorative layer against the scroll
 ```
 
 **The header is `fixed` and transparent at rest, so it neither reserves space nor has a
@@ -112,6 +113,16 @@ comment if you change the ladder.
 **Motion:** wrap a section child in `<ScrollReveal>` and stagger siblings with
 `delayClassName="delay-1"` / `"delay-2"`. The `.scroll-reveal` / `.is-visible` pair in
 globals.css does the actual transition.
+
+**Parallax:** wrap a decorative layer in `<ParallaxLayer>` to drift it against the scroll. Give
+the wrapper more room than it needs (`-inset-y-16` on the chapter grids) — the transform does not
+move the layout box, so the drift would otherwise expose an edge. Inert under reduced motion.
+Consecutive `ChapterTabs` pass `overlapPrevious` so the next section rides up over the last one
+with a rounded lip and a cast shadow.
+
+**Tailwind gotcha:** `shadow-[…]` silently drops an arbitrary value whose first offset is
+negative — the rule compiles but computes to transparent. Use the arbitrary *property* form,
+`[box-shadow:0_-26px_60px_…]`, for upward shadows.
 
 **Card hover:** every card carries `.card-lift`, which lifts it 6px and scales it to 1.025.
 Pair it with a Tailwind `hover:` class for the surface — a stronger shadow and accent border on

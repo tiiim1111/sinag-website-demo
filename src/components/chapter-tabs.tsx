@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import ParallaxLayer from "@/components/parallax-layer";
 
 export type Chapter = {
   id: string;
@@ -17,6 +18,11 @@ type ChapterTabsProps = {
   chapters: Chapter[];
   /** Set when the section opens a page, so the band clears the fixed header. */
   asPageOpener?: boolean;
+  /**
+   * Ride up over the section above with a rounded lip and a cast shadow, so
+   * scrolling from one chapter set to the next reads as one layer over another.
+   */
+  overlapPrevious?: boolean;
 };
 
 /**
@@ -33,6 +39,7 @@ export default function ChapterTabs({
   ariaLabel,
   chapters,
   asPageOpener = false,
+  overlapPrevious = false,
 }: ChapterTabsProps) {
   const [activeTab, setActiveTab] = useState(0);
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
@@ -60,7 +67,16 @@ export default function ChapterTabs({
   };
 
   return (
-    <section id={id} className="scroll-mt-20">
+    <section
+      id={id}
+      className={`scroll-mt-20 ${
+        overlapPrevious
+          ? // Arbitrary *property* rather than shadow-[…]: Tailwind's shadow utility
+            // drops an arbitrary value whose first offset is negative.
+            "relative z-10 -mt-10 overflow-hidden rounded-t-[2.5rem] [box-shadow:0_-26px_60px_rgba(4,56,63,0.28)]"
+          : ""
+      }`}
+    >
       <div className="bg-[#04383f]">
         <div
           className={`mx-auto w-full max-w-7xl px-6 pb-4 md:px-8 ${
@@ -124,15 +140,21 @@ export default function ChapterTabs({
       </div>
 
       <div className="relative overflow-hidden bg-[#eef4f7]">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 opacity-50"
-          style={{
-            backgroundImage:
-              "linear-gradient(rgba(12,47,87,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(12,47,87,0.05) 1px, transparent 1px)",
-            backgroundSize: "70px 70px",
-          }}
-        />
+        {/* Inset vertically past the panel so the drift never exposes an edge. */}
+        <ParallaxLayer
+          className="pointer-events-none absolute inset-x-0 -inset-y-16"
+          distance={90}
+        >
+          <div
+            aria-hidden="true"
+            className="h-full w-full opacity-50"
+            style={{
+              backgroundImage:
+                "linear-gradient(rgba(12,47,87,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(12,47,87,0.05) 1px, transparent 1px)",
+              backgroundSize: "70px 70px",
+            }}
+          />
+        </ParallaxLayer>
         <div className="relative mx-auto w-full max-w-7xl px-6 py-16 text-[var(--brand-dark)] md:px-8 md:py-20">
           {chapters.map((chapter, index) => (
             <div
