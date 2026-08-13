@@ -34,7 +34,8 @@ src/app/
   globals.css             design tokens, type scale, animation classes
   page.tsx                Home — hero, scientific shift, energy challenge, what we built,
                           why now, closing full-bleed CTA band
-  about-us/               company story, leadership cards, Gem Power panel
+  about-us/               "What We Stand For" statement then the leadership block. No
+                          hero, and the 2014/EER founding copy was cut on purpose
   our-system/             three tabbed sections and nothing else: Energy Challenge (3
                           chapters), Solution (5), Technology (4), chained through nested
                           ScrollStacks. No hero — the challenge rail is it
