@@ -2,21 +2,17 @@ import Image from "next/image";
 import ChapterSplit from "@/components/chapter-split";
 import ScrollReveal from "@/components/scroll-reveal";
 
-/**
- * Jurisdictions in the order the deck lists them. `image` stays null until the
- * certificate scan is supplied — drop the file in public/patents/ and set the
- * path here; nothing else needs changing.
- */
-const certificates: Array<{ jurisdiction: string; image: string | null }> = [
-  { jurisdiction: "United States", image: null },
-  { jurisdiction: "Japan", image: null },
-  { jurisdiction: "ARIPO", image: null },
-  { jurisdiction: "Taiwan", image: null },
-  { jurisdiction: "South Korea", image: null },
-  { jurisdiction: "Indonesia", image: null },
-  { jurisdiction: "India", image: null },
-  { jurisdiction: "Hong Kong", image: null },
-  { jurisdiction: "GCC", image: null },
+/** Jurisdictions in the order the deck lists them. Scans are all portrait, ~3:4. */
+const certificates = [
+  { jurisdiction: "United States", image: "/patents/united-states.png" },
+  { jurisdiction: "Japan", image: "/patents/japan.png" },
+  { jurisdiction: "ARIPO", image: "/patents/aripo.png" },
+  { jurisdiction: "Taiwan", image: "/patents/taiwan.png" },
+  { jurisdiction: "South Korea", image: "/patents/south-korea.png" },
+  { jurisdiction: "Indonesia", image: "/patents/indonesia.png" },
+  { jurisdiction: "India", image: "/patents/india.png" },
+  { jurisdiction: "Hong Kong", image: "/patents/hong-kong.png" },
+  { jurisdiction: "GCC", image: "/patents/gcc.png" },
 ];
 
 export default function PatentPortfolioSection() {
@@ -46,21 +42,13 @@ export default function PatentPortfolioSection() {
           >
             <figure className="card-lift h-full rounded-2xl border border-[#cfe0ea] bg-white p-4 shadow-[0_14px_28px_rgba(12,47,87,0.06)] hover:border-[#0a745f]/40 hover:shadow-[0_24px_44px_rgba(12,47,87,0.14)]">
               <div className="relative aspect-[3/4] w-full overflow-hidden rounded-lg bg-[#f3f7fa]">
-                {certificate.image ? (
-                  <Image
-                    src={certificate.image}
-                    alt={`${certificate.jurisdiction} patent certificate`}
-                    fill
-                    sizes="(min-width: 1280px) 14vw, (min-width: 768px) 30vw, 45vw"
-                    className="object-contain"
-                  />
-                ) : (
-                  <div className="flex h-full items-center justify-center rounded-lg border border-dashed border-[#cfe0ea]">
-                    <span className="type-kicker px-3 text-center uppercase tracking-[0.12em] text-slate-400">
-                      Certificate to follow
-                    </span>
-                  </div>
-                )}
+                <Image
+                  src={certificate.image}
+                  alt={`${certificate.jurisdiction} patent certificate`}
+                  fill
+                  sizes="(min-width: 1280px) 14vw, (min-width: 768px) 30vw, 45vw"
+                  className="object-contain"
+                />
               </div>
               <figcaption className="type-kicker mt-4 text-center font-semibold uppercase tracking-[0.14em] text-[#0a745f]">
                 {certificate.jurisdiction}

@@ -203,6 +203,7 @@ gempowerph.com public pages.
 - `public/sinag-logo.svg` — the older Sinag Global wordmark the header used before the Gem Power
   lockup replaced it. Kept in case the branding reverts.
 - `public/team/*.png` — leadership headshots
+- `public/patents/*.png` — the nine patent certificate scans, portrait, ~3:4
 - `public/overview/eer.png` — EER-SPG container render (homepage)
 - `public/overview/picture1.png` — currently unused
 - `public/cta/power-the-future.jpg` — **placeholder** behind the homepage closing CTA band.
@@ -219,10 +220,6 @@ gempowerph.com public pages.
 Things that are deliberately unfinished — don't "fix" them silently, they need product decisions:
 
 - **Search button** in the nav (`site-shell.tsx`) is decorative — no handler, no search backend.
-- **All nine patent certificate scans are missing.** `patent-portfolio-section.tsx` renders a
-  "certificate to follow" frame for every entry whose `image` is null. Drop the files in
-  `public/patents/` and set the paths in that array — no other change needed. **This must not
-  ship to a live site as-is.**
 - **Investors portal** password form is UI only — `type="button"`, no handler, no auth.
 - **SEO:** only `layout.tsx` sets metadata. No per-page titles, no OG images, no favicon.
 - **A11y:** no `prefers-reduced-motion` guard on the parallax, video autoplay, or reveals.
