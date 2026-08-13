@@ -1,8 +1,22 @@
 import ChapterTabs from "@/components/chapter-tabs";
-import PanelHeading from "@/components/panel-heading";
 import ScrollReveal from "@/components/scroll-reveal";
 
-/** Centred body copy, matching the Solution panels. */
+/**
+ * Two-column chapter: heading holds the left column, copy runs down the right.
+ * Deliberately different from the Solution panels, which centre their copy under
+ * a full-width heading.
+ */
+function Chapter({ title, children }: { title: React.ReactNode; children: React.ReactNode }) {
+  return (
+    <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
+      <ScrollReveal>
+        <h2 className="type-title font-semibold tracking-tight text-[var(--brand-dark)]">{title}</h2>
+      </ScrollReveal>
+      <div>{children}</div>
+    </div>
+  );
+}
+
 function Copy({
   children,
   delayClassName = "delay-1",
@@ -14,17 +28,15 @@ function Copy({
 }) {
   return (
     <ScrollReveal className={className} delayClassName={delayClassName}>
-      <p className="type-body mx-auto max-w-4xl text-center text-slate-700">{children}</p>
+      <p className="type-body text-slate-700">{children}</p>
     </ScrollReveal>
   );
 }
 
 function OverviewPanel() {
   return (
-    <>
-      <PanelHeading>Technology Overview: Electromagnetic Energy-Flux Reactor</PanelHeading>
-
-      <Copy className="mt-8">
+    <Chapter title="Technology Overview: Electromagnetic Energy-Flux Reactor">
+      <Copy className="">
         EER-SPG harnesses the power of electrons through electromagnetism, one of the four fundamental
         forces of nature. At the centre of the system is the main electromagnetic reactor. The reactor uses
         a primary excitation circuit and two secondary output circuits to generate electrical energy through
@@ -37,16 +49,14 @@ function OverviewPanel() {
         excitation burden under load. This is the core technical principle behind GEMCOR&apos;s clean
         baseload generation platform.
       </Copy>
-    </>
+    </Chapter>
   );
 }
 
 function CoreMechanismPanel() {
   return (
-    <>
-      <PanelHeading>Core Operating Mechanism</PanelHeading>
-
-      <Copy className="mt-8">
+    <Chapter title="Core Operating Mechanism">
+      <Copy className="">
         The EER-SPG uses an electromagnetic reactor with two secondary circuits or outputs.
       </Copy>
       <Copy>
@@ -64,23 +74,19 @@ function CoreMechanismPanel() {
         the same power factor and equal load.
       </Copy>
 
-      <ScrollReveal className="mt-10" delayClassName="delay-2">
-        <p className="type-emphasis mx-auto max-w-4xl text-center font-semibold text-[#0a745f]">
+      <ScrollReveal className="mt-8" delayClassName="delay-2">
+        <p className="type-emphasis font-semibold text-[#0a745f]">
           This allows EER-SPG to operate as a fully regenerative baseload energy source on demand.
         </p>
       </ScrollReveal>
-    </>
+    </Chapter>
   );
 }
 
 function FluxCancellationPanel() {
   return (
-    <>
-      <PanelHeading>Magnetic Flux Cancellation</PanelHeading>
-
-      <Copy className="mt-8">
-        Mutual flux cancellation is the defining mechanism of EER-SPG.
-      </Copy>
+    <Chapter title="Magnetic Flux Cancellation">
+      <Copy className="">Mutual flux cancellation is the defining mechanism of EER-SPG.</Copy>
       <Copy>
         In a conventional electromagnetic system, secondary load current can induce a mutual flux that
         magnetically couples into the primary circuit. This mutual flux coupling by the secondary circuit
@@ -88,9 +94,7 @@ function FluxCancellationPanel() {
       </Copy>
 
       <ScrollReveal className="mt-8" delayClassName="delay-2">
-        <p className="type-emphasis mx-auto max-w-4xl text-center font-semibold text-[#0a745f]">
-          EER-SPG is designed differently.
-        </p>
+        <p className="type-emphasis font-semibold text-[#0a745f]">EER-SPG is designed differently.</p>
       </ScrollReveal>
 
       <Copy className="mt-8" delayClassName="delay-2">
@@ -103,16 +107,14 @@ function FluxCancellationPanel() {
         As load current intensifies, the magnetic fields on the two secondary coils also intensify,
         continuing the cancellation effect during loaded operation.
       </Copy>
-    </>
+    </Chapter>
   );
 }
 
 function ExcitationPanel() {
   return (
-    <>
-      <PanelHeading>Excitation-Only Input</PanelHeading>
-
-      <Copy className="mt-8">
+    <Chapter title="Excitation-Only Input">
+      <Copy className="">
         EER-SPG{" "}
         <span className="font-semibold text-[#0a745f]">does not require fuel or feedstock</span> to generate
         electricity.
@@ -123,20 +125,20 @@ function ExcitationPanel() {
         electromagnetism in the electromagnetic core.
       </Copy>
 
-      <ScrollReveal className="mt-8" delayClassName="delay-2">
-        <p className="type-body mx-auto max-w-4xl text-center font-semibold text-[var(--brand-dark)]">
+      <ScrollReveal className="mt-6" delayClassName="delay-2">
+        <p className="type-body font-semibold text-[var(--brand-dark)]">
           Initial excitation can be supplied by an energy storage battery, small solar installation, or wind
           power installation.
         </p>
       </ScrollReveal>
 
-      <Copy className="mt-8" delayClassName="delay-2">
+      <Copy className="mt-6" delayClassName="delay-2">
         After startup, the loop back inverter shifts the excitation source from the battery or other
         renewable sources to the main inverter output, allowing the battery to return to charging mode for
         future use or having the power generated by the renewable energy sources (use for initial
         excitation) seamlessly diverted and synchronise to the main output of the EER-SPG system.
       </Copy>
-    </>
+    </Chapter>
   );
 }
 
