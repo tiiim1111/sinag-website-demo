@@ -33,11 +33,14 @@ export default function PatentPortfolioSection() {
         </ScrollReveal>
       </ChapterSplit>
 
-      {/* Nine entries over five columns lands 5 + 4, the way the deck splits them. */}
-      <div className="mt-12 grid gap-5 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5">
+      {/* Nine entries over five columns lands 5 + 4, the way the deck splits them.
+          Flex rather than grid: a grid leaves the short last row flush left, and
+          the widths subtract the gaps so the columns still line up. */}
+      <div className="mt-12 flex flex-wrap justify-center gap-5">
         {certificates.map((certificate, index) => (
           <ScrollReveal
             key={certificate.jurisdiction}
+            className="w-full sm:w-[calc((100%-1.25rem)/2)] md:w-[calc((100%-2.5rem)/3)] xl:w-[calc((100%-5rem)/5)]"
             delayClassName={index % 3 === 0 ? "" : index % 3 === 1 ? "delay-1" : "delay-2"}
           >
             <figure className="card-lift h-full rounded-2xl border border-[#cfe0ea] bg-white p-4 shadow-[0_14px_28px_rgba(12,47,87,0.06)] hover:border-[#0a745f]/40 hover:shadow-[0_24px_44px_rgba(12,47,87,0.14)]">
