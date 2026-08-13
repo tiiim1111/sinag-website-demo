@@ -59,8 +59,8 @@ background of its own.** Two consequences for any new page:
   page's first section needs `pt-32` to clear it, or the kicker renders behind the logo.
 - Its links are white until you scroll past 120px, which only reads over a dark hero. A page
   that opens on a light background must pass `<SiteShell solidHeader>` — otherwise the nav is
-  white on near-white. Home and About Us open dark and do not need it; Our System, Latest and
-  Investors Portal do.
+  white on near-white. Home, About Us and Our System all open on a dark band and do not need it;
+  Latest and Investors Portal do.
 
 **Every page wraps its content in `<SiteShell>`.** Nav links live in the `navItems` array in
 `site-shell.tsx` — adding a route means adding it there, and usually to `footerColumns` too.

@@ -117,6 +117,20 @@ const tabs = [
   { id: "baseload-gap", label: "The Baseload Gap" },
 ];
 
+function GridBackdrop() {
+  return (
+    <div
+      aria-hidden="true"
+      className="pointer-events-none absolute inset-0 opacity-50"
+      style={{
+        backgroundImage:
+          "linear-gradient(rgba(12,47,87,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(12,47,87,0.05) 1px, transparent 1px)",
+        backgroundSize: "70px 70px",
+      }}
+    />
+  );
+}
+
 type ChallengeCardProps = {
   title: string;
   icon: React.ReactNode;
@@ -192,7 +206,9 @@ function RenewableLimitsPanel() {
         </h2>
       </ScrollReveal>
 
-      <div className="mt-10 grid gap-10 lg:grid-cols-2 lg:gap-14">
+      {/* The table runs much taller than the prose, so the text column is
+          narrowed and centred against it rather than left hanging at the top. */}
+      <div className="mt-10 grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-center lg:gap-14">
         <ScrollReveal delayClassName="delay-1">
           <p className="type-body text-slate-700">
             Traditional renewable energy sources have changed the global energy landscape, but still carry
@@ -361,77 +377,105 @@ export default function EnergyChallengeSection({
     }
   };
 
-  return (
-    <section id="challenge" className="relative scroll-mt-20 overflow-hidden bg-[#eef4f7]">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-50"
-        style={{
-          backgroundImage:
-            "linear-gradient(rgba(12,47,87,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(12,47,87,0.05) 1px, transparent 1px)",
-          backgroundSize: "70px 70px",
-        }}
-      />
-      <div
-        className={`relative mx-auto w-full max-w-7xl px-6 pb-16 text-[var(--brand-dark)] md:px-8 md:pb-20 ${
-          asPageOpener ? "pt-32 md:pt-36" : "pt-16 md:pt-20"
-        }`}
-      >
-        <p className="type-kicker font-semibold uppercase tracking-[0.18em] text-[#00a8a8]">Challenge</p>
-
-        {!tabbed ? (
+  if (!tabbed) {
+    return (
+      <section id="challenge" className="relative scroll-mt-20 overflow-hidden bg-[#eef4f7]">
+        <GridBackdrop />
+        <div
+          className={`relative mx-auto w-full max-w-7xl px-6 pb-16 text-[var(--brand-dark)] md:px-8 md:pb-20 ${
+            asPageOpener ? "pt-32 md:pt-36" : "pt-16 md:pt-20"
+          }`}
+        >
+          <p className="type-kicker font-semibold uppercase tracking-[0.18em] text-[#00a8a8]">Challenge</p>
           <div className="pt-4">
             <EnergyChallengePanel />
           </div>
-        ) : (
-          <>
-            <div
-              role="tablist"
-              aria-label="The energy challenge"
-              className="mt-6 flex gap-2 overflow-x-auto border-b border-[#cfe0ea] pb-px"
-            >
-              {tabs.map((tab, index) => {
-                const isActive = index === activeTab;
-                return (
-                  <button
-                    key={tab.id}
-                    ref={(node) => {
-                      tabRefs.current[index] = node;
-                    }}
-                    type="button"
-                    role="tab"
-                    id={`tab-${tab.id}`}
-                    aria-selected={isActive}
-                    aria-controls={`panel-${tab.id}`}
-                    tabIndex={isActive ? 0 : -1}
-                    onClick={() => setActiveTab(index)}
-                    onKeyDown={(event) => onKeyDown(event, index)}
-                    className={`type-body-sm -mb-px whitespace-nowrap border-b-2 px-4 py-3 font-semibold transition ${
-                      isActive
-                        ? "border-[#00a8a8] text-[var(--brand-dark)]"
-                        : "border-transparent text-slate-500 hover:border-[#cfe0ea] hover:text-[var(--brand-dark)]"
+        </div>
+      </section>
+    );
+  }
+
+  return (
+    <section id="challenge" className="scroll-mt-20">
+      {/* Chapter selector, styled after the GE Vernova "5 Charges" rail: numbered
+          items in condensed caps, split by hairline rules, on a deep teal band. */}
+      <div className="bg-[#04383f]">
+        <div
+          className={`mx-auto w-full max-w-7xl px-6 pb-2 md:px-8 ${
+            asPageOpener ? "pt-32 md:pt-36" : "pt-16 md:pt-20"
+          }`}
+        >
+          <p className="type-kicker text-center font-semibold uppercase tracking-[0.22em] text-[#d8ff35]">
+            Challenge
+          </p>
+
+          <div
+            role="tablist"
+            aria-label="The energy challenge"
+            className="mt-8 flex justify-start overflow-x-auto lg:justify-center"
+          >
+            {tabs.map((tab, index) => {
+              const isActive = index === activeTab;
+              return (
+                <button
+                  key={tab.id}
+                  ref={(node) => {
+                    tabRefs.current[index] = node;
+                  }}
+                  type="button"
+                  role="tab"
+                  id={`tab-${tab.id}`}
+                  aria-selected={isActive}
+                  aria-controls={`panel-${tab.id}`}
+                  tabIndex={isActive ? 0 : -1}
+                  onClick={() => setActiveTab(index)}
+                  onKeyDown={(event) => onKeyDown(event, index)}
+                  className={`group relative flex shrink-0 items-baseline gap-3 whitespace-nowrap px-5 pb-5 pt-1 md:px-7 ${
+                    index > 0 ? "border-l border-white/25" : ""
+                  }`}
+                >
+                  <span
+                    className={`display-condensed type-body-lg transition ${
+                      isActive ? "text-[#d8ff35]" : "text-white/40 group-hover:text-[#d8ff35]/70"
+                    }`}
+                  >
+                    {index + 1}
+                  </span>
+                  <span
+                    className={`display-condensed type-body-lg uppercase tracking-[0.02em] transition ${
+                      isActive ? "text-white" : "text-white/55 group-hover:text-white/85"
                     }`}
                   >
                     {tab.label}
-                  </button>
-                );
-              })}
-            </div>
+                  </span>
+                  <span
+                    aria-hidden="true"
+                    className={`absolute inset-x-5 bottom-0 h-[3px] transition md:inset-x-7 ${
+                      isActive ? "bg-[#d8ff35]" : "bg-transparent"
+                    }`}
+                  />
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </div>
 
-            {panels.map((Panel, index) => (
-              <div
-                key={tabs[index].id}
-                role="tabpanel"
-                id={`panel-${tabs[index].id}`}
-                aria-labelledby={`tab-${tabs[index].id}`}
-                hidden={index !== activeTab}
-                className="pt-10"
-              >
-                <Panel />
-              </div>
-            ))}
-          </>
-        )}
+      <div className="relative overflow-hidden bg-[#eef4f7]">
+        <GridBackdrop />
+        <div className="relative mx-auto w-full max-w-7xl px-6 py-16 text-[var(--brand-dark)] md:px-8 md:py-20">
+          {panels.map((Panel, index) => (
+            <div
+              key={tabs[index].id}
+              role="tabpanel"
+              id={`panel-${tabs[index].id}`}
+              aria-labelledby={`tab-${tabs[index].id}`}
+              hidden={index !== activeTab}
+            >
+              <Panel />
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

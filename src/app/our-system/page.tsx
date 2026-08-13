@@ -3,7 +3,7 @@ import EnergyChallengeSection from "@/components/energy-challenge-section";
 
 export default function OurSystemPage() {
   return (
-    <SiteShell solidHeader>
+    <SiteShell>
       <EnergyChallengeSection asPageOpener tabbed />
     </SiteShell>
   );
