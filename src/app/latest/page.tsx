@@ -27,7 +27,10 @@ export default function LatestPage() {
         </p>
         <div className="mt-10 space-y-6">
           {posts.map((post) => (
-            <article key={post.title} className="thin-border rounded-2xl bg-white p-8">
+            <article
+              key={post.title}
+              className="card-lift thin-border rounded-2xl bg-white p-8 hover:border-[var(--accent)] hover:shadow-[0_22px_44px_rgba(12,47,87,0.12)]"
+            >
               <p className="type-kicker uppercase tracking-[0.12em] text-slate-500">{post.date}</p>
               <h2 className="type-body-lg mt-3 font-semibold text-[var(--brand-dark)]">{post.title}</h2>
               <p className="type-body mt-4 text-slate-600">{post.excerpt}</p>

@@ -92,6 +92,19 @@ comment if you change the ladder.
 `delayClassName="delay-1"` / `"delay-2"`. The `.scroll-reveal` / `.is-visible` pair in
 globals.css does the actual transition.
 
+**Card hover:** every card carries `.card-lift`, which lifts it 6px and scales it to 1.025.
+Pair it with a Tailwind `hover:` class for the surface — a stronger shadow and accent border on
+light cards, a brighter border and background on dark ones. Cards with a photo also get `group`
+on the article and `.card-zoom` on the `<Image>`, which scales the photo to 1.08 inside its
+`overflow-hidden` frame. Both effects are disabled under `prefers-reduced-motion`.
+
+Two gotchas:
+- The homepage challenge cards use `clip-path`, which clips their box-shadow away. The lift and
+  the border colour carry the hover there; do not expect a shadow to show.
+- If a card's own transform is driven by an inline `style` (the scientific-shift cards are), the
+  inline value wins over `.card-lift:hover`. Put the scroll transform on a wrapper `<div>` and
+  leave the article free for hover — that section is already structured this way.
+
 ## Content source of truth
 
 The company deck is `gemcor-presentation.pptx` (60 slides) at the repo root, **gitignored** along
@@ -116,7 +129,13 @@ gempowerph.com public pages.
 - `public/1.mp4` `2.mp4` `3.mp4` — hero videos, **32MB total, committed**. All three autoplay
   simultaneously. This is the site's biggest performance liability; compress or lazy-load before
   any real launch.
-- `public/team/*.png` — leadership headshots + Gem Power logo
+- `public/logo.png` — Gem Power Philippines Corp. lockup (2000×357, alpha). Used in the header,
+  the footer, and the About Us panel. Source drop lives in the gitignored `Logos/` folder.
+- `public/logo-mark.png` — the mark alone (582×357, alpha). Currently unused; it is the obvious
+  candidate if you add a favicon.
+- `public/sinag-logo.svg` — the older Sinag Global wordmark the header used before the Gem Power
+  lockup replaced it. Kept in case the branding reverts.
+- `public/team/*.png` — leadership headshots
 - `public/overview/eer.png` — EER-SPG container render (homepage)
 - `public/overview/picture1.png` — currently unused
 - `public/cta/power-the-future.jpg` — **placeholder** behind the homepage closing CTA band.
@@ -133,7 +152,6 @@ gempowerph.com public pages.
 Things that are deliberately unfinished — don't "fix" them silently, they need product decisions:
 
 - **Search button** in the nav (`site-shell.tsx`) is decorative — no handler, no search backend.
-- **Footer social links** all point at `#` — Sinag's real profile URLs have not been supplied yet.
 - **Investors portal** password form is UI only — `type="button"`, no handler, no auth.
 - **SEO:** only `layout.tsx` sets metadata. No per-page titles, no OG images, no favicon.
 - **A11y:** no `prefers-reduced-motion` guard on the parallax, video autoplay, or reveals.

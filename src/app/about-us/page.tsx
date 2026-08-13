@@ -89,8 +89,8 @@ export default function AboutUsPage() {
               <div className="flex h-full min-h-[280px] items-center justify-center p-8 md:p-10">
                 <div className="relative w-full max-w-[440px] rounded-[1.75rem] border border-white/12 bg-white px-8 py-10 shadow-[0_22px_50px_rgba(0,0,0,0.18)]">
                   <Image
-                    src="/team/gem-power-logo.png"
-                    alt="Gem Power logo"
+                    src="/logo.png"
+                    alt="Gem Power Philippines Corp."
                     width={2000}
                     height={357}
                     className="h-auto w-full"
@@ -103,14 +103,14 @@ export default function AboutUsPage() {
           <div className="grid gap-6 border-t border-white/10 px-8 py-8 md:grid-cols-2 xl:grid-cols-4 md:px-10 lg:px-12">
             {leadership.map((person, index) => (
               <ScrollReveal key={person.name} delayClassName={index === 0 ? "" : index === 1 ? "delay-1" : "delay-2"}>
-                <article className="rounded-2xl border border-white/12 bg-white/6 p-5 backdrop-blur-sm">
+                <article className="card-lift group rounded-2xl border border-white/12 bg-white/6 p-5 backdrop-blur-sm hover:border-cyan-200/45 hover:bg-white/10">
                   <div className="relative mb-5 aspect-square overflow-hidden rounded-[1.2rem] border border-white/10">
                     <Image
                       src={person.image}
                       alt={person.name}
                       fill
                       sizes="(min-width: 1280px) 18vw, (min-width: 768px) 40vw, 90vw"
-                      className="object-cover"
+                      className="card-zoom object-cover"
                     />
                   </div>
                   <p className="type-body font-semibold">{person.name}</p>

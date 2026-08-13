@@ -39,7 +39,10 @@ export default function OurSystemPage() {
         </div>
         <div className="grid gap-6 md:grid-cols-3">
           {systemPoints.map((item) => (
-            <article key={item} className="thin-border rounded-2xl bg-white p-6">
+            <article
+              key={item}
+              className="card-lift thin-border rounded-2xl bg-white p-6 hover:border-[var(--accent)] hover:shadow-[0_22px_44px_rgba(12,47,87,0.12)]"
+            >
               <h2 className="type-body font-semibold text-[var(--brand-dark)]">{item}</h2>
             </article>
           ))}
@@ -47,7 +50,7 @@ export default function OurSystemPage() {
       </section>
 
       <section className="mx-auto grid w-full max-w-6xl gap-6 px-6 py-4 md:grid-cols-2">
-        <article className="thin-border rounded-2xl bg-white p-8">
+        <article className="card-lift thin-border rounded-2xl bg-white p-8 hover:border-[var(--accent)] hover:shadow-[0_22px_44px_rgba(12,47,87,0.12)]">
           <p className="type-kicker font-semibold tracking-[0.16em] text-[var(--accent)]">APPLICATION FIT</p>
           <h2 className="type-emphasis mt-3 font-semibold text-[var(--brand-dark)]">Designed for distributed and stationary power use cases</h2>
           <p className="type-body mt-4 text-slate-600">
@@ -55,7 +58,7 @@ export default function OurSystemPage() {
             applications, especially where reliable, sustainable, and flexible power supply is strategically important.
           </p>
         </article>
-        <article className="thin-border rounded-2xl bg-white p-8">
+        <article className="card-lift thin-border rounded-2xl bg-white p-8 hover:border-[var(--accent)] hover:shadow-[0_22px_44px_rgba(12,47,87,0.12)]">
           <p className="type-kicker font-semibold tracking-[0.16em] text-[var(--accent)]">MARKET STORY</p>
           <h2 className="type-emphasis mt-3 font-semibold text-[var(--brand-dark)]">Positioned as a cleaner alternative to conventional generation</h2>
           <p className="type-body mt-4 text-slate-600">

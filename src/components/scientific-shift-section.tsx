@@ -180,19 +180,22 @@ export default function ScientificShiftSection() {
               const offsetY = (1 - reveal) * (24 + index * 6);
               const offsetX = (1 - reveal) * direction * 14;
               return (
-                <article
+                // The scroll reveal drives an inline transform, so it lives on a wrapper —
+                // otherwise it would overwrite the card's hover transform.
+                <div
                   key={item.title}
-                  className="rounded-[1.75rem] border border-[#274530] bg-[#16261b]/95 px-6 py-7 shadow-[inset_0_0_0_1px_rgba(143,219,61,0.05)] backdrop-blur-sm"
                   style={{
                     transform: `translate3d(${offsetX}px, ${offsetY + (1 - reveal) * 38}px, 0) scale(${0.9 + reveal * 0.1})`,
                     opacity: reveal,
                   }}
                 >
-                  <div className="flex items-center gap-5">
-                    <div className="shrink-0">{item.icon}</div>
-                    <p className="type-body-lg font-semibold leading-snug text-white">{item.title}</p>
-                  </div>
-                </article>
+                  <article className="card-lift h-full rounded-[1.75rem] border border-[#274530] bg-[#16261b]/95 px-6 py-7 shadow-[inset_0_0_0_1px_rgba(143,219,61,0.05)] backdrop-blur-sm hover:border-[#8fdb3d]/50 hover:bg-[#1b3122]/95">
+                    <div className="flex items-center gap-5">
+                      <div className="shrink-0">{item.icon}</div>
+                      <p className="type-body-lg font-semibold leading-snug text-white">{item.title}</p>
+                    </div>
+                  </article>
+                </div>
               );
             })}
           </div>

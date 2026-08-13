@@ -131,7 +131,7 @@ export default function HomePage() {
             <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
               {topRowCards.map((item, index) => (
                 <ScrollReveal key={item.title} delayClassName={index > 0 ? "delay-1" : ""}>
-                  <article className="mx-auto w-full max-w-[290px] border border-[#cfe0ea] bg-white text-[#103133] [clip-path:polygon(10%_0,100%_0,90%_100%,0_100%)] px-7 py-8 shadow-[0_16px_34px_rgba(12,47,87,0.08)]">
+                  <article className="card-lift mx-auto w-full max-w-[290px] border border-[#cfe0ea] bg-white text-[#103133] [clip-path:polygon(10%_0,100%_0,90%_100%,0_100%)] px-7 py-8 shadow-[0_16px_34px_rgba(12,47,87,0.08)] hover:border-[#0b7f8f]/40 hover:shadow-[0_26px_48px_rgba(12,47,87,0.16)]">
                     <div className="flex justify-center">{item.icon}</div>
                     <p className="mt-5 text-center text-[0.95rem] font-semibold uppercase tracking-[0.08em] text-[#1b3c3c]">
                       {item.title}
@@ -146,7 +146,7 @@ export default function HomePage() {
                   key={item.title}
                   delayClassName={index === 0 ? "" : index === 1 ? "delay-1" : "delay-2"}
                 >
-                  <article className="mx-auto w-full max-w-[290px] border border-[#cfe0ea] bg-white text-[#103133] [clip-path:polygon(10%_0,100%_0,90%_100%,0_100%)] px-7 py-8 shadow-[0_16px_34px_rgba(12,47,87,0.08)]">
+                  <article className="card-lift mx-auto w-full max-w-[290px] border border-[#cfe0ea] bg-white text-[#103133] [clip-path:polygon(10%_0,100%_0,90%_100%,0_100%)] px-7 py-8 shadow-[0_16px_34px_rgba(12,47,87,0.08)] hover:border-[#0b7f8f]/40 hover:shadow-[0_26px_48px_rgba(12,47,87,0.16)]">
                     <div className="flex justify-center">{item.icon}</div>
                     <p className="mt-5 text-center text-[0.95rem] font-semibold uppercase tracking-[0.08em] text-[#1b3c3c]">
                       {item.title}
@@ -291,7 +291,7 @@ export default function HomePage() {
                 key={item.title}
                 delayClassName={index === 0 ? "" : index === 1 ? "delay-1" : "delay-2"}
               >
-                <article className="rounded-2xl border border-[#d8d5c8] bg-white/96 px-8 py-7 text-center shadow-[0_14px_28px_rgba(18,43,40,0.06)]">
+                <article className="card-lift rounded-2xl border border-[#d8d5c8] bg-white/96 px-8 py-7 text-center shadow-[0_14px_28px_rgba(18,43,40,0.06)] hover:border-[#0a745f]/40 hover:shadow-[0_24px_44px_rgba(18,43,40,0.14)]">
                   <h3 className="type-emphasis font-semibold tracking-tight text-[#0a745f]">{item.title}</h3>
                   <p className="type-body-sm mt-3 text-[#5d6665]">{item.body}</p>
                 </article>

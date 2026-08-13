@@ -39,6 +39,9 @@ yarn-error.log*
 # local working assets
 resources/
 
+# brand source drop — canonical copies live in public/ (logo-header, logo-footer)
+Logos/
+
 # source presentation deck (30MB of binaries; kept locally, not in git)
 gemcor-presentation.pptx
 gemcor-presentation.zip

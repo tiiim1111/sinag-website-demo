@@ -163,6 +163,39 @@ a {
   line-height: 0.92;
 }
 
+/* Shared card hover: a small lift and zoom. Pair it with a Tailwind hover: class
+   for the surface change (shadow on light cards, border/tint on dark ones). */
+.card-lift {
+  transition:
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.45s ease,
+    background-color 0.45s ease;
+}
+
+.card-lift:hover {
+  transform: translate3d(0, -6px, 0) scale(1.025);
+}
+
+/* Image zoom inside a .card-lift that carries the `group` class. */
+.card-zoom {
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.group:hover .card-zoom {
+  transform: scale(1.08);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-lift:hover {
+    transform: none;
+  }
+
+  .group:hover .card-zoom {
+    transform: none;
+  }
+}
+
 .fade-up {
   animation: fadeUp 0.7s ease-out both;
 }
