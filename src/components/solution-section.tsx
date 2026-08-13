@@ -1,4 +1,5 @@
 import Image from "next/image";
+import ChapterSplit from "@/components/chapter-split";
 import ChapterTabs from "@/components/chapter-tabs";
 import PanelHeading from "@/components/panel-heading";
 import ScrollReveal from "@/components/scroll-reveal";
@@ -301,31 +302,29 @@ function AdvantagesPanel() {
 
 function EmbeddedPowerPanel() {
   return (
-    <>
-      <PanelHeading>Embedded Clean Power</PanelHeading>
-
-      <ScrollReveal className="mt-8" delayClassName="delay-1">
-        <p className="type-body mx-auto max-w-4xl text-center text-slate-700">
+    <ChapterSplit title="Embedded Clean Power">
+      <ScrollReveal delayClassName="delay-1">
+        <p className="type-body text-slate-700">
           EER-SPG can be deployed directly where power is consumed. For embedded generation, this creates a
           more direct relationship between the power source and the energy user, reducing reliance on
           centralised generation and long-distance delivery.
         </p>
       </ScrollReveal>
       <ScrollReveal className="mt-6" delayClassName="delay-1">
-        <p className="type-body mx-auto max-w-4xl text-center text-slate-700">
+        <p className="type-body text-slate-700">
           The embedded model is designed to reduce or eliminate key external charges associated with
           conventional electricity delivery, including transmission, distribution, demand, system loss, and
           related pass-through charges, depending on the applicable regulatory and commercial structure.
         </p>
       </ScrollReveal>
 
-      <ScrollReveal className="mt-12" delayClassName="delay-2">
-        <p className="type-body-lg mx-auto max-w-6xl text-center font-semibold text-slate-600">
+      <ScrollReveal className="mt-8" delayClassName="delay-2">
+        <p className="type-body-lg font-semibold text-slate-600">
           {embeddedOutcomes.join(" ")}{" "}
           <span className="text-[#0a745f]">Strengthen resilience.</span>
         </p>
       </ScrollReveal>
-    </>
+    </ChapterSplit>
   );
 }
 
