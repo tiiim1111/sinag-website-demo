@@ -1,5 +1,6 @@
 import Image from "next/image";
 import ChapterTabs from "@/components/chapter-tabs";
+import PanelHeading from "@/components/panel-heading";
 import ScrollReveal from "@/components/scroll-reveal";
 
 const designedFor = [
@@ -59,16 +60,6 @@ const embeddedOutcomes = [
   "Reduce dependency.",
   "Improve control.",
 ];
-
-function PanelHeading({ children }: { children: React.ReactNode }) {
-  return (
-    <ScrollReveal>
-      <h2 className="type-title max-w-6xl font-semibold tracking-tight text-[var(--brand-dark)] md:type-display">
-        {children}
-      </h2>
-    </ScrollReveal>
-  );
-}
 
 function EerSpgPanel() {
   return (
@@ -347,7 +338,7 @@ const chapters = [
 ];
 
 /** "GEMCOR's Solution: EER-SPG" — the five solution chapters, tabbed. Our System only. */
-export default function SolutionSection() {
+export default function SolutionSection({ trailingSpace = false }: { trailingSpace?: boolean }) {
   return (
     <ChapterTabs
       id="solution"
@@ -355,6 +346,7 @@ export default function SolutionSection() {
       ariaLabel="The EER-SPG solution"
       chapters={chapters}
       overlapPrevious
+      trailingSpace={trailingSpace}
     />
   );
 }

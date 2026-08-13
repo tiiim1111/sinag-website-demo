@@ -35,8 +35,9 @@ src/app/
   page.tsx                Home — hero, scientific shift, energy challenge, what we built,
                           why now, closing full-bleed CTA band
   about-us/               company story, leadership cards, Gem Power panel
-  our-system/             two tabbed sections and nothing else: Energy Challenge (3
-                          chapters) then Solution (5). No hero — the challenge rail is it
+  our-system/             three tabbed sections and nothing else: Energy Challenge (3
+                          chapters), Solution (5), Technology (4), chained through nested
+                          ScrollStacks. No hero — the challenge rail is it
   latest/                 newsroom — 2 hardcoded posts
   investors-portal/       password gate (UI only, no backend)
 src/components/
@@ -54,6 +55,8 @@ src/components/
                           System only — the homepage shows just the first, no tabs), and
                           `asPageOpener` adds the top padding that clears the fixed header
   solution-section.tsx    "GEMCOR's Solution: EER-SPG" — 5 chapters. Our System only
+  technology-section.tsx  "Technology" — 4 reactor chapters. Our System only
+  panel-heading.tsx       chapter panel h2 — left-aligned while its copy is centred
   scroll-reveal.tsx       IntersectionObserver wrapper for section reveals
   parallax-layer.tsx      drifts a decorative layer against the scroll
   scroll-stack.tsx        pins one section while the next scrolls up over it
@@ -143,7 +146,12 @@ distance scrolled instead, which freezes it visually without touching layout.
 A pinned section pins the moment its bottom meets the bottom of the viewport, so free scroll
 before the trigger is only `sectionHeight - viewportHeight`. Pass `trailingSpace` to its
 `ChapterTabs` to buy room — without it the challenge fired after ~98px and was covered before it
-could be read.
+could be read. **Every pinned section needs it.**
+
+Nest ScrollStacks to chain handoffs (Challenge → Solution → Technology). Nesting works because
+only the `pinned` child is transformed, never the children, so an inner stack still measures off
+an untransformed container. The last section in the chain is not pinned and needs no
+`trailingSpace`.
 
 **Tailwind gotcha:** `shadow-[…]` silently drops an arbitrary value whose first offset is
 negative — the rule compiles but computes to transparent. Use the arbitrary *property* form,
