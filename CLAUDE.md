@@ -206,12 +206,11 @@ gempowerph.com public pages.
 - `public/patents/*.png` — the nine patent certificate scans, portrait, ~3:4
 - `public/overview/eer.png` — EER-SPG container render (homepage)
 - `public/overview/picture1.png` — currently unused
-- `public/cta/power-the-future.jpg` — **placeholder** behind the homepage closing CTA band.
-  CC0 via Openverse, no attribution required, but only 853px wide so it is soft at desktop
-  widths. Drop the final art at the same path to swap it; no code change needed. The band
-  layers two overlays over it — a flat tint plus a directional gradient that runs top-down
-  below `lg` and left-to-right above it — so the white headline stays legible whatever the
-  photo crops to.
+- `public/cta/power-the-future.png` — GEMCOR facility shot behind the homepage closing CTA band
+  (1505×493). The band layers two overlays over it — a flat tint plus a directional gradient that
+  runs top-down below `lg` and left-to-right above it — so the white headline stays legible
+  whatever the photo crops to. They are tuned for this already-dark image; a brighter
+  replacement would need them raised again.
 - `public/{next,vercel,window,file,globe}.svg` — create-next-app leftovers, unused
 - `resources/` — gitignored duplicate of the hero videos
 

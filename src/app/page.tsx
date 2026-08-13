@@ -151,24 +151,25 @@ export default function HomePage() {
       </section>
 
       <section className="relative isolate overflow-hidden text-white">
-        {/* Placeholder photo — swap public/cta/power-the-future.jpg with the final art. */}
         <Image
-          src="/cta/power-the-future.jpg"
+          src="/cta/power-the-future.png"
           alt=""
           aria-hidden="true"
           fill
           sizes="100vw"
           className="-z-10 object-cover object-center"
         />
-        <div aria-hidden="true" className="absolute inset-0 -z-10 bg-black/45 lg:bg-black/30" />
-        {/* Narrow viewports crop into the sky, so darken top-down; wide ones darken left-to-right. */}
+        {/* The facility shot is already dark, so these sit lighter than they did
+            over the bright placeholder — enough to hold the headline, not enough
+            to flatten the containers. */}
+        <div aria-hidden="true" className="absolute inset-0 -z-10 bg-black/30 lg:bg-black/20" />
         <div
           aria-hidden="true"
-          className="absolute inset-0 -z-10 bg-gradient-to-b from-black/40 via-black/20 to-transparent lg:hidden"
+          className="absolute inset-0 -z-10 bg-gradient-to-b from-black/35 via-black/15 to-transparent lg:hidden"
         />
         <div
           aria-hidden="true"
-          className="absolute inset-0 -z-10 hidden bg-gradient-to-r from-black/45 via-black/15 to-transparent lg:block"
+          className="absolute inset-0 -z-10 hidden bg-gradient-to-r from-black/40 via-black/10 to-transparent lg:block"
         />
 
         <div className="mx-auto flex w-full max-w-7xl flex-col justify-center px-6 py-24 md:px-8 md:py-32 lg:min-h-[34rem]">
