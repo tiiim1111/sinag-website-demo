@@ -93,7 +93,7 @@ export default function HomePage() {
       <ParallaxHero />
       <ScientificShiftSection />
 
-      <section className="relative overflow-hidden bg-[#eef4f7]">
+      <section id="challenge" className="relative scroll-mt-20 overflow-hidden bg-[#eef4f7]">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 opacity-50"
@@ -165,7 +165,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="relative overflow-hidden bg-[#14191b]">
+      <section id="overview" className="relative scroll-mt-20 overflow-hidden bg-[#14191b]">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 opacity-60"
@@ -231,7 +231,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="relative overflow-hidden bg-[#f8f7f1]">
+      <section id="why-now" className="relative scroll-mt-20 overflow-hidden bg-[#f8f7f1]">
         <div className="pointer-events-none absolute inset-y-0 right-[18%] hidden w-[38rem] rounded-full border border-[#d7e6df] opacity-60 lg:block" />
         <div className="pointer-events-none absolute inset-y-0 right-[12%] hidden w-[28rem] rounded-full border border-[#d7e6df] opacity-50 lg:block" />
         <div className="pointer-events-none absolute inset-x-0 bottom-[6.5rem] hidden border-t border-dashed border-[#d6dfd7] md:block" />
@@ -334,7 +334,7 @@ export default function HomePage() {
               className="lg:border-l lg:border-white/35 lg:pl-16"
               delayClassName="delay-1"
             >
-              <p className="type-body-lg max-w-xl text-white/95">
+              <p className="type-body max-w-md text-white/95">
                 The EER-SPG delivers clean, continuous baseload power &mdash; no fuel, no feedstock, no weather
                 dependency. Built for industries, utilities, microgrids, and the communities they serve.
               </p>

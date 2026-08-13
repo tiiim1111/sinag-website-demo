@@ -39,14 +39,19 @@ src/app/
   latest/                 newsroom — 2 hardcoded posts
   investors-portal/       password gate (UI only, no backend)
 src/components/
-  site-shell.tsx          nav + footer wrapper — every page must render inside this
+  site-shell.tsx          nav + footer wrapper — every page must render inside this.
+                          Holds navItems, footerColumns and socials as module-level arrays
   parallax-hero.tsx       3-video autoplay carousel, 9s rotation, scroll parallax
   scientific-shift-section.tsx   scroll-progress-driven reveal (inline transforms)
   scroll-reveal.tsx       IntersectionObserver wrapper for section reveals
 ```
 
 **Every page wraps its content in `<SiteShell>`.** Nav links live in the `navItems` array in
-`site-shell.tsx` — adding a route means adding it there.
+`site-shell.tsx` — adding a route means adding it there, and usually to `footerColumns` too.
+
+The footer deep-links into page sections by anchor: `#challenge`, `#overview`, `#why-now` on the
+homepage and `#leadership` on About Us. Those ids carry a `scroll-mt-*` so the fixed header does
+not cover the heading — **keep the id and the scroll offset together** if you move a section.
 
 ## Design system
 
@@ -71,6 +76,15 @@ fluid `clamp()` values, so they need no responsive variants:
 
 `.type-kicker` · `.type-body-sm` · `.type-body` · `.type-body-lg` · `.type-emphasis` ·
 `.type-title` · `.type-display`
+
+The scale is a **golden-ratio ladder** anchored on `.type-body` (1rem at 375px → 1.125rem at
+1440px). Steps are φ (1.618), √φ (1.272), or φ^¼ (1.128) — never an arbitrary number. On mobile
+every step is √φ or tighter; on desktop the display tier (emphasis → title → display) opens up
+to a full φ per step, so headlines gain presence at width without body copy leaving the scale.
+
+**If you add a size, derive it from an existing token by φ, √φ, or φ^¼ — do not invent one.**
+The derivations are written out in the comment above the tokens in `globals.css`; update that
+comment if you change the ladder.
 
 `.display-condensed` switches to Oswald — used only for the hero headline.
 
@@ -119,6 +133,7 @@ gempowerph.com public pages.
 Things that are deliberately unfinished — don't "fix" them silently, they need product decisions:
 
 - **Search button** in the nav (`site-shell.tsx`) is decorative — no handler, no search backend.
+- **Footer social links** all point at `#` — Sinag's real profile URLs have not been supplied yet.
 - **Investors portal** password form is UI only — `type="button"`, no handler, no auth.
 - **SEO:** only `layout.tsx` sets metadata. No per-page titles, no OG images, no favicon.
 - **A11y:** no `prefers-reduced-motion` guard on the parallax, video autoplay, or reveals.

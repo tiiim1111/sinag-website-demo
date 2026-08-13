@@ -8,13 +8,25 @@
   --brand-dark: #0c2f57;
   --accent: #11b39a;
   --line: #cfdee8;
-  --type-kicker: clamp(0.78rem, 0.76rem + 0.12vw, 0.9rem);
-  --type-body-sm: clamp(0.95rem, 0.92rem + 0.14vw, 1.02rem);
-  --type-body: clamp(1rem, 0.97rem + 0.18vw, 1.12rem);
-  --type-body-lg: clamp(1.2rem, 1.08rem + 0.5vw, 1.46rem);
-  --type-emphasis: clamp(1.42rem, 1.24rem + 0.8vw, 1.92rem);
-  --type-title: clamp(2.45rem, 1.95rem + 2.2vw, 4.15rem);
-  --type-display: clamp(3.25rem, 2.3rem + 4.1vw, 6.45rem);
+  /* Golden-ratio type scale. phi = 1.618, sqrt(phi) = 1.272, phi^(1/4) = 1.128.
+     Body is the anchor: 1rem at 375px viewport, 1.125rem at 1440px.
+
+     mobile ladder (every step sqrt(phi), tightest two phi^1/4):
+       kicker -1/4- body-sm -1/4- body -1/2- body-lg -1/2- emphasis
+              -1/2- title -1/2- display
+     desktop ladder (display tier opens up to a full phi per step):
+       kicker -1/4- body-sm -1/4- body -1/2- body-lg
+       body -phi- emphasis -phi- title -phi- display
+
+     The ladder widens as the viewport does, so headlines gain presence on
+     desktop without body copy drifting off the same scale. */
+  --type-kicker: clamp(0.786rem, 0.751rem + 0.149vw, 0.885rem);
+  --type-body-sm: clamp(0.887rem, 0.848rem + 0.167vw, 0.998rem);
+  --type-body: clamp(1rem, 0.956rem + 0.188vw, 1.125rem);
+  --type-body-lg: clamp(1.272rem, 1.216rem + 0.239vw, 1.431rem);
+  --type-emphasis: clamp(1.618rem, 1.547rem + 0.303vw, 1.82rem);
+  --type-title: clamp(2.058rem, 1.746rem + 1.333vw, 2.945rem);
+  --type-display: clamp(2.618rem, 1.862rem + 3.226vw, 4.765rem);
   --leading-body: 1.58;
   --leading-tight: 0.96;
 }

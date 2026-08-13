@@ -71,7 +71,7 @@ export default function AboutUsPage() {
         </div>
       </section>
 
-      <section className="mx-auto w-full max-w-6xl px-6 py-4">
+      <section id="leadership" className="mx-auto w-full max-w-6xl scroll-mt-24 px-6 py-4">
         <div className="overflow-hidden rounded-[2rem] bg-[var(--brand-dark)] text-white shadow-[0_24px_60px_rgba(12,47,87,0.18)]">
           <div className="grid gap-0 lg:grid-cols-[1.1fr_0.9fr]">
             <ScrollReveal className="order-2 p-8 md:p-10 lg:order-1 lg:p-12">
