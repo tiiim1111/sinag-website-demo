@@ -301,15 +301,63 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="mt-12 border-y border-[var(--line)] bg-white">
-        <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-6 py-10 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left">
-          <p className="type-emphasis font-semibold text-[var(--brand-dark)]">Let&apos;s power the future together.</p>
-          <Link
-            href="/investors-portal"
-            className="inline-flex items-center justify-center rounded-full bg-[var(--brand)] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[var(--brand-dark)]"
-          >
-            Explore prospects today
-          </Link>
+      <section className="relative isolate overflow-hidden text-white">
+        {/* Placeholder photo — swap public/cta/power-the-future.jpg with the final art. */}
+        <Image
+          src="/cta/power-the-future.jpg"
+          alt=""
+          aria-hidden="true"
+          fill
+          sizes="100vw"
+          className="-z-10 object-cover object-center"
+        />
+        <div aria-hidden="true" className="absolute inset-0 -z-10 bg-black/45 lg:bg-black/30" />
+        {/* Narrow viewports crop into the sky, so darken top-down; wide ones darken left-to-right. */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 -z-10 bg-gradient-to-b from-black/40 via-black/20 to-transparent lg:hidden"
+        />
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 -z-10 hidden bg-gradient-to-r from-black/45 via-black/15 to-transparent lg:block"
+        />
+
+        <div className="mx-auto flex w-full max-w-7xl flex-col justify-center px-6 py-24 md:px-8 md:py-32 lg:min-h-[34rem]">
+          <div className="grid gap-10 lg:grid-cols-[1.15fr_1fr] lg:gap-16">
+            <ScrollReveal>
+              <h2 className="display-condensed type-title font-semibold uppercase tracking-tight md:type-display">
+                Let&apos;s power the future together
+              </h2>
+            </ScrollReveal>
+
+            <ScrollReveal
+              className="lg:border-l lg:border-white/35 lg:pl-16"
+              delayClassName="delay-1"
+            >
+              <p className="type-body-lg max-w-xl text-white/95">
+                The EER-SPG delivers clean, continuous baseload power &mdash; no fuel, no feedstock, no weather
+                dependency. Built for industries, utilities, microgrids, and the communities they serve.
+              </p>
+              <Link
+                href="/our-system"
+                className="type-body mt-9 inline-flex items-center gap-4 rounded-full bg-[#d8ff35] py-2 pl-7 pr-2 font-semibold !text-[#0e2238] transition hover:bg-[#c6f20b]"
+              >
+                Know more about our solution
+                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5">
+                    <path
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M4 12h15m-6-6 6 6-6 6"
+                    />
+                  </svg>
+                </span>
+              </Link>
+            </ScrollReveal>
+          </div>
         </div>
       </section>
     </SiteShell>

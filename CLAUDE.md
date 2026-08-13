@@ -32,7 +32,8 @@ No test suite and no CI. `npm run build` is the only gate.
 src/app/
   layout.tsx              fonts + root metadata (only metadata in the whole site)
   globals.css             design tokens, type scale, animation classes
-  page.tsx                Home — hero, scientific shift, energy challenge, what we built, why now
+  page.tsx                Home — hero, scientific shift, energy challenge, what we built,
+                          why now, closing full-bleed CTA band
   about-us/               company story, leadership cards, Gem Power panel
   our-system/             how the EER works (Faraday's law framing), application fit
   latest/                 newsroom — 2 hardcoded posts
@@ -104,6 +105,12 @@ gempowerph.com public pages.
 - `public/team/*.png` — leadership headshots + Gem Power logo
 - `public/overview/eer.png` — EER-SPG container render (homepage)
 - `public/overview/picture1.png` — currently unused
+- `public/cta/power-the-future.jpg` — **placeholder** behind the homepage closing CTA band.
+  CC0 via Openverse, no attribution required, but only 853px wide so it is soft at desktop
+  widths. Drop the final art at the same path to swap it; no code change needed. The band
+  layers two overlays over it — a flat tint plus a directional gradient that runs top-down
+  below `lg` and left-to-right above it — so the white headline stays legible whatever the
+  photo crops to.
 - `public/{next,vercel,window,file,globe}.svg` — create-next-app leftovers, unused
 - `resources/` — gitignored duplicate of the hero videos
 
