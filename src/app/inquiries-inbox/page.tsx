@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
 import crypto from "node:crypto";
+import Image from "next/image";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { readInquiries } from "@/lib/inquiries";
+import { readInquiries, type Inquiry } from "@/lib/inquiries";
 
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Inquiries inbox",
   // Unlisted is not protection on its own, but there is no reason to let a
-  // crawler index a page holding people's contact details.
+  // crawler index a page holding contact details people sent us.
   robots: { index: false, follow: false },
 };
 
@@ -58,6 +59,93 @@ async function signOut() {
   redirect("/inquiries-inbox");
 }
 
+/** Teal ground shared by all three states, matching Inquiries and About Us. */
+function Shell({ children }: { children: React.ReactNode }) {
+  return (
+    <main className="relative min-h-screen overflow-hidden bg-[#04383f]">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 opacity-70"
+        style={{
+          backgroundImage:
+            "linear-gradient(rgba(216,255,53,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(216,255,53,0.05) 1px, transparent 1px)",
+          backgroundSize: "64px 64px",
+        }}
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -left-24 top-10 h-80 w-80 rounded-full bg-[#d8ff35]/10 blur-3xl"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -right-10 bottom-0 h-96 w-96 rounded-full bg-cyan-400/8 blur-3xl"
+      />
+      <div className="relative mx-auto w-full max-w-5xl px-6 py-16">{children}</div>
+    </main>
+  );
+}
+
+function initials(name: string): string {
+  return name
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase() ?? "")
+    .join("");
+}
+
+function InquiryCard({ inquiry }: { inquiry: Inquiry }) {
+  const received = new Date(inquiry.receivedAt);
+  return (
+    <li className="rounded-[1.5rem] border border-white/15 bg-white/[0.06] p-6 backdrop-blur-sm transition hover:border-[#d8ff35]/40 hover:bg-white/[0.09] md:p-7">
+      <div className="flex flex-wrap items-start justify-between gap-4">
+        <div className="flex items-center gap-4">
+          <span
+            aria-hidden="true"
+            className="type-body-sm flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#d8ff35] font-semibold text-[#0e2238]"
+          >
+            {initials(inquiry.name)}
+          </span>
+          <div>
+            <p className="type-body font-semibold text-white">{inquiry.name}</p>
+            {inquiry.company && <p className="type-body-sm text-slate-400">{inquiry.company}</p>}
+          </div>
+        </div>
+        <time className="type-kicker whitespace-nowrap text-slate-400" dateTime={inquiry.receivedAt}>
+          {received.toLocaleDateString(undefined, {
+            day: "numeric",
+            month: "short",
+            year: "numeric",
+          })}
+          {" at "}
+          {received.toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit" })}
+        </time>
+      </div>
+
+      <div className="mt-5 flex flex-wrap gap-2">
+        <a
+          href={`mailto:${inquiry.email}`}
+          className="type-kicker rounded-full border border-white/20 px-4 py-2 font-semibold text-white transition hover:border-[#d8ff35] hover:text-[#d8ff35]"
+        >
+          {inquiry.email}
+        </a>
+        {inquiry.contact && (
+          <a
+            href={`tel:${inquiry.contact}`}
+            className="type-kicker rounded-full border border-white/20 px-4 py-2 font-semibold text-white transition hover:border-[#d8ff35] hover:text-[#d8ff35]"
+          >
+            {inquiry.contact}
+          </a>
+        )}
+      </div>
+
+      <p className="type-body-sm mt-5 whitespace-pre-wrap rounded-xl bg-black/20 px-5 py-4 text-slate-200">
+        {inquiry.message}
+      </p>
+    </li>
+  );
+}
+
 export default async function InquiriesInboxPage({
   searchParams,
 }: {
@@ -68,14 +156,22 @@ export default async function InquiriesInboxPage({
 
   if (!token) {
     return (
-      <main className="mx-auto max-w-2xl px-6 py-24">
-        <h1 className="type-title font-semibold text-[var(--brand-dark)]">Inbox not configured</h1>
-        <p className="type-body mt-4 text-slate-700">
-          Set <code className="rounded bg-slate-100 px-1.5 py-0.5">INQUIRIES_PASSWORD</code> in the
-          server environment and restart. Until then this page shows nothing — it fails closed rather
-          than exposing contact details.
-        </p>
-      </main>
+      <Shell>
+        <div className="mx-auto max-w-lg rounded-[1.5rem] border border-[#d8ff35]/40 bg-white/[0.06] p-10 backdrop-blur-sm">
+          <p className="type-kicker font-semibold uppercase tracking-[0.18em] text-[#d8ff35]">
+            Not configured
+          </p>
+          <h1 className="type-emphasis mt-3 font-semibold text-white">The inbox is closed</h1>
+          <p className="type-body-sm mt-4 text-slate-300">
+            Set{" "}
+            <code className="rounded bg-black/30 px-1.5 py-0.5 text-[#d8ff35]">
+              INQUIRIES_PASSWORD
+            </code>{" "}
+            in the server environment and restart. Until then this page shows nothing &mdash; it fails
+            closed rather than exposing contact details.
+          </p>
+        </div>
+      </Shell>
     );
   }
 
@@ -84,85 +180,85 @@ export default async function InquiriesInboxPage({
 
   if (!authorised) {
     return (
-      <main className="mx-auto max-w-md px-6 py-24">
-        <h1 className="type-title font-semibold text-[var(--brand-dark)]">Inquiries inbox</h1>
-        <form action={signIn} className="mt-8">
-          <label className="type-body-sm font-semibold text-[var(--brand-dark)]" htmlFor="password">
-            Password
-          </label>
-          <input
-            id="password"
-            name="password"
-            type="password"
-            autoComplete="current-password"
-            className="type-body-sm mt-2 w-full rounded-lg border border-[var(--line)] px-4 py-3 focus:border-[var(--brand)] focus:outline-none"
+      <Shell>
+        <div className="mx-auto mt-6 max-w-md">
+          <Image
+            src="/logo.png"
+            alt="Gem Power Philippines Corp."
+            width={2000}
+            height={357}
+            className="mx-auto h-auto w-[190px]"
           />
-          {error && <p className="type-kicker mt-2 text-red-600">That password did not match.</p>}
-          <button
-            type="submit"
-            className="type-body mt-5 w-full rounded-full bg-[var(--brand)] px-6 py-3 font-semibold text-white transition hover:bg-[var(--brand-dark)]"
-          >
-            Open inbox
-          </button>
-        </form>
-      </main>
+          <div className="mt-10 rounded-[1.5rem] border border-white/15 bg-white/[0.06] p-8 backdrop-blur-sm">
+            <p className="type-kicker font-semibold uppercase tracking-[0.18em] text-[#d8ff35]">
+              Restricted
+            </p>
+            <h1 className="type-emphasis mt-3 font-semibold text-white">Inquiries inbox</h1>
+            <p className="type-body-sm mt-3 text-slate-300">
+              This page holds contact details people sent us. Enter the password to open it.
+            </p>
+
+            <form action={signIn} className="mt-7">
+              <label className="type-body-sm font-semibold text-white" htmlFor="password">
+                Password
+              </label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                autoComplete="current-password"
+                className="type-body-sm mt-2 w-full rounded-lg border border-white/20 bg-black/25 px-4 py-3 text-white transition focus:border-[#d8ff35] focus:outline-none focus:ring-2 focus:ring-[#d8ff35]/25"
+              />
+              {error && <p className="type-kicker mt-2 text-red-400">That password did not match.</p>}
+              <button
+                type="submit"
+                className="type-body mt-6 w-full rounded-full bg-[#d8ff35] px-6 py-3 font-semibold text-[#0e2238] transition hover:bg-[#c6f20b]"
+              >
+                Open inbox
+              </button>
+            </form>
+          </div>
+        </div>
+      </Shell>
     );
   }
 
   const inquiries = (await readInquiries()).slice().reverse();
 
   return (
-    <main className="mx-auto max-w-5xl px-6 py-16">
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <h1 className="type-title font-semibold text-[var(--brand-dark)]">Inquiries</h1>
+    <Shell>
+      <div className="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <p className="type-kicker font-semibold uppercase tracking-[0.18em] text-[#d8ff35]">Inbox</p>
+          <h1 className="type-title mt-2 font-semibold tracking-tight text-white">Inquiries</h1>
+          <p className="type-body-sm mt-2 text-slate-300">
+            {inquiries.length} {inquiries.length === 1 ? "inquiry" : "inquiries"}, newest first.
+          </p>
+        </div>
         <form action={signOut}>
-          <button type="submit" className="type-body-sm text-slate-500 underline">
+          <button
+            type="submit"
+            className="type-body-sm rounded-full border border-white/25 px-5 py-2 font-semibold text-white transition hover:border-[#d8ff35] hover:text-[#d8ff35]"
+          >
             Sign out
           </button>
         </form>
       </div>
-      <p className="type-body-sm mt-2 text-slate-600">
-        {inquiries.length} {inquiries.length === 1 ? "inquiry" : "inquiries"}, newest first.
-      </p>
 
       {inquiries.length === 0 ? (
-        <p className="type-body mt-10 text-slate-500">Nothing has come in yet.</p>
+        <div className="mt-12 rounded-[1.5rem] border border-dashed border-white/20 px-8 py-16 text-center">
+          <p className="type-body font-semibold text-white">Nothing has come in yet.</p>
+          <p className="type-body-sm mt-2 text-slate-400">
+            Submissions from the Inquiries page will land here.
+          </p>
+        </div>
       ) : (
-        <ul className="mt-8 space-y-5">
+        <ul className="mt-10 space-y-5">
           {inquiries.map((inquiry) => (
-            <li
-              key={inquiry.id}
-              className="rounded-2xl border border-[var(--line)] bg-white px-7 py-6 shadow-[0_10px_24px_rgba(12,47,87,0.05)]"
-            >
-              <div className="flex flex-wrap items-baseline justify-between gap-3">
-                <p className="type-body font-semibold text-[var(--brand-dark)]">
-                  {inquiry.name}
-                  {inquiry.company && (
-                    <span className="font-normal text-slate-500"> · {inquiry.company}</span>
-                  )}
-                </p>
-                <time className="type-kicker text-slate-500" dateTime={inquiry.receivedAt}>
-                  {new Date(inquiry.receivedAt).toLocaleString()}
-                </time>
-              </div>
-              <p className="type-body-sm mt-2 text-slate-600">
-                <a href={`mailto:${inquiry.email}`} className="text-[#0a745f] underline">
-                  {inquiry.email}
-                </a>
-                {inquiry.contact && (
-                  <>
-                    {" · "}
-                    <a href={`tel:${inquiry.contact}`} className="text-[#0a745f] underline">
-                      {inquiry.contact}
-                    </a>
-                  </>
-                )}
-              </p>
-              <p className="type-body mt-4 whitespace-pre-wrap text-slate-700">{inquiry.message}</p>
-            </li>
+            <InquiryCard key={inquiry.id} inquiry={inquiry} />
           ))}
         </ul>
       )}
-    </main>
+    </Shell>
   );
 }
