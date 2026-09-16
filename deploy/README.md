@@ -93,6 +93,17 @@ curl -sI http://127.0.0.1:3000 | head -1     # Next itself
 curl -sI http://localhost | head -1          # through nginx
 ```
 
+## Why the config looks the way it does
+
+- **nginx serves `public/` directly** (the `.mp4|.png|...` location). Next serves everything under
+  `public/` with `max-age=0`, so all three hero videos revalidate on every page load. Off disk with
+  a 30-day cache, that traffic never reaches Node. `try_files ... @next` falls back for anything
+  not on disk.
+- **Compression is nginx's, not Next's.** `next.config.ts` sets `compress: false`. Node gzipping
+  every response ties up the single Next process; nginx is faster and parallel.
+- **Proxy buffering stays on** (the default). With it off nginx streams from Next and holds that
+  connection for as long as a slow client takes to read — and there is exactly one Next process.
+
 ## Two things that bite
 
 **`X-Forwarded-For` must be set** (it is, in the supplied config). The inquiry
