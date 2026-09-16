@@ -215,6 +215,21 @@ Two gotchas:
   inline value wins over `.card-lift:hover`. Put the scroll transform on a wrapper `<div>` and
   leave the article free for hover — that section is already structured this way.
 
+## Deploying
+
+Production is a VM, not Vercel. Next runs on `127.0.0.1:3000` under pm2; nginx owns 80/443 and
+proxies to it. `deploy/README.md` has the full runbook; `deploy/nginx-sinag.conf` and
+`ecosystem.config.cjs` are the configs to copy.
+
+Two things that are easy to get wrong and hard to diagnose:
+
+- **nginx must send `X-Forwarded-For`.** The inquiry rate limit keys on it. Without it every
+  visitor looks like a single IP and one submission locks out everyone for five minutes.
+- **`pm2 save` and `pm2 startup` are both needed**, or the site does not come back after a reboot.
+
+`.env.local` holds `INQUIRIES_PASSWORD` and lives only on the server — gitignored, so a pull never
+touches it.
+
 ## Inquiries pipeline
 
 The form on `/inquiries` POSTs to `/api/inquiries`, which validates, rate limits, and appends to a
