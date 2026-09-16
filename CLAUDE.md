@@ -283,8 +283,11 @@ gempowerph.com public pages.
   any real launch.
 - `public/logo.png` — Gem Power Philippines Corp. lockup (2000×357, alpha). Used in the header,
   the footer, and the About Us panel. Source drop lives in the gitignored `Logos/` folder.
-- `public/logo-mark.png` — the mark alone (582×357, alpha). Currently unused; it is the obvious
-  candidate if you add a favicon.
+- `public/logo-mark.png` — the mark alone (582×357, alpha). Source for the favicons.
+- `src/app/icon.png` / `src/app/apple-icon.png` — the favicon and iOS icon, generated from
+  logo-mark by trimming its transparent margin and centring it square. Next picks these up by
+  filename; there are no link tags to maintain. The Apple one is on white because iOS
+  composites a transparent icon onto black.
 - `public/sinag-logo.svg` — the older Sinag Global wordmark the header used before the Gem Power
   lockup replaced it. Kept in case the branding reverts.
 - `public/team/*.png` — leadership headshots
@@ -305,7 +308,7 @@ Things that are deliberately unfinished — don't "fix" them silently, they need
 
 - **Search button** in the nav (`site-shell.tsx`) is decorative — no handler, no search backend.
 - **Investors portal** password form is UI only — `type="button"`, no handler, no auth.
-- **SEO:** only `layout.tsx` sets metadata. No per-page titles, no OG images, no favicon.
+- **SEO:** only `layout.tsx` sets root metadata. No OG images. Inquiries is the one page with its own title.
 - **A11y:** no `prefers-reduced-motion` guard on the parallax, video autoplay, or reveals.
 - `ScrollReveal` re-hides on scroll-out (it tracks `isIntersecting` both ways) rather than
   revealing once.
