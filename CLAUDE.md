@@ -126,6 +126,13 @@ move the layout box, so the drift would otherwise expose an edge. Inert under re
 Consecutive `ChapterTabs` pass `overlapPrevious` so the next section rides up over the last one
 with a rounded lip and a cast shadow.
 
+**Equal-height chapters:** every panel in a `ChapterTabs` sits in the same CSS grid cell
+(`col-start-1 row-start-1`), so the section is always as tall as its longest chapter and
+switching tabs never resizes it. Inactive panels are `invisible`, **not** the `hidden`
+attribute — `hidden` pulls the box out of layout, which is what made the height jump.
+Visibility still removes them from the a11y tree, tab order and pointer events. The constant
+height also keeps a `ScrollStack` pin stable, since its trigger is derived from section height.
+
 **Sticky chapter rail:** the `ChapterTabs` rail is `sticky top-0` so the tabs stay reachable while
 you read a chapter. Two things keep that working, both easy to undo by accident:
 

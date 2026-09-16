@@ -170,17 +170,29 @@ export default function ChapterTabs({
             trailingSpace ? "pb-[38vh]" : "pb-16 md:pb-20"
           }`}
         >
-          {chapters.map((chapter, index) => (
-            <div
-              key={chapter.id}
-              role="tabpanel"
-              id={`panel-${chapter.id}`}
-              aria-labelledby={`tab-${chapter.id}`}
-              hidden={index !== activeTab}
-            >
-              {chapter.panel}
-            </div>
-          ))}
+          {/* Every panel sits in the same grid cell, so the section is always as
+              tall as its longest chapter and switching tabs does not resize it.
+              Inactive panels use `visibility` rather than the `hidden` attribute:
+              hidden removes the box from layout, which is what made the height
+              jump. Visibility still takes inactive panels out of the a11y tree,
+              out of tab order, and out of pointer events. */}
+          <div className="grid">
+            {chapters.map((chapter, index) => {
+              const isActive = index === activeTab;
+              return (
+                <div
+                  key={chapter.id}
+                  role="tabpanel"
+                  id={`panel-${chapter.id}`}
+                  aria-labelledby={`tab-${chapter.id}`}
+                  aria-hidden={!isActive}
+                  className={`col-start-1 row-start-1 ${isActive ? "" : "invisible"}`}
+                >
+                  {chapter.panel}
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>
