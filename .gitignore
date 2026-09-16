@@ -52,3 +52,6 @@ gemcor-presentation-extract/
 next-env.d.ts
 
 .vercel
+
+# inquiry submissions written at runtime
+/data/

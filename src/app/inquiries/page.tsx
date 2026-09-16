@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import SiteShell from "@/components/site-shell";
 import ChapterSplit from "@/components/chapter-split";
+import InquiryForm from "@/components/inquiry-form";
 import ScrollReveal from "@/components/scroll-reveal";
 
 export const metadata: Metadata = {
@@ -10,9 +11,8 @@ export const metadata: Metadata = {
 };
 
 /**
- * Every route here is real — tel: and mailto: work with no backend. There is
- * deliberately no submit form: the site has no API layer, and a form that
- * silently discards an inquiry is worse than none.
+ * Contact routes shown beside the form. tel: and mailto: work with no backend;
+ * the form posts to /api/inquiries.
  */
 const channels = [
   {
@@ -56,27 +56,11 @@ export default function InquiriesPage() {
               that through and we will route the inquiry to the right part of the team.
             </p>
           </ScrollReveal>
-          <ScrollReveal className="mt-8" delayClassName="delay-2">
-            <a
-              href="mailto:info@sinagglobal.com"
-              className="type-body inline-flex items-center gap-4 rounded-full bg-[var(--brand)] py-2 pl-7 pr-2 font-semibold text-white transition hover:bg-[var(--brand-dark)]"
-            >
-              Send us an inquiry
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[var(--brand-dark)]">
-                <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5">
-                  <path
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M4 12h15m-6-6 6 6-6 6"
-                  />
-                </svg>
-              </span>
-            </a>
-          </ScrollReveal>
         </ChapterSplit>
+      </section>
+
+      <section className="mx-auto w-full max-w-6xl px-6 pb-16">
+        <InquiryForm />
       </section>
 
       <section className="mx-auto w-full max-w-6xl px-6 pb-20">

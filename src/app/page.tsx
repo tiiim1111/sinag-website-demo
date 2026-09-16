@@ -189,10 +189,10 @@ export default function HomePage() {
                 dependency. Built for industries, utilities, microgrids, and the communities they serve.
               </p>
               <Link
-                href="/our-system"
+                href="/inquiries"
                 className="type-body mt-9 inline-flex items-center gap-4 rounded-full bg-[#d8ff35] py-2 pl-7 pr-2 font-semibold text-[#0e2238] transition hover:bg-[#c6f20b]"
               >
-                Know more about our solution
+                Send us an inquiry
                 <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white">
                   <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5">
                     <path

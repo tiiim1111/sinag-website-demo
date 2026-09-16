@@ -4,8 +4,9 @@ Marketing site for **Sinag Global Energy Corp.** — a Philippine clean-energy c
 product is the **EER-SPG** (Electromagnetic Energy-Flux Reactor — Stationary Power Generator),
 positioned as clean, on-demand baseload generation without fuel, feedstock, or weather dependency.
 
-This is a **content/design-led marketing site**, not an app. There is no database, no API layer,
-and no auth. Most work here is copy, layout, and motion.
+This is a **content/design-led marketing site**. Most work here is copy, layout, and motion — but
+it is no longer purely static: the inquiry form posts to a route handler, submissions are stored
+on disk, and a password-gated page reads them back. See **Inquiries pipeline** below.
 
 ## Commands
 
@@ -40,8 +41,9 @@ src/app/
   our-system/             three tabbed sections and nothing else: Energy Challenge (3
                           chapters), Solution (5), Technology (4), chained through nested
                           ScrollStacks. No hero — the challenge rail is it
-  inquiries/              contact routes. No submit form on purpose — there is no API
-                          layer, and tel:/mailto: actually work
+  inquiries/              inquiry form + contact routes
+  inquiries-inbox/        password-gated list of submissions. Unlinked and noindex
+  api/inquiries/          POST handler: validate, rate limit, append to disk
   latest/                 newsroom — 2 hardcoded posts
   investors-portal/       password gate (UI only, no backend)
 src/components/
@@ -64,6 +66,9 @@ src/components/
   scroll-reveal.tsx       IntersectionObserver wrapper for section reveals
   parallax-layer.tsx      drifts a decorative layer against the scroll
   scroll-stack.tsx        pins one section while the next scrolls up over it
+  inquiry-form.tsx        the form; mirrors the server cooldown in localStorage
+src/lib/
+  inquiries.ts            JSON-file storage, serialised so writes cannot clobber
 ```
 
 **The header is `fixed` and transparent at rest, so it neither reserves space nor has a
@@ -202,6 +207,33 @@ Two gotchas:
 - If a card's own transform is driven by an inline `style` (the scientific-shift cards are), the
   inline value wins over `.card-lift:hover`. Put the scroll transform on a wrapper `<div>` and
   leave the article free for hover — that section is already structured this way.
+
+## Inquiries pipeline
+
+The form on `/inquiries` POSTs to `/api/inquiries`, which validates, rate limits, and appends to a
+JSON file. `/inquiries-inbox` reads it back behind a password.
+
+**Two environment variables**, both server-side:
+
+| Variable | Required | Default |
+|---|---|---|
+| `INQUIRIES_PASSWORD` | yes, for the inbox | none — the inbox **fails closed** and shows nothing |
+| `INQUIRIES_FILE` | no | `data/inquiries.json` (gitignored) |
+
+Things worth knowing before you change any of it:
+
+- **Storage is a file, so this only works where the filesystem persists.** It works on the VM. It
+  does **not** work on Vercel, whose filesystem is read-only and ephemeral — submissions there are
+  silently lost. Moving off the VM means moving storage to a database first.
+- **The cooldown is in-memory and per-process**: one submission per IP per 5 minutes, reset on
+  restart. Fine for one VM; more than one instance would need a shared store.
+- **Rate limiting reads `x-forwarded-for`.** Behind nginx that header must be set
+  (`proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;`) or every visitor looks like one
+  IP and a single submission locks out everyone for five minutes.
+- The form carries a **honeypot** field named `website`. Anything in it is treated as a bot: the
+  request returns `200` but is never stored, so the bot does not retry.
+- The inbox is unlinked and `noindex`, but **obscurity is not the protection** — the password is.
+  Do not remove the gate to make it easier to check.
 
 ## Content source of truth
 
