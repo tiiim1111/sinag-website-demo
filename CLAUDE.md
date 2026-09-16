@@ -155,6 +155,13 @@ only the `pinned` child is transformed, never the children, so an inner stack st
 an untransformed container. The last section in the chain is not pinned and needs no
 `trailingSpace`.
 
+A pinned section **keeps its downward translate after the handoff** — it ends up sitting up to a
+full viewport lower than its layout box, spilling over whatever follows. Its wrapper is
+`relative z-0`, and a positioned element outranks a static one in paint order regardless of
+z-index, so it painted straight over the footer. The footer therefore carries `relative z-20`.
+**Do not fix a spill like this with `overflow-hidden`** on the stack — that would make it a
+scroll container and kill the sticky rails.
+
 **Tailwind gotcha:** `shadow-[…]` silently drops an arbitrary value whose first offset is
 negative — the rule compiles but computes to transparent. Use the arbitrary *property* form,
 `[box-shadow:0_-26px_60px_…]`, for upward shadows.

@@ -190,7 +190,10 @@ export default function SiteShell({ children, solidHeader = false }: SiteShellPr
 
       <main>{children}</main>
 
-      <footer className="bg-[#13191b] text-white">
+      {/* Positioned above the page so a ScrollStack cannot paint over it: a
+          pinned section keeps its downward translate after the handoff, and a
+          positioned z-0 wrapper outranks a static footer in paint order. */}
+      <footer className="relative z-20 bg-[#13191b] text-white">
         <div className="mx-auto w-full max-w-7xl px-6 py-16 md:px-8 md:py-20">
           <div className="grid gap-12 lg:grid-cols-[1fr_0.85fr_1fr_1.2fr] lg:gap-0">
             <div className="lg:pr-12">
