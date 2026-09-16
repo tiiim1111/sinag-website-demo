@@ -17,15 +17,15 @@ const certificates = [
 
 export default function PatentPortfolioSection() {
   return (
-    <section id="patents" className="mx-auto w-full max-w-6xl scroll-mt-24 px-6 pb-20">
-      <ChapterSplit title="Global Patent Portfolio">
+    <section id="patents" className="relative mx-auto w-full max-w-6xl scroll-mt-24 px-6 pb-24">
+      <ChapterSplit title="Global Patent Portfolio" dark>
         <ScrollReveal delayClassName="delay-1">
-          <p className="type-kicker font-semibold uppercase tracking-[0.18em] text-[#0a745f]">
+          <p className="type-kicker font-semibold uppercase tracking-[0.18em] text-[#d8ff35]">
             Validation
           </p>
         </ScrollReveal>
         <ScrollReveal className="mt-4" delayClassName="delay-2">
-          <p className="type-body text-slate-700">
+          <p className="type-body text-slate-300">
             EER-SPG is protected by a global patent portfolio. After review by a panel of scientists in
             electromagnetism, power electronics, and electrical engineering, patents for the technology were
             successfully issued in multiple jurisdictions.
@@ -43,8 +43,8 @@ export default function PatentPortfolioSection() {
             className="w-full sm:w-[calc((100%-1.25rem)/2)] md:w-[calc((100%-2.5rem)/3)] xl:w-[calc((100%-5rem)/5)]"
             delayClassName={index % 3 === 0 ? "" : index % 3 === 1 ? "delay-1" : "delay-2"}
           >
-            <figure className="card-lift h-full rounded-2xl border border-[#cfe0ea] bg-white p-4 shadow-[0_14px_28px_rgba(12,47,87,0.06)] hover:border-[#0a745f]/40 hover:shadow-[0_24px_44px_rgba(12,47,87,0.14)]">
-              <div className="relative aspect-[3/4] w-full overflow-hidden rounded-lg bg-[#f3f7fa]">
+            <figure className="card-lift h-full rounded-2xl border border-white/15 bg-white/[0.06] p-4 backdrop-blur-sm hover:border-[#d8ff35]/50 hover:bg-white/[0.1]">
+              <div className="relative aspect-[3/4] w-full overflow-hidden rounded-lg bg-white">
                 <Image
                   src={certificate.image}
                   alt={`${certificate.jurisdiction} patent certificate`}
@@ -53,7 +53,7 @@ export default function PatentPortfolioSection() {
                   className="object-contain"
                 />
               </div>
-              <figcaption className="type-kicker mt-4 text-center font-semibold uppercase tracking-[0.14em] text-[#0a745f]">
+              <figcaption className="type-kicker mt-4 text-center font-semibold uppercase tracking-[0.14em] text-[#d8ff35]">
                 {certificate.jurisdiction}
               </figcaption>
             </figure>

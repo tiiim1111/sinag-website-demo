@@ -33,18 +33,36 @@ const leadership = [
 
 export default function AboutUsPage() {
   return (
-    <SiteShell solidHeader>
-      {/* Light statement, then one dark block. Two navy slabs in a row read as a
-          wall; the contrast gives the page a rhythm instead. */}
-      <section className="mx-auto w-full max-w-6xl px-6 pb-16 pt-32">
-        <ChapterSplit title="What We Stand For">
+    // Dark teal ground, so the transparent header reads without solidHeader.
+    <SiteShell>
+      <section className="relative overflow-hidden bg-[#04383f]">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 opacity-70"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(216,255,53,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(216,255,53,0.05) 1px, transparent 1px)",
+            backgroundSize: "64px 64px",
+          }}
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -left-20 top-16 h-80 w-80 rounded-full bg-[#d8ff35]/10 blur-3xl"
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute right-0 top-[40rem] h-96 w-96 rounded-full bg-cyan-400/8 blur-3xl"
+        />
+
+        <div className="relative mx-auto w-full max-w-6xl px-6 pb-16 pt-32">
+        <ChapterSplit title="What We Stand For" dark>
           <ScrollReveal delayClassName="delay-1">
-            <p className="type-body-lg font-semibold text-[var(--brand-dark)]">
+            <p className="type-body-lg font-semibold text-white">
               A company narrative built around clean power, access, and long-term partnership.
             </p>
           </ScrollReveal>
           <ScrollReveal className="mt-6" delayClassName="delay-2">
-            <p className="type-body text-slate-700">
+            <p className="type-body text-slate-300">
               The strongest common thread across the public references is not only the technology itself,
               but the business model around it: enabling access to electricity, supporting development, and
               offering cleaner alternatives through structured partnerships and practical deployment
@@ -52,16 +70,16 @@ export default function AboutUsPage() {
             </p>
           </ScrollReveal>
         </ChapterSplit>
-      </section>
+        </div>
 
-      <section id="leadership" className="mx-auto w-full max-w-6xl scroll-mt-24 px-6 pb-20">
-        <div className="overflow-hidden rounded-[2rem] bg-[var(--brand-dark)] text-white shadow-[0_24px_60px_rgba(12,47,87,0.18)]">
+      <section id="leadership" className="relative mx-auto w-full max-w-6xl scroll-mt-24 px-6 pb-20">
+        <div className="overflow-hidden rounded-[2rem] border border-white/15 bg-white/[0.06] text-white backdrop-blur-sm">
           <ScrollReveal className="px-8 pb-8 pt-10 md:px-12 md:pt-12">
-            <p className="type-kicker font-semibold tracking-[0.16em] text-cyan-200">LEADERSHIP</p>
+            <p className="type-kicker font-semibold tracking-[0.16em] text-[#d8ff35]">LEADERSHIP</p>
             <h2 className="type-emphasis mt-3 max-w-3xl font-semibold">
               Experienced leadership positioned for energy transition and deployment
             </h2>
-            <p className="type-body-sm mt-5 max-w-3xl text-slate-200">
+            <p className="type-body-sm mt-5 max-w-3xl text-slate-300">
               Sinag Global is led by a management team with decades of combined experience across power
               generation, utilities, project finance, and electrical engineering &mdash; the disciplines
               required to take the EER-SPG from proven technology to deployed capacity.
@@ -76,7 +94,7 @@ export default function AboutUsPage() {
               >
                 {/* h-full so the four share a height — the bios differ in length
                     and were ending at four different depths. */}
-                <article className="card-lift group h-full rounded-2xl border border-white/12 bg-white/6 p-5 backdrop-blur-sm hover:border-cyan-200/45 hover:bg-white/10">
+                <article className="card-lift group h-full rounded-2xl border border-white/12 bg-white/6 p-5 backdrop-blur-sm hover:border-[#d8ff35]/45 hover:bg-white/10">
                   <div className="relative mb-5 aspect-square overflow-hidden rounded-[1.2rem] border border-white/10">
                     <Image
                       src={person.image}
@@ -87,8 +105,8 @@ export default function AboutUsPage() {
                     />
                   </div>
                   <p className="type-body font-semibold">{person.name}</p>
-                  <p className="type-body-sm mt-1 font-semibold text-cyan-200">{person.role}</p>
-                  <p className="type-body-sm mt-4 text-slate-200">{person.body}</p>
+                  <p className="type-body-sm mt-1 font-semibold text-[#d8ff35]">{person.role}</p>
+                  <p className="type-body-sm mt-4 text-slate-300">{person.body}</p>
                 </article>
               </ScrollReveal>
             ))}
@@ -96,7 +114,8 @@ export default function AboutUsPage() {
         </div>
       </section>
 
-      <PatentPortfolioSection />
+        <PatentPortfolioSection />
+      </section>
     </SiteShell>
   );
 }

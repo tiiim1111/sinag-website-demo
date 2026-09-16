@@ -36,8 +36,8 @@ src/app/
   page.tsx                Home — hero, scientific shift, energy challenge, what we built,
                           why now, closing full-bleed CTA band
   about-us/               "What We Stand For" statement, the leadership block, then the
-                          patent portfolio. No hero, and the 2014/EER founding copy was
-                          cut on purpose
+                          patent portfolio, all on the #04383f teal. No hero, and the
+                          2014/EER founding copy was cut on purpose
   our-system/             three tabbed sections and nothing else: Energy Challenge (3
                           chapters), Solution (5), Technology (4), chained through nested
                           ScrollStacks. No hero — the challenge rail is it
@@ -79,8 +79,8 @@ background of its own.** Two consequences for any new page:
   page's first section needs `pt-32` to clear it, or the kicker renders behind the logo.
 - Its links are white until you scroll past 120px, which only reads over a dark hero. A page
   that opens on a light background must pass `<SiteShell solidHeader>` — otherwise the nav is
-  white on near-white. Home, Our System and Inquiries all open on a dark band; About Us, Latest
-  and Investors Portal pass it.
+  white on near-white. Home, Our System, About Us and Inquiries all open on a dark band; only
+  Latest and Investors Portal pass it.
 
 **Every page wraps its content in `<SiteShell>`.** Nav links live in the `navItems` array in
 `site-shell.tsx` — adding a route means adding it there, and usually to `footerColumns` too.
@@ -110,6 +110,12 @@ arbitrary values (e.g. `text-[var(--brand-dark)]`).
 if you touch these sections: `#8fdb3d` (lime, dark "Overview" sections), `#d8ff35` (hero
 yellow-green CTA + nav underline), `#0b7f8f` (challenge card icons), `#eef4f7` / `#14191b` /
 `#f8f7f1` (section grounds).
+
+**Dark pages** — About Us and Inquiries — sit on `#04383f`, the chapter rail's ground, with that
+band's lime `#d8ff35` for kickers, required marks, focus rings and buttons. Surfaces on them are
+**white-alpha** (`bg-white/[0.06]`, `border-white/15`), not fixed hex, so retinting the ground
+carries the cards with it. One exception: the patent certificate frames stay solid white — the
+scans are white paper and need a light backing to read as documents.
 
 **Type scale** — always use these classes, never raw `text-*` sizes for body/headings. All are
 fluid `clamp()` values, so they need no responsive variants:
