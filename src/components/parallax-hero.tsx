@@ -6,24 +6,27 @@ import { useEffect, useRef, useState } from "react";
 const slides = [
   {
     video: "/1.mp4",
-    title: "Step Into Revolutionary Renewable Energy",
-    subtitle: "Clean, high-output power systems designed to support sustainable growth.",
-    cta: "See more",
-    rail: ["Renewable Energy", "Energy Access", "Sustainable Growth"],
+    title: "The Baseload Gap",
+    subtitle:
+      "Critical energy users need baseload power. Factories, utilities, government facilities, hospitals, data centres, logistics networks, and essential infrastructure cannot operate on intermittent supply alone.",
+    cta: "Read more",
+    rail: ["Energy Challenge", "Limits of Renewables", "The Baseload Gap"],
   },
   {
     video: "/2.mp4",
-    title: "Anywhere, Everywhere, Anytime",
-    subtitle: "Reliable stationary power generation from ambient sources, wherever energy is needed.",
-    cta: "See more",
-    rail: ["Uninterrupted Power", "Distributed Generation", "Scalable Delivery"],
+    title: "Clean Baseload",
+    subtitle:
+      "EER-SPG changes the operating logic of clean power generation. This is clean energy designed around the load, not around the weather.",
+    cta: "Read more",
+    rail: ["EER-SPG", "Advantages", "Embedded Power"],
   },
   {
     video: "/3.mp4",
-    title: "Rethinking Sustainable Power Supply",
-    subtitle: "A cleaner path for industries, communities, and long-term decarbonization goals.",
-    cta: "See more",
-    rail: ["Decarbonization", "Partnership Models", "Future Projects"],
+    title: "Magnetic Flux Cancellation",
+    subtitle:
+      "In a conventional electromagnetic system, secondary load current can induce a mutual flux that magnetically couples into the primary circuit. This mutual flux coupling by the secondary circuit increases the input burden of the primary circuit as secondary load current increases.",
+    cta: "Read more",
+    rail: ["Core Mechanism", "Flux Cancellation", "Excitation Input"],
   },
 ];
 
