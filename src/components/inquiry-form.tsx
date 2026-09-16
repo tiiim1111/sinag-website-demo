@@ -13,7 +13,7 @@ const fields = [
 ] as const;
 
 const inputClass =
-  "type-body-sm mt-2 w-full rounded-lg border border-[var(--line)] bg-white px-4 py-3 text-[var(--brand-dark)] transition focus:border-[var(--brand)] focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/25";
+  "type-body-sm mt-2 w-full rounded-lg border border-white/20 bg-black/25 px-4 py-3 text-white transition focus:border-[#d8ff35] focus:outline-none focus:ring-2 focus:ring-[#d8ff35]/25";
 
 function formatRemaining(ms: number): string {
   const total = Math.ceil(ms / 1000);
@@ -97,13 +97,13 @@ export default function InquiryForm() {
 
   if (status === "sent") {
     return (
-      <div className="rounded-2xl border border-[#0a745f]/30 bg-white px-8 py-10 text-center shadow-[0_14px_28px_rgba(12,47,87,0.06)]">
-        <p className="type-emphasis font-semibold text-[#0a745f]">Thank you — your inquiry is in.</p>
-        <p className="type-body mt-3 text-slate-700">
+      <div className="rounded-2xl border border-[#d8ff35]/40 bg-white/[0.06] px-8 py-10 text-center backdrop-blur-sm">
+        <p className="type-emphasis font-semibold text-[#d8ff35]">Thank you — your inquiry is in.</p>
+        <p className="type-body mt-3 text-slate-300">
           We will come back to you at the email address you gave us.
         </p>
         {remaining > 0 && (
-          <p className="type-body-sm mt-6 text-slate-500">
+          <p className="type-body-sm mt-6 text-slate-400">
             You can send another in {formatRemaining(remaining)}.
           </p>
         )}
@@ -117,14 +117,14 @@ export default function InquiryForm() {
     <form
       onSubmit={onSubmit}
       noValidate
-      className="rounded-2xl border border-[var(--line)] bg-white px-8 py-8 shadow-[0_14px_28px_rgba(12,47,87,0.06)]"
+      className="rounded-2xl border border-white/15 bg-white/[0.06] px-8 py-8 backdrop-blur-sm"
     >
       <div className="grid gap-5 md:grid-cols-2">
         {fields.map((field) => (
           <label key={field.name} className="block">
-            <span className="type-body-sm font-semibold text-[var(--brand-dark)]">
+            <span className="type-body-sm font-semibold text-white">
               {field.label}
-              {field.required && <span className="text-[#0a745f]"> *</span>}
+              {field.required && <span className="text-[#d8ff35]"> *</span>}
             </span>
             <input
               name={field.name}
@@ -134,15 +134,15 @@ export default function InquiryForm() {
               className={inputClass}
             />
             {errors[field.name] && (
-              <span className="type-kicker mt-1 block text-red-600">{errors[field.name]}</span>
+              <span className="type-kicker mt-1 block text-red-400">{errors[field.name]}</span>
             )}
           </label>
         ))}
       </div>
 
       <label className="mt-5 block">
-        <span className="type-body-sm font-semibold text-[var(--brand-dark)]">
-          Message<span className="text-[#0a745f]"> *</span>
+        <span className="type-body-sm font-semibold text-white">
+          Message<span className="text-[#d8ff35]"> *</span>
         </span>
         <textarea
           name="message"
@@ -151,7 +151,7 @@ export default function InquiryForm() {
           className={`${inputClass} resize-y`}
         />
         {errors.message && (
-          <span className="type-kicker mt-1 block text-red-600">{errors.message}</span>
+          <span className="type-kicker mt-1 block text-red-400">{errors.message}</span>
         )}
       </label>
 
@@ -165,18 +165,18 @@ export default function InquiryForm() {
         className="hidden"
       />
 
-      {formError && <p className="type-body-sm mt-5 text-red-600">{formError}</p>}
+      {formError && <p className="type-body-sm mt-5 text-red-400">{formError}</p>}
 
       <div className="mt-7 flex flex-wrap items-center gap-4">
         <button
           type="submit"
           disabled={blocked || status === "sending"}
-          className="type-body inline-flex items-center rounded-full bg-[var(--brand)] px-8 py-3 font-semibold text-white transition hover:bg-[var(--brand-dark)] disabled:cursor-not-allowed disabled:bg-slate-300"
+          className="type-body inline-flex items-center rounded-full bg-[#d8ff35] px-8 py-3 font-semibold text-[#0e2238] transition hover:bg-[#c6f20b] disabled:cursor-not-allowed disabled:bg-white/15 disabled:text-white/50"
         >
           {status === "sending" ? "Sending…" : "Send inquiry"}
         </button>
         {blocked && (
-          <span className="type-body-sm text-slate-500">
+          <span className="type-body-sm text-slate-400">
             You can send another in {formatRemaining(remaining)}.
           </span>
         )}
