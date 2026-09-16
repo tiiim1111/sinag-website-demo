@@ -40,6 +40,8 @@ src/app/
   our-system/             three tabbed sections and nothing else: Energy Challenge (3
                           chapters), Solution (5), Technology (4), chained through nested
                           ScrollStacks. No hero — the challenge rail is it
+  inquiries/              contact routes. No submit form on purpose — there is no API
+                          layer, and tel:/mailto: actually work
   latest/                 newsroom — 2 hardcoded posts
   investors-portal/       password gate (UI only, no backend)
 src/components/
@@ -71,11 +73,15 @@ background of its own.** Two consequences for any new page:
   page's first section needs `pt-32` to clear it, or the kicker renders behind the logo.
 - Its links are white until you scroll past 120px, which only reads over a dark hero. A page
   that opens on a light background must pass `<SiteShell solidHeader>` — otherwise the nav is
-  white on near-white. Home, About Us and Our System all open on a dark band and do not need it;
-  Latest and Investors Portal do.
+  white on near-white. Only Home and Our System open on a dark band; About Us, Inquiries, Latest
+  and Investors Portal all pass it.
 
 **Every page wraps its content in `<SiteShell>`.** Nav links live in the `navItems` array in
 `site-shell.tsx` — adding a route means adding it there, and usually to `footerColumns` too.
+
+The top nav carries four items: Home, Our System, About Us, Inquiries. **Latest and Investors
+Portal were pulled from it deliberately** — both pages still exist and stay reachable from the
+footer's Company column.
 
 The footer deep-links into page sections by anchor: `#challenge`, `#overview`, `#why-now` on the
 homepage and `#leadership` on About Us. Those ids carry a `scroll-mt-*` so the fixed header does

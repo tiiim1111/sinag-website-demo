@@ -6,10 +6,9 @@ import { useEffect, useState } from "react";
 
 const navItems = [
   { href: "/", label: "Home" },
-  { href: "/about-us", label: "About Us" },
   { href: "/our-system", label: "Our System" },
-  { href: "/latest", label: "Latest" },
-  { href: "/investors-portal", label: "Investors Portal" },
+  { href: "/about-us", label: "About Us" },
+  { href: "/inquiries", label: "Inquiries" },
 ];
 
 const footerColumns = [
@@ -18,6 +17,7 @@ const footerColumns = [
     links: [
       { href: "/about-us", label: "About Us" },
       { href: "/about-us#leadership", label: "Leadership" },
+      { href: "/inquiries", label: "Inquiries" },
       { href: "/latest", label: "Latest" },
       { href: "/investors-portal", label: "Investors Portal" },
     ],
