@@ -219,7 +219,7 @@ export default function SiteShell({ children, solidHeader = false }: SiteShellPr
                     <li key={link.label}>
                       <Link
                         href={link.href}
-                        className="type-body-sm text-white/55 transition hover:text-white"
+                        className="type-body-sm text-white/55 transition hover:text-[#6eb444]"
                       >
                         {link.label}
                       </Link>
@@ -240,16 +240,16 @@ export default function SiteShell({ children, solidHeader = false }: SiteShellPr
                   Metro Manila
                 </li>
                 <li>
-                  <a href="tel:+639178810555" className="transition hover:text-white">
+                  <a href="tel:+639178810555" className="transition hover:text-[#6eb444]">
                     +63 917 881 0555
                   </a>
                   {" / "}
-                  <a href="tel:+639209012450" className="transition hover:text-white">
+                  <a href="tel:+639209012450" className="transition hover:text-[#6eb444]">
                     +63 920 901 2450
                   </a>
                 </li>
                 <li>
-                  <a href="mailto:info@sinagglobal.com" className="transition hover:text-white">
+                  <a href="mailto:info@sinagglobal.com" className="transition hover:text-[#6eb444]">
                     info@sinagglobal.com
                   </a>
                 </li>

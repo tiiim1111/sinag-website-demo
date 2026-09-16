@@ -169,6 +169,17 @@ z-index, so it painted straight over the footer. The footer therefore carries `r
 **Do not fix a spill like this with `overflow-hidden`** on the stack — that would make it a
 scroll container and kill the sticky rails.
 
+**Cascade layers:** plain CSS written in `globals.css` outside a layer **beats every Tailwind
+utility**, whatever the specificity — utilities live in `@layer utilities`, and unlayered
+declarations outrank layered ones. The base `a { color: inherit }` sat unlayered and silently
+ate every `text-*` on an anchor, which is why the hero CTA needed `!text-[…]` to work at all.
+It now sits in `@layer base`. **Put any new element-level rule in `@layer base` too**, or you
+will spend an afternoon wondering why a colour class does nothing.
+
+**Gem Power green:** the logo's dominant green is `#338942`, but it only reaches 4.06:1 on the
+footer's `#13191b` — under the 4.5:1 minimum. Footer link hovers use the mark's lighter green
+`#6eb444` instead, which is 7.00:1.
+
 **Tailwind gotcha:** `shadow-[…]` silently drops an arbitrary value whose first offset is
 negative — the rule compiles but computes to transparent. Use the arbitrary *property* form,
 `[box-shadow:0_-26px_60px_…]`, for upward shadows.

@@ -116,10 +116,10 @@ export default function ParallaxHero() {
           </div>
           <Link
             href="/our-system"
-            className="type-body mt-8 inline-flex items-center gap-3 rounded-full bg-[#d8ff35] px-7 py-3.5 font-semibold !text-[#0e2238] transition hover:bg-[#c6f20b] hover:!text-[#0e2238]"
+            className="type-body mt-8 inline-flex items-center gap-3 rounded-full bg-[#d8ff35] px-7 py-3.5 font-semibold text-[#0e2238] transition hover:bg-[#c6f20b] hover:text-[#0e2238]"
           >
             {current.cta}
-            <span aria-hidden="true" className="!text-[#0e2238]">
+            <span aria-hidden="true" className="text-[#0e2238]">
               &#8594;
             </span>
           </Link>
