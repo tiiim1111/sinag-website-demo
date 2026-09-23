@@ -5,8 +5,17 @@ import ParallaxHero from "@/components/parallax-hero";
 import ScientificShiftSection from "@/components/scientific-shift-section";
 import EnergyChallengeSection from "@/components/energy-challenge-section";
 import ScrollReveal from "@/components/scroll-reveal";
+import NewsCards from "@/components/news-cards";
+import { readPublishedPosts } from "@/lib/posts";
 
-export default function HomePage() {
+// Prerendered, but the newsroom can change underneath it. Saving a post
+// revalidates this path immediately; the window here only covers like counts
+// drifting between saves.
+export const revalidate = 300;
+
+export default async function HomePage() {
+  const posts = await readPublishedPosts();
+
   return (
     <SiteShell>
       <ParallaxHero />
@@ -149,6 +158,15 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      <NewsCards
+        posts={posts}
+        tone="light"
+        kicker="LATEST"
+        heading="News and updates"
+        intro="Awards, partnerships, and milestones as the EER-SPG moves from proven technology toward deployed capacity."
+        limit={3}
+      />
 
       <section className="relative isolate overflow-hidden text-white">
         <Image

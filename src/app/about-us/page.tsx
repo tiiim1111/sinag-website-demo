@@ -3,6 +3,8 @@ import SiteShell from "@/components/site-shell";
 import ChapterSplit from "@/components/chapter-split";
 import PatentPortfolioSection from "@/components/patent-portfolio-section";
 import ScrollReveal from "@/components/scroll-reveal";
+import NewsCards from "@/components/news-cards";
+import { readPublishedPosts } from "@/lib/posts";
 
 const leadership = [
   {
@@ -31,7 +33,11 @@ const leadership = [
   },
 ];
 
-export default function AboutUsPage() {
+export const revalidate = 300;
+
+export default async function AboutUsPage() {
+  const posts = await readPublishedPosts();
+
   return (
     // Dark teal ground, so the transparent header reads without solidHeader.
     <SiteShell>
@@ -115,6 +121,16 @@ export default function AboutUsPage() {
       </section>
 
         <PatentPortfolioSection />
+
+        <NewsCards
+          posts={posts}
+          tone="dark"
+          kicker="NEWSROOM"
+          heading="Where the company has been in the news"
+          intro="Recognition, panels, and public milestones that show the work outside these pages."
+          limit={3}
+          className="pt-0"
+        />
       </section>
     </SiteShell>
   );

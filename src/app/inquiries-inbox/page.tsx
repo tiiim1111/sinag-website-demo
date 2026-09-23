@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import crypto from "node:crypto";
 import Image from "next/image";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { INBOX_COOKIE, expectedToken, hashPassword, sameToken } from "@/lib/gate";
 import { readInquiries, storageBackend, type Inquiry } from "@/lib/inquiries";
 
 export const dynamic = "force-dynamic";
@@ -14,32 +14,14 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-const COOKIE = "sinag_inbox";
-
-/** sha256 of INQUIRIES_PASSWORD, or null when the env var is unset. */
-function expectedToken(): string | null {
-  const password = process.env.INQUIRIES_PASSWORD;
-  if (!password) return null;
-  return crypto.createHash("sha256").update(password).digest("hex");
-}
-
-function sameToken(a: string, b: string): boolean {
-  const left = Buffer.from(a);
-  const right = Buffer.from(b);
-  return left.length === right.length && crypto.timingSafeEqual(left, right);
-}
-
 async function signIn(formData: FormData) {
   "use server";
-  const token = expectedToken();
-  const submitted = crypto
-    .createHash("sha256")
-    .update(String(formData.get("password") ?? ""))
-    .digest("hex");
+  const token = expectedToken(process.env.INQUIRIES_PASSWORD);
+  const submitted = hashPassword(String(formData.get("password") ?? ""));
 
   if (token && sameToken(submitted, token)) {
     const store = await cookies();
-    store.set(COOKIE, token, {
+    store.set(INBOX_COOKIE, token, {
       httpOnly: true,
       sameSite: "lax",
       secure: process.env.NODE_ENV === "production",
@@ -55,7 +37,7 @@ async function signIn(formData: FormData) {
 async function signOut() {
   "use server";
   const store = await cookies();
-  store.delete(COOKIE);
+  store.delete(INBOX_COOKIE);
   redirect("/inquiries-inbox");
 }
 
@@ -151,7 +133,7 @@ export default async function InquiriesInboxPage({
 }: {
   searchParams: Promise<{ error?: string }>;
 }) {
-  const token = expectedToken();
+  const token = expectedToken(process.env.INQUIRIES_PASSWORD);
   const { error } = await searchParams;
 
   if (!token) {
@@ -176,7 +158,7 @@ export default async function InquiriesInboxPage({
   }
 
   const store = await cookies();
-  const authorised = store.get(COOKIE)?.value === token;
+  const authorised = store.get(INBOX_COOKIE)?.value === token;
 
   if (!authorised) {
     return (

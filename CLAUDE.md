@@ -5,9 +5,14 @@ product is the **EER-SPG** (Electromagnetic Energy-Flux Reactor — Stationary P
 positioned as clean, on-demand baseload generation without fuel, feedstock, or weather dependency.
 
 This is a **content/design-led marketing site**. Most work here is copy, layout, and motion — but
-it is no longer purely static: the inquiry form posts to a route handler, submissions are stored
-in Postgres or on disk, and a password-gated page reads them back. See **Inquiries pipeline**
-below.
+it is no longer purely static. Two pipelines have a backend, and both follow the same shape —
+Postgres when `DATABASE_URL` is set, a JSON file otherwise, behind a password-gated page:
+
+- **Inquiries** — the form posts to a route handler and a gated page reads submissions back.
+- **Newsroom** — posts are written in a block editor at `/newsroom-admin` and rendered as cards
+  on Home and About Us, and as articles under `/latest`.
+
+See **Inquiries pipeline** and **Newsroom** below.
 
 ## Commands
 
@@ -45,8 +50,10 @@ src/app/
   inquiries/              inquiry form + contact routes. Dark teal (#04383f), the chapter
                           rail's ground, with that band's lime #d8ff35 as the accent
   inquiries-inbox/        password-gated list of submissions. Unlinked and noindex
+  newsroom-admin/         password-gated block editor. Unlinked and noindex
   api/inquiries/          POST handler: validate, then rate limit, then store
-  latest/                 newsroom — 2 hardcoded posts
+  api/news/               save/delete a post (gated), upload + serve images, like
+  latest/                 newsroom index, plus latest/[slug] for a full article
   investors-portal/       password gate (UI only, no backend)
 src/components/
   site-shell.tsx          nav + footer wrapper — every page must render inside this.
@@ -69,9 +76,18 @@ src/components/
   parallax-layer.tsx      drifts a decorative layer against the scroll
   scroll-stack.tsx        pins one section while the next scrolls up over it
   inquiry-form.tsx        the form; mirrors the server cooldown in localStorage
+  news-cards.tsx          the newsroom card section. Fully parameterized — Home and
+                          About Us render the same component, `tone` picks the palette
+  news-editor.tsx         the block editor. The only place posts are written
+  post-actions.tsx        share + like + author, at the foot of an article
 src/lib/
   inquiries.ts            storage + throttle. Postgres when DATABASE_URL is set,
                           JSON file otherwise. Holds both code paths
+  posts.ts                the same two backends for newsroom posts and images
+  post-types.ts           the Post/Block shape and its pure helpers. Kept apart from
+                          posts.ts so a client component can import it without
+                          dragging node:fs and the Neon driver into the browser bundle
+  gate.ts                 the shared password gate for the two unlinked admin pages
 ```
 
 **The header is `fixed` and transparent at rest, so it neither reserves space nor has a
@@ -230,8 +246,8 @@ Two things that are easy to get wrong and hard to diagnose:
   visitor looks like a single IP and one submission locks out everyone for five minutes.
 - **`pm2 save` and `pm2 startup` are both needed**, or the site does not come back after a reboot.
 
-`.env.local` holds `INQUIRIES_PASSWORD` and lives only on the server — gitignored, so a pull never
-touches it.
+`.env.local` holds `INQUIRIES_PASSWORD` and `NEWSROOM_PASSWORD` and lives only on the server —
+gitignored, so a pull never touches it.
 
 ## Inquiries pipeline
 
@@ -243,8 +259,11 @@ JSON file. `/inquiries-inbox` reads it back behind a password.
 | Variable | Required | Default |
 |---|---|---|
 | `INQUIRIES_PASSWORD` | yes, for the inbox | none — the inbox **fails closed** and shows nothing |
+| `NEWSROOM_PASSWORD` | yes, for the editor | none — the editor **fails closed**; nothing opens or saves |
 | `DATABASE_URL` | on Vercel | unset — falls back to the JSON file |
 | `INQUIRIES_FILE` | no | `data/inquiries.json` (gitignored) |
+| `NEWS_FILE` | no | `data/news.json` (gitignored) |
+| `NEWS_MEDIA_DIR` | no | `data/news-media/` (gitignored) |
 
 Things worth knowing before you change any of it:
 
@@ -266,6 +285,63 @@ Things worth knowing before you change any of it:
   request returns `200` but is never stored, so the bot does not retry.
 - The inbox is unlinked and `noindex`, but **obscurity is not the protection** — the password is.
   Do not remove the gate to make it easier to check.
+
+## Newsroom
+
+Posts are written at **`/newsroom-admin`**, a password-gated block editor, and read back on three
+public surfaces: cards on **Home** and **About Us**, the index at **`/latest`**, and an article at
+**`/latest/[slug]`**.
+
+A post is a title, a date, an author, an optional card summary, and an ordered list of **blocks**.
+There are exactly two block kinds, **text** and **image** — the `+` in the editor's left margin
+inserts one above that block. Keep it to two: a third kind means touching the editor, the
+coercion in `posts.ts`, and the article renderer together.
+
+**Storage is the same two-backend shape as inquiries** — Postgres when `DATABASE_URL` is set, a
+JSON file under `data/` otherwise. Tables: `news_posts`, `news_media`, `news_likes`.
+
+Things worth knowing before you change any of it:
+
+- **`NEWSROOM_PASSWORD` is a separate password from `INQUIRIES_PASSWORD`, on purpose.** Reading
+  contact details and publishing to the public site are not the same risk. Both fail closed: an
+  unset variable means the page cannot be opened *or* saved, not that it is open.
+- **The gate is re-checked in the route handlers, not only on the page.** `/api/news` and
+  `/api/news/media` each call `newsroomAuthorised()`. Hiding a button is never the protection —
+  a route can be called directly.
+- **A draft 404s for the public.** There is no unlisted preview URL; the editor's View button only
+  appears once a post is published.
+- **Images live in the database, not on disk**, base64 in a `text` column rather than `bytea` —
+  the Neon HTTP driver round-trips text predictably and binary parameters do not. They are served
+  by `/api/news/media/[id]` as `immutable` for a year, which is load-bearing: every uncached hit
+  is a query. Limit is 2MB, checked on the received bytes rather than the declared size.
+- **The editor records each image's natural width and height in the browser before upload**, so
+  the article can reserve the right box. A block with `width: 0` predates that or failed to
+  measure, and falls back to a plain `<img>` with no reserved box — a wrong box is worse than none.
+- **Likes are one per IP**, enforced by a primary key on `(post_id, ip)`, and read
+  `x-forwarded-for` like the inquiry rate limit does. They are not spoof-proof and are not meant
+  to be. **The cards do not show a like count** — Home and About Us are prerendered and likes are
+  not, so the card read 0 beside an article reading 2.
+- **Saving revalidates `/`, `/about-us`, `/latest` and the article.** Home and About Us also carry
+  `revalidate = 300` as a floor. Drop the `revalidatePath` calls and a new post will not appear
+  until the next deploy.
+- `src/lib/post-types.ts` holds the shape and its pure helpers, apart from `posts.ts`. **Import
+  types and constants from `post-types` in any `"use client"` file** — reaching into `posts.ts`
+  drags `node:fs` and the Neon driver into the browser bundle.
+
+**Seeding:** the two 2021 posts that used to be hardcoded on `/latest` live in
+`scripts/seed-news.mjs`. A fresh database has no posts, so run it once per deployment:
+
+```bash
+node scripts/seed-news.mjs https://your-site "$NEWSROOM_PASSWORD"
+```
+
+It skips anything already published, so re-running is safe.
+
+**Next dev inlines server file reads into the RSC payload.** In `npm run dev`, the whole of
+`data/news.json` — drafts included — turns up in a `self.__next_f.push(...)` script on the page.
+`/inquiries-inbox` has always done the same with `data/inquiries.json`. It is dev instrumentation,
+**not** a leak in this code: a production build is clean, which is verified by grepping the served
+HTML for a draft title. Do not "fix" it by changing how the file is read.
 
 ## Content source of truth
 
@@ -318,7 +394,10 @@ Things that are deliberately unfinished — don't "fix" them silently, they need
 
 - **Search button** in the nav (`site-shell.tsx`) is decorative — no handler, no search backend.
 - **Investors portal** password form is UI only — `type="button"`, no handler, no auth.
-- **SEO:** only `layout.tsx` sets root metadata. No OG images. Inquiries is the one page with its own title.
+- **Deleting a post leaves its uploaded images behind** in `news_media`. Nothing references them
+  and nothing cleans them up; a purge needs a product decision about undo first.
+- **SEO:** only `layout.tsx` sets root metadata. No OG images. Inquiries, Latest and each article
+  have their own titles; nothing else does.
 - **A11y:** no `prefers-reduced-motion` guard on the parallax, video autoplay, or reveals.
 - `ScrollReveal` re-hides on scroll-out (it tracks `isIntersecting` both ways) rather than
   revealing once.

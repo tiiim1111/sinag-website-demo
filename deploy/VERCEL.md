@@ -26,19 +26,22 @@ three environments; nothing to copy by hand.
 
 The schema creates itself on the first request. There is no migration to run.
 
-## 2. Set the inbox password
+## 2. Set the two passwords
 
 Project → **Settings** → **Environment Variables**:
 
 | Name | Value | Environments |
 |---|---|---|
 | `INQUIRIES_PASSWORD` | something long | Production, Preview, Development |
+| `NEWSROOM_PASSWORD` | something long, **different** | Production, Preview, Development |
 
-Without it `/inquiries-inbox` shows "The inbox is closed" and no data. That is
-deliberate — it fails closed.
+Without the first, `/inquiries-inbox` shows "The inbox is closed" and no data.
+Without the second, `/newsroom-admin` shows "The newsroom is closed" and cannot
+save. Both are deliberate — they fail closed.
 
-**Use a different password than the VM.** Two deployments, two places a
-password can leak.
+**Make all four different: two per host.** Reading contact details and
+publishing to the public site are not the same risk, and the VM and Vercel are
+two places a password can leak from.
 
 ## 3. Redeploy
 
@@ -48,13 +51,29 @@ Environment variables only reach a new build:
 git push            # or hit Redeploy in the dashboard
 ```
 
-## 4. Check it
+## 4. Seed the newsroom
+
+A fresh database has no posts, so `/latest` and the Home and About Us card
+sections come up empty. The two 2021 posts that used to be hardcoded on
+`/latest` go back in with:
+
+```bash
+node scripts/seed-news.mjs https://sinag-site-demo.vercel.app "<NEWSROOM_PASSWORD>"
+```
+
+It skips anything already published, so re-running is safe. Everything after
+that is written at `/newsroom-admin`.
+
+## 5. Check it
 
 1. `/inquiries` — send a test submission
 2. `/inquiries-inbox` — it should be there, and the line under the heading
    should read **"Stored in Postgres."** If it says "Stored in a local file",
    `DATABASE_URL` did not reach the running deployment
 3. Submit again straight away — expect the five minute countdown
+4. `/newsroom-admin` — sign in, and the line at the top should read
+   **"Stored in Postgres."** Add a post with an image and check it appears on
+   Home, About Us and `/latest`
 
 ## Running both Vercel and the VM
 

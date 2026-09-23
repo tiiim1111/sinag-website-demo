@@ -29,10 +29,15 @@ sudo mkswap /swapfile && sudo swapon /swapfile
 echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
 ```
 
-**3. The inbox password.** Without this the inbox shows nothing — by design.
+**3. The two passwords.** Without these the inbox shows nothing and the
+newsroom editor cannot be opened or saved — both by design, they fail closed.
+Make them different from each other and from the Vercel deployment's.
 
 ```bash
-echo 'INQUIRIES_PASSWORD=<long and hard to guess>' > .env.local
+cat > .env.local <<'EOF'
+INQUIRIES_PASSWORD=<long and hard to guess>
+NEWSROOM_PASSWORD=<a different long one>
+EOF
 ```
 
 `.env.local` is gitignored, so it never leaves the server and is never
