@@ -13,8 +13,8 @@ const oswald = Oswald({
 });
 
 export const metadata: Metadata = {
-  title: "Sinag Global",
-  description: "Sinag Global clean energy systems and services.",
+  title: "GEM Global",
+  description: "GEM Global clean energy systems and services.",
 };
 
 export default function RootLayout({

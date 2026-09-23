@@ -5,9 +5,9 @@ import InquiryForm from "@/components/inquiry-form";
 import ScrollReveal from "@/components/scroll-reveal";
 
 export const metadata: Metadata = {
-  title: "Inquiries | Sinag Global",
+  title: "Inquiries | GEM Global",
   description:
-    "Talk to Sinag Global about power supply agreements, joint ventures, and EER-SPG deployment.",
+    "Talk to GEM Global about power supply agreements, joint ventures, and EER-SPG deployment.",
 };
 
 /**

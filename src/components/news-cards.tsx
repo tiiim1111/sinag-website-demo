@@ -161,7 +161,7 @@ export default function NewsCards({
                     <div
                       className={`type-kicker mt-auto flex items-center justify-between gap-3 border-t pt-4 ${c.divider} ${c.meta}`}
                     >
-                      <span className="truncate">{post.author || "Sinag Global Energy"}</span>
+                      <span className="truncate">{post.author || "GEM Global"}</span>
                       <span className="shrink-0 font-semibold">Read</span>
                     </div>
                   </div>

@@ -105,7 +105,7 @@ export default function SiteShell({ children, solidHeader = false }: SiteShellPr
             <Link href="/" className="flex items-center gap-3">
               <Image
                 src="/logo.png"
-                alt="Gem Global Holdings Nevada Corp."
+                alt="GEM Global Holdings Nevada Corp."
                 width={970}
                 height={161}
                 className="h-auto w-[180px] md:w-[215px]"
@@ -201,7 +201,7 @@ export default function SiteShell({ children, solidHeader = false }: SiteShellPr
               <Link href="/" className="inline-flex">
                 <Image
                   src="/logo.png"
-                  alt="Gem Global Holdings Nevada Corp."
+                  alt="GEM Global Holdings Nevada Corp."
                   width={970}
                   height={161}
                   className="h-auto w-[210px] md:w-[240px]"
@@ -260,7 +260,7 @@ export default function SiteShell({ children, solidHeader = false }: SiteShellPr
           </div>
 
           <div className="type-kicker mt-14 flex flex-col gap-3 border-t border-white/12 pt-6 text-white/45 sm:flex-row sm:items-center sm:justify-between">
-            <p>&copy; {new Date().getFullYear()} Sinag Global Energy Corp. All rights reserved.</p>
+            <p>&copy; {new Date().getFullYear()} GEM Global Holdings Nevada Corp. All rights reserved.</p>
           </div>
         </div>
       </footer>

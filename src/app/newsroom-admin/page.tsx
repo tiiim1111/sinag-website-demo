@@ -106,7 +106,7 @@ export default async function NewsroomAdminPage({
         <div className="mx-auto mt-6 max-w-md">
           <Image
             src="/logo.png"
-            alt="Gem Global Holdings Nevada Corp."
+            alt="GEM Global Holdings Nevada Corp."
             width={970}
             height={161}
             className="mx-auto h-auto w-[190px]"

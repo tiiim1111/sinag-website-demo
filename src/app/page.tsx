@@ -45,7 +45,7 @@ export default async function HomePage() {
           <ScrollReveal className="mt-8" delayClassName="delay-1">
             <p className="type-body-lg max-w-6xl text-slate-300">
               <span className="font-semibold text-[#8fdb3d]">EER-SPG</span> stands for{" "}
-              <span className="font-semibold text-white">Electromagnetic Energy-Flux Reactor</span>, Sinag Global&apos;s
+              <span className="font-semibold text-white">Electromagnetic Energy-Flux Reactor</span>, GEM Global&apos;s
               stationary electromagnetic power generation system, developed to provide clean baseload electricity on
               demand.
             </p>

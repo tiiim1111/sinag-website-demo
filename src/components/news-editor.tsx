@@ -443,7 +443,7 @@ export default function NewsEditor({ initialPosts }: { initialPosts: Post[] }) {
                 id="post-author"
                 type="text"
                 value={draft.author}
-                placeholder="Sinag Global Energy"
+                placeholder="GEM Global"
                 onChange={(event) => setDraft({ ...draft, author: event.target.value })}
                 className={`${inputClass} mt-2`}
               />
@@ -677,7 +677,7 @@ export default function NewsEditor({ initialPosts }: { initialPosts: Post[] }) {
                 </div>
                 <p className="type-body mt-3 font-semibold text-white">{post.title}</p>
                 <p className="type-kicker mt-1 text-slate-400">
-                  {post.author || "Sinag Global Energy"} &middot; /latest/{post.slug}
+                  {post.author || "GEM Global"} &middot; /latest/{post.slug}
                 </p>
               </div>
 

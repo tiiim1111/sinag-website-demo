@@ -5,6 +5,11 @@
  * a fresh deployment needs them put back. Safe to re-run: it skips a post whose
  * slug is already there.
  *
+ * The bylines carry the current company name, but the headlines and bodies
+ * still say SINAG: these record what happened in 2021, under the name the
+ * company held then. Renaming them would claim GEM Global received an award it
+ * did not yet exist to receive.
+ *
  *   node scripts/seed-news.mjs <base-url> <newsroom-password>
  *
  * e.g. node scripts/seed-news.mjs http://localhost:3000 "$NEWSROOM_PASSWORD"
@@ -25,7 +30,7 @@ const posts = [
     title:
       "Sinag awarded by PIDC as one of Top 10 Most Promising Renewable Energy Solutions Provider in 2021",
     date: "2021-06-03",
-    author: "Sinag Global Energy",
+    author: "GEM Global",
     excerpt:
       "A milestone that reinforced the company\u2019s positioning as an emerging player in clean, reliable, and scalable renewable energy solutions.",
     published: true,
@@ -46,7 +51,7 @@ const posts = [
     title:
       "SINAG represented by COO Mr. Danilo Enriquez joins panel at Green and Renewable Innovations for Circular Economy",
     date: "2021-06-03",
-    author: "Sinag Global Energy",
+    author: "GEM Global",
     excerpt:
       "The event highlighted practical routes to cleaner growth and underscored Sinag\u2019s role in conversations around innovation, renewables, and circular energy systems.",
     published: true,

@@ -9,7 +9,7 @@ import { readPublishedPosts } from "@/lib/posts";
 const leadership = [
   {
     name: "Bonifacio J. Eyales",
-    role: "Group Chairman and CEO, Sinag Global Energy Corp.",
+    role: "Group Chairman and CEO, GEM Global Holdings Nevada Corp.",
     image: "/team/bonifacio-j-eyales.png",
     body: "Founder of the company and inventor of EER technology, with over three decades of practice in electrical engineering, power demand management, energy conservation, and power plant operations.",
   },
@@ -92,7 +92,7 @@ export default async function AboutUsPage() {
               Experienced leadership positioned for energy transition and deployment
             </h2>
             <p className="type-body-sm mt-5 max-w-3xl text-slate-300">
-              Sinag Global is led by a management team with decades of combined experience across power
+              GEM Global is led by a management team with decades of combined experience across power
               generation, utilities, project finance, and electrical engineering &mdash; the disciplines
               required to take the EER-SPG from proven technology to deployed capacity.
             </p>

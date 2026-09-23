@@ -220,12 +220,12 @@ export default function PostActions({ slug, likes, author, tone = "light" }: Pos
           aria-hidden="true"
           className={`type-body-sm flex h-12 w-12 shrink-0 items-center justify-center rounded-full font-semibold ${c.avatar}`}
         >
-          {initials(author || "Sinag Global Energy")}
+          {initials(author || "GEM Global")}
         </span>
         <div>
           <p className={`type-kicker uppercase tracking-[0.14em] ${c.label}`}>Written by</p>
           <p className={`type-body font-semibold ${c.authorName}`}>
-            {author || "Sinag Global Energy"}
+            {author || "GEM Global"}
           </p>
         </div>
       </div>

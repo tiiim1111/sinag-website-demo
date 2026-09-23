@@ -9,7 +9,7 @@ export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Latest",
-  description: "Announcements, milestones and events from Sinag Global Energy Corp.",
+  description: "Announcements, milestones and events from GEM Global Holdings Nevada Corp.",
 };
 
 export default async function LatestPage() {
@@ -24,7 +24,7 @@ export default async function LatestPage() {
           headingAs="h1"
           kicker="LATEST"
           heading="Latest updates"
-          intro="Announcements, milestones, and events from Sinag Global Energy Corp. and the teams building the EER-SPG."
+          intro="Announcements, milestones, and events from GEM Global Holdings Nevada Corp. and the teams building the EER-SPG."
           limit={posts.length}
           viewAllHref={null}
         />

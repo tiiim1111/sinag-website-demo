@@ -207,7 +207,7 @@ export default function ScientificShiftSection() {
               opacity: bodyReveal,
             }}
           >
-            For Sinag Global, this reinforces the future of clean energy:
+            For GEM Global, this reinforces the future of clean energy:
             <span className="font-semibold text-white">
               {" "}
               electricity can be generated through advanced electromagnetic processes

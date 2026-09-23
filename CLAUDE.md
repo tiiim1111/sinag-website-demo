@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-Marketing site for **Sinag Global Energy Corp.** — a Philippine clean-energy company whose
+Marketing site for **GEM Global Holdings Nevada Corp.** — a clean-energy company whose
 product is the **EER-SPG** (Electromagnetic Energy-Flux Reactor — Stationary Power Generator),
 positioned as clean, on-demand baseload generation without fuel, feedstock, or weather dependency.
 
@@ -367,6 +367,13 @@ deck you must **read the PNGs visually** — grepping the XML returns nothing.
 Copy currently on the site is derived from that deck plus the existing sinagglobal.com and
 gempowerph.com public pages.
 
+**The company is named GEM Global Holdings Nevada Corp.** It was Sinag Global Energy Corp., and
+Gem Power Philippines Corp. before the current rebrand. Two places deliberately keep an older
+name and should not be "corrected": the 2021 newsroom posts in `scripts/seed-news.mjs`, whose
+headlines record what SINAG did under the name it held then, and the cookie and localStorage
+keys (`sinag_inbox`, `sinag_newsroom`, `sinag:liked:*`, `sinag:last-inquiry`) — renaming those
+signs every admin out and wipes every visitor's cooldown and like memory, for no visible gain.
+
 ### Writing copy for this site
 
 - Claims stay at the level the deck makes them — "positioned as", "designed for", "aims to".
@@ -390,7 +397,8 @@ gempowerph.com public pages.
   generated from the mark by centring it square. Next picks these up by filename; there are no
   link tags to maintain. The Apple one is on white because iOS composites a transparent icon
   onto black.
-- `public/sinag-logo.svg` — the Sinag Global wordmark the header used two brands ago. Kept in
+- `public/sinag-logo.svg` — the Sinag Global wordmark the header used two brands ago, before
+  the company was renamed. Kept in
   case the branding reverts. The Gem Power lockup it replaced is only in git history.
 - `public/team/*.png` — leadership headshots. All **300×300 RGBA, circle-cropped with fully
   transparent corners** — the card frame is a rounded square on the teal, so a photo with white
