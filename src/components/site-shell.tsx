@@ -105,9 +105,9 @@ export default function SiteShell({ children, solidHeader = false }: SiteShellPr
             <Link href="/" className="flex items-center gap-3">
               <Image
                 src="/logo.png"
-                alt="Gem Power Philippines Corp."
-                width={2000}
-                height={357}
+                alt="Gem Global Holdings Nevada Corp."
+                width={970}
+                height={161}
                 className="h-auto w-[180px] md:w-[215px]"
                 priority
               />
@@ -201,9 +201,9 @@ export default function SiteShell({ children, solidHeader = false }: SiteShellPr
               <Link href="/" className="inline-flex">
                 <Image
                   src="/logo.png"
-                  alt="Gem Power Philippines Corp."
-                  width={2000}
-                  height={357}
+                  alt="Gem Global Holdings Nevada Corp."
+                  width={970}
+                  height={161}
                   className="h-auto w-[210px] md:w-[240px]"
                 />
               </Link>
@@ -220,7 +220,7 @@ export default function SiteShell({ children, solidHeader = false }: SiteShellPr
                     <li key={link.label}>
                       <Link
                         href={link.href}
-                        className="type-body-sm text-white/55 transition hover:text-[#6eb444]"
+                        className="type-body-sm text-white/55 transition hover:text-[#68c058]"
                       >
                         {link.label}
                       </Link>
@@ -241,16 +241,16 @@ export default function SiteShell({ children, solidHeader = false }: SiteShellPr
                   Metro Manila
                 </li>
                 <li>
-                  <a href="tel:+639178810555" className="transition hover:text-[#6eb444]">
+                  <a href="tel:+639178810555" className="transition hover:text-[#68c058]">
                     +63 917 881 0555
                   </a>
                   {" / "}
-                  <a href="tel:+639293373567" className="transition hover:text-[#6eb444]">
+                  <a href="tel:+639293373567" className="transition hover:text-[#68c058]">
                     +63 929 337 3567
                   </a>
                 </li>
                 <li>
-                  <a href="mailto:info@gemcor.ph" className="transition hover:text-[#6eb444]">
+                  <a href="mailto:info@gemcor.ph" className="transition hover:text-[#68c058]">
                     info@gemcor.ph
                   </a>
                 </li>

@@ -212,9 +212,19 @@ ate every `text-*` on an anchor, which is why the hero CTA needed `!text-[…]` 
 It now sits in `@layer base`. **Put any new element-level rule in `@layer base` too**, or you
 will spend an afternoon wondering why a colour class does nothing.
 
-**Gem Power green:** the logo's dominant green is `#338942`, but it only reaches 4.06:1 on the
-footer's `#13191b` — under the 4.5:1 minimum. Footer link hovers use the mark's lighter green
-`#6eb444` instead, which is 7.00:1.
+**Gem Global green:** the mark's dominant green is `#006038`, which reaches only 2.31:1 on the
+footer's `#13191b` — far under the 4.5:1 minimum. Footer link hovers use the mark's lighter leaf
+green `#68c058` instead, which is 7.84:1. (The previous branding used `#338942`/`#6eb444` the
+same way; the values changed with the logo, the rule did not.)
+
+**The lockup is hard to read on the homepage hero, and always has been.** Measured on the
+rendered page it reaches **1.96:1** against the video — the previous lockup managed 2.22:1, so
+this is a long-standing problem the rebrand made slightly worse, not a new one. Both fail the
+3:1 floor for large text. The header is transparent at rest and only the homepage runs a dark
+hero under it, so this is the one place it bites. Fixing it properly needs a **white knockout
+variant of the lockup** shown while the header is transparent — that asset has not been
+supplied, and inventing one is a branding decision. Do not paper over it with a scrim without
+asking.
 
 **Tailwind gotcha:** `shadow-[…]` silently drops an arbitrary value whose first offset is
 negative — the rule compiles but computes to transparent. Use the arbitrary *property* form,
@@ -369,15 +379,19 @@ gempowerph.com public pages.
 - `public/1.mp4` `2.mp4` `3.mp4` — hero videos, **32MB total, committed**. All three autoplay
   simultaneously. This is the site's biggest performance liability; compress or lazy-load before
   any real launch.
-- `public/logo.png` — Gem Power Philippines Corp. lockup (2000×357, alpha). Used in the header,
-  the footer, and the About Us panel. Source drop lives in the gitignored `Logos/` folder.
-- `public/logo-mark.png` — the mark alone (582×357, alpha). Source for the favicons.
-- `src/app/icon.png` / `src/app/apple-icon.png` — the favicon and iOS icon, generated from
-  logo-mark by trimming its transparent margin and centring it square. Next picks these up by
-  filename; there are no link tags to maintain. The Apple one is on white because iOS
-  composites a transparent icon onto black.
-- `public/sinag-logo.svg` — the older Sinag Global wordmark the header used before the Gem Power
-  lockup replaced it. Kept in case the branding reverts.
+- `public/logo.png` — Gem Global Holdings Nevada Corp. lockup (970×161, alpha), **cropped tight
+  to the ink** — there is no transparent margin, unlike the lockup it replaced. Used in the
+  header, the footer, the inbox and the newsroom. **The `width`/`height` on every `<Image>` must
+  stay 970×161**: Next derives the layout aspect-ratio from those attributes, so a stale pair
+  silently stretches the logo rather than erroring.
+- `public/logo-mark.png` — the mark alone (189×155, alpha), cut from the lockup at its widest
+  internal column gap. Source for the favicons.
+- `src/app/icon.png` (256×256) / `src/app/apple-icon.png` (180×180) — the favicon and iOS icon,
+  generated from the mark by centring it square. Next picks these up by filename; there are no
+  link tags to maintain. The Apple one is on white because iOS composites a transparent icon
+  onto black.
+- `public/sinag-logo.svg` — the Sinag Global wordmark the header used two brands ago. Kept in
+  case the branding reverts. The Gem Power lockup it replaced is only in git history.
 - `public/team/*.png` — leadership headshots. All **300×300 RGBA, circle-cropped with fully
   transparent corners** — the card frame is a rounded square on the teal, so a photo with white
   corners would show them. Match that when adding one. Five people now, laid out 3 + 2 by the

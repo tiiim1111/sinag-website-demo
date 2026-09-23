@@ -33,7 +33,7 @@ type ChapterTabsProps = {
 /**
  * Chapter rail styled after the GE Vernova "5 Charges" band: numbered items in
  * condensed caps, split by hairline rules, over deep teal. The teal is dark
- * because the Gem Power logo is green and vanishes against a mid tone.
+ * because the Gem Global logo is green and vanishes against a mid tone.
  *
  * Panels are passed in already rendered, so the sections that use this can stay
  * server components and every chapter's copy stays in the HTML.

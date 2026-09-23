@@ -106,9 +106,9 @@ export default async function NewsroomAdminPage({
         <div className="mx-auto mt-6 max-w-md">
           <Image
             src="/logo.png"
-            alt="Gem Power Philippines Corp."
-            width={2000}
-            height={357}
+            alt="Gem Global Holdings Nevada Corp."
+            width={970}
+            height={161}
             className="mx-auto h-auto w-[190px]"
           />
           <div className="mt-10 rounded-[1.5rem] border border-white/15 bg-white/[0.06] p-8 backdrop-blur-sm">
