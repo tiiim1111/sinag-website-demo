@@ -67,13 +67,13 @@ that is written at `/newsroom-admin`.
 ## 5. Check it
 
 1. `/inquiries` — send a test submission
-2. `/inquiries-inbox` — it should be there, and the line under the heading
-   should read **"Stored in Postgres."** If it says "Stored in a local file",
-   `DATABASE_URL` did not reach the running deployment
+2. `/inquiries-inbox` — it should be there. If it is not, `DATABASE_URL` may
+   not have reached the running deployment; check it under Settings →
+   Environment Variables rather than looking for it on the page, which no
+   longer says which backend it used
 3. Submit again straight away — expect the five minute countdown
-4. `/newsroom-admin` — sign in, and the line at the top should read
-   **"Stored in Postgres."** Add a post with an image and check it appears on
-   Home, About Us and `/latest`
+4. `/newsroom-admin` — sign in, add a post with an image, and check it
+   appears on Home, About Us and `/latest`
 
 ## Running both Vercel and the VM
 
@@ -84,8 +84,9 @@ They are separate deployments. Whether they share an inbox is your choice:
 - **Leave the VM without it** and it keeps its own `data/inquiries.json`, which
   is a second, separate inbox.
 
-Either is fine. Picking by accident is not — check the "Stored in…" line on
-each host to see which one you are looking at.
+Either is fine. Picking by accident is not — check whether `DATABASE_URL` is
+set on each host to see which one you are looking at. The pages themselves do
+not say.
 
 The VM's existing `data/inquiries.json` does not migrate itself. To move those
 rows into Postgres, insert them once by hand; there are only a handful.

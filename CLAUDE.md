@@ -103,9 +103,9 @@ background of its own.** Two consequences for any new page:
 **Every page wraps its content in `<SiteShell>`.** Nav links live in the `navItems` array in
 `site-shell.tsx` — adding a route means adding it there, and usually to `footerColumns` too.
 
-The top nav carries four items: Home, Our System, About Us, Inquiries. **Latest and Investors
-Portal were pulled from it deliberately** — both pages still exist and stay reachable from the
-footer's Company column.
+The top nav carries five items: Home, Our System, About Us, Latest, Inquiries. **Investors Portal
+is kept out of it deliberately** — the page still exists and stays reachable from the footer's
+Company column.
 
 The footer deep-links into page sections by anchor: `#challenge`, `#overview`, `#why-now` on the
 homepage and `#leadership` on About Us. Those ids carry a `scroll-mt-*` so the fixed header does
@@ -272,8 +272,10 @@ Things worth knowing before you change any of it:
   do not share memory, so a file write is lost and an in-process counter never sees the previous
   request. Local dev deliberately needs no database.
 - **They are separate inboxes.** Point the VM at the same `DATABASE_URL` to share one, or leave it
-  unset so the VM keeps its own file. The inbox prints which backend it read — check that line
-  before concluding an inquiry went missing.
+  unset so the VM keeps its own file. Before concluding an inquiry went missing, check which
+  backend that host is on — `storageBackend()` in `inquiries.ts` and `postsBackend()` in
+  `posts.ts` answer it, and it comes down to whether `DATABASE_URL` is set there. **The admin
+  pages used to print this and no longer do**, by request; do not add the line back.
 - **The cooldown follows the backend**: a Postgres row per IP claimed in a single upsert, or an
   in-memory map on the file backend. The upsert decides and records in one statement, so two
   requests arriving together cannot both pass.

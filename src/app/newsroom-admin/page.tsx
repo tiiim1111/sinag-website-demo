@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import NewsEditor from "@/components/news-editor";
 import { NEWSROOM_COOKIE, hashPassword, newsroomToken, sameToken } from "@/lib/gate";
-import { postsBackend, readPosts } from "@/lib/posts";
+import { readPosts } from "@/lib/posts";
 
 export const dynamic = "force-dynamic";
 
@@ -149,12 +149,7 @@ export default async function NewsroomAdminPage({
 
   return (
     <Shell>
-      <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
-        <p className="type-kicker text-slate-400">
-          {/* Two backends exist and they are separate sets of posts. Say which
-              one this is rather than leaving it to be guessed. */}
-          {postsBackend() === "postgres" ? "Stored in Postgres." : "Stored in a local file."}
-        </p>
+      <div className="mb-8 flex flex-wrap items-center justify-end gap-4">
         <form action={signOut}>
           <button
             type="submit"
