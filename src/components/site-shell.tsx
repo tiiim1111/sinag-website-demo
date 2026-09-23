@@ -244,13 +244,13 @@ export default function SiteShell({ children, solidHeader = false }: SiteShellPr
                     +63 917 881 0555
                   </a>
                   {" / "}
-                  <a href="tel:+639209012450" className="transition hover:text-[#6eb444]">
-                    +63 920 901 2450
+                  <a href="tel:+639293373567" className="transition hover:text-[#6eb444]">
+                    +63 929 337 3567
                   </a>
                 </li>
                 <li>
-                  <a href="mailto:info@sinagglobal.com" className="transition hover:text-[#6eb444]">
-                    info@sinagglobal.com
+                  <a href="mailto:info@gemcor.ph" className="transition hover:text-[#6eb444]">
+                    info@gemcor.ph
                   </a>
                 </li>
                 <li>Mon&ndash;Fri | 8am to 5pm</li>

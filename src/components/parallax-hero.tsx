@@ -6,9 +6,9 @@ import { useEffect, useRef, useState } from "react";
 const slides = [
   {
     video: "/1.mp4",
-    title: "The Baseload Gap",
+    title: "Clean & Renewable Energy for the Present and Future Generation",
     subtitle:
-      "Critical energy users need baseload power. Factories, utilities, government facilities, hospitals, data centres, logistics networks, and essential infrastructure cannot operate on intermittent supply alone.",
+      "A Breakthrough, Innovative, Base load energy source 24/7, 365 days a year",
     cta: "Read more",
     rail: ["Energy Challenge", "Limits of Renewables", "The Baseload Gap"],
   },
@@ -66,13 +66,7 @@ export default function ParallaxHero() {
     };
   }, []);
 
-  useEffect(() => {
-    const timer = window.setInterval(() => {
-      setActiveSlide((prev) => (prev + 1) % slides.length);
-    }, 9000);
-
-    return () => window.clearInterval(timer);
-  }, []);
+  // Slides hold until the arrows or dots are used. No auto-advance.
 
   const prevSlide = () => {
     setActiveSlide((prev) => (prev - 1 + slides.length) % slides.length);

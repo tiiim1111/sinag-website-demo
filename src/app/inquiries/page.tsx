@@ -17,14 +17,14 @@ export const metadata: Metadata = {
 const channels = [
   {
     label: "Email",
-    lines: [{ text: "info@sinagglobal.com", href: "mailto:info@sinagglobal.com" }],
+    lines: [{ text: "info@gemcor.ph", href: "mailto:info@gemcor.ph" }],
     note: "The fastest route for project briefs and documents.",
   },
   {
     label: "Phone",
     lines: [
       { text: "+63 917 881 0555", href: "tel:+639178810555" },
-      { text: "+63 920 901 2450", href: "tel:+639209012450" },
+      { text: "+63 929 337 3567", href: "tel:+639293373567" },
     ],
     note: "Mon–Fri, 8am to 5pm.",
   },

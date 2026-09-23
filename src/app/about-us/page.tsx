@@ -27,7 +27,7 @@ const leadership = [
     name: "Leopoldo B. Carmelo",
     role: "Director",
     image: "/team/leopoldo-b-carmelo.png",
-    body: "Electrical engineer, academic leader, and consultant with deep experience in planning, design, installation, and project management for electrical systems.",
+    body: "Masters Degree in Electrical engineer, academic leader, and consultant with deep experience in planning, design, installation, and project management for electrical systems.",
   },
 ];
 
