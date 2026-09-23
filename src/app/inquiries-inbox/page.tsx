@@ -3,7 +3,7 @@ import crypto from "node:crypto";
 import Image from "next/image";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { readInquiries, type Inquiry } from "@/lib/inquiries";
+import { readInquiries, storageBackend, type Inquiry } from "@/lib/inquiries";
 
 export const dynamic = "force-dynamic";
 
@@ -224,6 +224,7 @@ export default async function InquiriesInboxPage({
   }
 
   const inquiries = (await readInquiries()).slice().reverse();
+  const backend = storageBackend();
 
   return (
     <Shell>
@@ -232,7 +233,12 @@ export default async function InquiriesInboxPage({
           <p className="type-kicker font-semibold uppercase tracking-[0.18em] text-[#d8ff35]">Inbox</p>
           <h1 className="type-title mt-2 font-semibold tracking-tight text-white">Inquiries</h1>
           <p className="type-body-sm mt-2 text-slate-300">
-            {inquiries.length} {inquiries.length === 1 ? "inquiry" : "inquiries"}, newest first.
+            {inquiries.length} {inquiries.length === 1 ? "inquiry" : "inquiries"}, newest first.{" "}
+            {/* Two backends exist, and they are separate inboxes. Say which one
+                this is rather than leaving it to be guessed. */}
+            <span className="text-slate-400">
+              {backend === "postgres" ? "Stored in Postgres." : "Stored in a local file."}
+            </span>
           </p>
         </div>
         <form action={signOut}>

@@ -1,15 +1,8 @@
 import { NextResponse } from "next/server";
-import { COOLDOWN_MS, appendInquiry } from "@/lib/inquiries";
+import { appendInquiry, claimSubmissionSlot } from "@/lib/inquiries";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
-
-/**
- * In-memory cooldown: one submission per IP per 5 minutes. It resets on
- * restart and is per-process, which is fine for a single VM — a shared store
- * would be needed if this ever runs on more than one instance.
- */
-const lastSeen = new Map<string, number>();
 
 function clientIp(request: Request): string {
   const forwarded = request.headers.get("x-forwarded-for");
@@ -22,18 +15,6 @@ function field(value: unknown, max: number): string {
 }
 
 export async function POST(request: Request) {
-  const ip = clientIp(request);
-  const now = Date.now();
-  const previous = lastSeen.get(ip);
-
-  if (previous !== undefined && now - previous < COOLDOWN_MS) {
-    const retryAfter = Math.ceil((COOLDOWN_MS - (now - previous)) / 1000);
-    return NextResponse.json(
-      { error: "cooldown", retryAfter },
-      { status: 429, headers: { "Retry-After": String(retryAfter) } },
-    );
-  }
-
   let body: unknown;
   try {
     body = await request.json();
@@ -43,7 +24,8 @@ export async function POST(request: Request) {
   const raw = body as Record<string, unknown>;
 
   // Hidden field a person never sees. Anything in it is a bot; accept without
-  // storing so it does not retry.
+  // storing so it does not retry. Checked before the throttle so bots never
+  // consume a real visitor's slot.
   if (field(raw.website, 100)) return NextResponse.json({ ok: true });
 
   const name = field(raw.name, 120);
@@ -58,8 +40,17 @@ export async function POST(request: Request) {
   else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.email = "That email does not look right.";
   if (!message) errors.message = "Please tell us what you need.";
 
+  // Validate before throttling, so a typo does not cost a five minute wait.
   if (Object.keys(errors).length > 0) {
     return NextResponse.json({ errors }, { status: 422 });
+  }
+
+  const slot = await claimSubmissionSlot(clientIp(request));
+  if (!slot.allowed) {
+    return NextResponse.json(
+      { error: "cooldown", retryAfter: slot.retryAfter },
+      { status: 429, headers: { "Retry-After": String(slot.retryAfter) } },
+    );
   }
 
   await appendInquiry({
@@ -72,6 +63,5 @@ export async function POST(request: Request) {
     message,
   });
 
-  lastSeen.set(ip, now);
   return NextResponse.json({ ok: true });
 }

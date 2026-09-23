@@ -6,7 +6,8 @@ positioned as clean, on-demand baseload generation without fuel, feedstock, or w
 
 This is a **content/design-led marketing site**. Most work here is copy, layout, and motion — but
 it is no longer purely static: the inquiry form posts to a route handler, submissions are stored
-on disk, and a password-gated page reads them back. See **Inquiries pipeline** below.
+in Postgres or on disk, and a password-gated page reads them back. See **Inquiries pipeline**
+below.
 
 ## Commands
 
@@ -25,7 +26,7 @@ No test suite and no CI. `npm run build` is the only gate.
   `@theme inline` inside `src/app/globals.css`
 - **Fonts:** Inter (`--font-inter`, body) and Oswald (`--font-display`, condensed headlines) via
   `next/font/google`, wired in `src/app/layout.tsx`
-- **Deploy:** Vercel, project `sinag-site-demo`, from `master`
+- **Deploy:** a VM (pm2 + nginx) and Vercel (`sinag-site-demo`, from `master`). See **Deploying**
 
 ## Structure
 
@@ -44,7 +45,7 @@ src/app/
   inquiries/              inquiry form + contact routes. Dark teal (#04383f), the chapter
                           rail's ground, with that band's lime #d8ff35 as the accent
   inquiries-inbox/        password-gated list of submissions. Unlinked and noindex
-  api/inquiries/          POST handler: validate, rate limit, append to disk
+  api/inquiries/          POST handler: validate, then rate limit, then store
   latest/                 newsroom — 2 hardcoded posts
   investors-portal/       password gate (UI only, no backend)
 src/components/
@@ -69,7 +70,8 @@ src/components/
   scroll-stack.tsx        pins one section while the next scrolls up over it
   inquiry-form.tsx        the form; mirrors the server cooldown in localStorage
 src/lib/
-  inquiries.ts            JSON-file storage, serialised so writes cannot clobber
+  inquiries.ts            storage + throttle. Postgres when DATABASE_URL is set,
+                          JSON file otherwise. Holds both code paths
 ```
 
 **The header is `fixed` and transparent at rest, so it neither reserves space nor has a
@@ -217,9 +219,10 @@ Two gotchas:
 
 ## Deploying
 
-Production is a VM, not Vercel. Next runs on `127.0.0.1:3000` under pm2; nginx owns 80/443 and
-proxies to it. `deploy/README.md` has the full runbook; `deploy/nginx-sinag.conf` and
-`ecosystem.config.cjs` are the configs to copy.
+Two targets. The VM runs Next on `127.0.0.1:3000` under pm2 with nginx on 80/443 —
+`deploy/README.md` is the runbook, `deploy/nginx-sinag.conf` and `ecosystem.config.cjs` are
+the configs. Vercel deploys from `master` into project `sinag-site-demo` —
+`deploy/VERCEL.md` covers it, and the only real work there is attaching a Postgres database.
 
 Two things that are easy to get wrong and hard to diagnose:
 
@@ -235,20 +238,27 @@ touches it.
 The form on `/inquiries` POSTs to `/api/inquiries`, which validates, rate limits, and appends to a
 JSON file. `/inquiries-inbox` reads it back behind a password.
 
-**Two environment variables**, both server-side:
+**Environment variables**, all server-side:
 
 | Variable | Required | Default |
 |---|---|---|
 | `INQUIRIES_PASSWORD` | yes, for the inbox | none — the inbox **fails closed** and shows nothing |
+| `DATABASE_URL` | on Vercel | unset — falls back to the JSON file |
 | `INQUIRIES_FILE` | no | `data/inquiries.json` (gitignored) |
 
 Things worth knowing before you change any of it:
 
-- **Storage is a file, so this only works where the filesystem persists.** It works on the VM. It
-  does **not** work on Vercel, whose filesystem is read-only and ephemeral — submissions there are
-  silently lost. Moving off the VM means moving storage to a database first.
-- **The cooldown is in-memory and per-process**: one submission per IP per 5 minutes, reset on
-  restart. Fine for one VM; more than one instance would need a shared store.
+- **Storage has two backends, chosen by whether `DATABASE_URL` is set.** Postgres when it is,
+  a JSON file when it is not. Vercel must have it: that filesystem is read-only and its functions
+  do not share memory, so a file write is lost and an in-process counter never sees the previous
+  request. Local dev deliberately needs no database.
+- **They are separate inboxes.** Point the VM at the same `DATABASE_URL` to share one, or leave it
+  unset so the VM keeps its own file. The inbox prints which backend it read — check that line
+  before concluding an inquiry went missing.
+- **The cooldown follows the backend**: a Postgres row per IP claimed in a single upsert, or an
+  in-memory map on the file backend. The upsert decides and records in one statement, so two
+  requests arriving together cannot both pass.
+- **Validation runs before the throttle**, so a typo does not cost the sender five minutes.
 - **Rate limiting reads `x-forwarded-for`.** Behind nginx that header must be set
   (`proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;`) or every visitor looks like one
   IP and a single submission locks out everyone for five minutes.
