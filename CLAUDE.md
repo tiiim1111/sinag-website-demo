@@ -378,7 +378,10 @@ gempowerph.com public pages.
   composites a transparent icon onto black.
 - `public/sinag-logo.svg` — the older Sinag Global wordmark the header used before the Gem Power
   lockup replaced it. Kept in case the branding reverts.
-- `public/team/*.png` — leadership headshots
+- `public/team/*.png` — leadership headshots. All **300×300 RGBA, circle-cropped with fully
+  transparent corners** — the card frame is a rounded square on the teal, so a photo with white
+  corners would show them. Match that when adding one. Five people now, laid out 3 + 2 by the
+  same centred flex the patent grid uses, not a grid: a grid leaves the short last row flush left.
 - `public/patents/*.png` — the nine patent certificate scans, portrait, ~3:4
 - `public/overview/eer.png` — EER-SPG container render (homepage)
 - `public/overview/picture1.png` — currently unused

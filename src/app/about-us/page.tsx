@@ -31,6 +31,12 @@ const leadership = [
     image: "/team/leopoldo-b-carmelo.png",
     body: "Masters Degree in Electrical engineer, academic leader, and consultant with deep experience in planning, design, installation, and project management for electrical systems.",
   },
+  {
+    name: "Beatrice Yvonne S. Eyales",
+    role: "Director",
+    image: "/team/beatrice-yvonne-s-eyales.png",
+    body: "Economics and social sciences at the London School of Economics, and a bachelor’s degree from Durham University, bringing a cross-border perspective across North America and Europe.",
+  },
 ];
 
 export const revalidate = 300;
@@ -92,11 +98,16 @@ export default async function AboutUsPage() {
             </p>
           </ScrollReveal>
 
-          <div className="grid gap-6 border-t border-white/10 px-8 py-8 md:grid-cols-2 md:px-12 xl:grid-cols-4">
+          {/* Five over three columns lands 3 + 2. Flex rather than grid, like the
+              patent grid below: a grid leaves the short last row flush left, and
+              the widths subtract the gaps so the columns still line up. Three
+              rather than four keeps the bios wide enough to read. */}
+          <div className="flex flex-wrap justify-center gap-6 border-t border-white/10 px-8 py-8 md:px-12">
             {leadership.map((person, index) => (
               <ScrollReveal
                 key={person.name}
-                delayClassName={index === 0 ? "" : index === 1 ? "delay-1" : "delay-2"}
+                className="w-full sm:w-[calc((100%-1.5rem)/2)] lg:w-[calc((100%-3rem)/3)]"
+                delayClassName={index % 3 === 0 ? "" : index % 3 === 1 ? "delay-1" : "delay-2"}
               >
                 {/* h-full so the four share a height — the bios differ in length
                     and were ending at four different depths. */}
@@ -106,7 +117,7 @@ export default async function AboutUsPage() {
                       src={person.image}
                       alt={person.name}
                       fill
-                      sizes="(min-width: 1280px) 18vw, (min-width: 768px) 40vw, 90vw"
+                      sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 90vw"
                       className="card-zoom object-cover"
                     />
                   </div>
